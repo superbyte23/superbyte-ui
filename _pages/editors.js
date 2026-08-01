@@ -58,7 +58,7 @@ function initEditors() {
     '</head>\n' +
     '<body data-bs-theme="dark">\n' +
     '  <main class="app-shell">\n' +
-    '    <h1>Admin console</h1>\n' +
+    '    <h1>UI</h1>\n' +
     '    <button class="btn btn-primary">New</button>\n' +
     '  </main>\n' +
     '</body>\n' +

@@ -59,6 +59,8 @@ const THEMES = {
   sky:     { name:'Sky',     base:'#0ea5e9', hi:'#38bdf8', rgb:'14,165,233'   },
   blue:    { name:'Blue',    base:'#3b82f6', hi:'#60a5fa', rgb:'59,130,246'   },
   purple:  { name:'Purple',  base:'#a855f7', hi:'#c084fc', rgb:'168,85,247'   },
+  white:   { name:'White',   base:'#ffffff', hi:'#e5e7eb', rgb:'255,255,255' },
+  dark:    { name:'Dark',    base:'#111827', hi:'#1f2937', rgb:'17,24,39'    },
 };
 let activeThemeKey = 'indigo';
 

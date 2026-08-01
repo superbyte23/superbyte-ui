@@ -2,7 +2,7 @@
 
 Superbyte Admin is a polished, static admin dashboard and management UI template built with Bootstrap 5, plain HTML, CSS, and vanilla JavaScript. The project ships as a collection of self-contained pages that can be opened directly in the browser or served locally with any lightweight web server.
 
-It is designed to feel like a modern enterprise admin console with dashboard analytics, CRUD-style data views, CRM/ecommerce workflows, forms, charts, maps, editors, authentication screens, and reusable UI components.
+It is designed to feel like a modern enterprise UI with dashboard analytics, CRUD-style data views, CRM/ecommerce workflows, forms, charts, maps, editors, authentication screens, and reusable UI components.
 
 ## Overview
 

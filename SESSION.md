@@ -3,7 +3,7 @@
 Saved: Sat Aug 01 2026. Next session: read this first, then continue from **Next Move**.
 
 ## Project
-Static Bootstrap 5.3.3 admin console at `C:\Users\Windows\Downloads\superbyte-admin`.
+Static Bootstrap 5.3.3 UI at `C:\Users\Windows\Downloads\superbyte-admin`.
 No build step. Open the HTML files directly in a browser.
 Node v26.5.0 available. **CDN policy: all assets are vendored locally under `vendor/`; zero external/CDN resource loads.**
 
