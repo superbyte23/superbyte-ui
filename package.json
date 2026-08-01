@@ -1,0 +1,13 @@
+{
+  "name": "superbyte-admin",
+  "version": "1.0.0",
+  "description": "A modern admin dashboard and management UI template, built with Bootstrap and plain HTML, CSS, and JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

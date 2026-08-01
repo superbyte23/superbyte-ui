@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Superbyte — Docs</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="vendor/hugeicons/css/hugeicons-used.css">
+<link rel="stylesheet" href="vendor/fonts.css">
+<link rel="stylesheet" href="vendor/fonts/theme-fonts.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<style>
+/* Docs-specific styles (uses the shared design tokens) */
+.docs h2 { font-size: 16px; font-weight: 700; margin: 0 0 10px; display: flex; align-items: center; gap: 9px; letter-spacing: -.02em; }
+.docs h2 i { color: var(--accent); font-size: 13px; }
+.docs h3 { font-size: 13.5px; font-weight: 700; margin: 18px 0 6px; color: var(--text); }
+.docs p, .docs li { font-size: 13px; color: var(--text2); line-height: 1.7; }
+.docs ul { padding-left: 18px; margin: 0 0 8px; }
+.docs code { font-family: var(--mono); font-size: 12px; background: var(--surface2); border: 1px solid var(--border2); padding: 1px 6px; border-radius: 5px; color: var(--accent-h); }
+.docs pre { background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius-sm); padding: 14px 16px; font-family: var(--mono); font-size: 12px; color: var(--text); overflow-x: auto; line-height: 1.65; margin: 0 0 8px; }
+.docs pre code { background: none; border: none; padding: 0; color: inherit; }
+.docs .docs-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.docs .docs-table th { text-align: left; font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); padding: 9px 12px; border-bottom: 1px solid var(--border2); white-space: nowrap; }
+.docs .docs-table td { padding: 9px 12px; color: var(--text2); border-bottom: 1px solid var(--border); vertical-align: top; }
+.docs .docs-table td:first-child { color: var(--text); font-family: var(--mono); font-size: 12px; }
+.docs .docs-table tr:last-child td { border-bottom: none; }
+.docs .tag { vertical-align: middle; }
+.docs .lead-tag { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+</style>
+<!-- sb-theme-bootstrap -->
+<script>
+(function () {
+  try {
+    var L = localStorage, m = {};
+    m.mode = L.getItem('grid_admin_theme');
+    m.accent = L.getItem('grid_admin_accent');
+    m.base = L.getItem('grid_admin_basetheme');
+    m.font = L.getItem('grid_admin_font');
+    m.radius = L.getItem('grid_admin_radius');
+    m.fs = L.getItem('grid_admin_fontsize');
+    m.compact = L.getItem('grid_admin_compact');
+    m.boxed = L.getItem('grid_admin_boxed');
+    var THEMES = {"indigo":{"name":"Indigo","base":"#6366f1","hi":"#818cf8","rgb":"99,102,241"},"violet":{"name":"Violet","base":"#8b5cf6","hi":"#a78bfa","rgb":"139,92,246"},"fuchsia":{"name":"Fuchsia","base":"#d946ef","hi":"#e879f9","rgb":"217,70,239"},"pink":{"name":"Pink","base":"#ec4899","hi":"#f472b6","rgb":"236,72,153"},"rose":{"name":"Rose","base":"#f43f5e","hi":"#fb7185","rgb":"244,63,94"},"red":{"name":"Red","base":"#ef4444","hi":"#f87171","rgb":"239,68,68"},"orange":{"name":"Orange","base":"#f97316","hi":"#fb923c","rgb":"249,115,22"},"amber":{"name":"Amber","base":"#f59e0b","hi":"#fbbf24","rgb":"245,158,11"},"yellow":{"name":"Yellow","base":"#eab308","hi":"#facc15","rgb":"234,179,8"},"lime":{"name":"Lime","base":"#84cc16","hi":"#a3e635","rgb":"132,204,22"},"green":{"name":"Green","base":"#22c55e","hi":"#4ade80","rgb":"34,197,94"},"emerald":{"name":"Emerald","base":"#10b981","hi":"#34d399","rgb":"16,185,129"},"teal":{"name":"Teal","base":"#14b8a6","hi":"#2dd4bf","rgb":"20,184,166"},"cyan":{"name":"Cyan","base":"#06b6d4","hi":"#22d3ee","rgb":"6,182,212"},"sky":{"name":"Sky","base":"#0ea5e9","hi":"#38bdf8","rgb":"14,165,233"},"blue":{"name":"Blue","base":"#3b82f6","hi":"#60a5fa","rgb":"59,130,246"},"purple":{"name":"Purple","base":"#a855f7","hi":"#c084fc","rgb":"168,85,247"}};
+    var FONTS = {"ubuntu":{"name":"Ubuntu","stack":"'Ubuntu', sans-serif"},"inter":{"name":"Inter","stack":"'Inter', 'Ubuntu', sans-serif"},"notosans":{"name":"Noto Sans","stack":"'Noto Sans', 'Ubuntu', sans-serif"},"nunitosans":{"name":"Nunito Sans","stack":"'Nunito Sans', 'Ubuntu', sans-serif"},"figtree":{"name":"Figtree","stack":"'Figtree', 'Ubuntu', sans-serif"},"roboto":{"name":"Roboto","stack":"'Roboto', 'Ubuntu', sans-serif"},"raleway":{"name":"Raleway","stack":"'Raleway', 'Ubuntu', sans-serif"},"dmsans":{"name":"DM Sans","stack":"'DM Sans', 'Ubuntu', sans-serif"},"publicsans":{"name":"Public Sans","stack":"'Public Sans', 'Ubuntu', sans-serif"},"outfit":{"name":"Outfit","stack":"'Outfit', 'Ubuntu', sans-serif"},"oxanium":{"name":"Oxanium","stack":"'Oxanium', 'Ubuntu', sans-serif"},"manrope":{"name":"Manrope","stack":"'Manrope', 'Ubuntu', sans-serif"},"spacegrotesk":{"name":"Space Grotesk","stack":"'Space Grotesk', 'Ubuntu', sans-serif"},"montserrat":{"name":"Montserrat","stack":"'Montserrat', 'Ubuntu', sans-serif"},"ibmplexsans":{"name":"IBM Plex Sans","stack":"'IBM Plex Sans', 'Ubuntu', sans-serif"},"sourcesans3":{"name":"Source Sans 3","stack":"'Source Sans 3', 'Ubuntu', sans-serif"},"instrumentsans":{"name":"Instrument Sans","stack":"'Instrument Sans', 'Ubuntu', sans-serif"}};
+    var R = { '4px': ['4px', '2px'], '8px': ['8px', '4px'], '14px': ['14px', '8px'] };
+    var t, hl = document.documentElement.style;
+    if (m.fs) hl.fontSize = Math.min(17, Math.max(13, parseInt(m.fs, 10))) + 'px';
+    if (m.font && FONTS[m.font]) hl.setProperty('--sans', FONTS[m.font].stack);
+    if (m.accent && (t = THEMES[m.accent])) {
+      hl.setProperty('--accent', t.base); hl.setProperty('--accent-h', t.hi);
+      hl.setProperty('--bs-primary', t.base); hl.setProperty('--bs-primary-rgb', t.rgb);
+    }
+    if (m.radius && R[m.radius]) {
+      var p = R[m.radius];
+      hl.setProperty('--radius', p[0]); hl.setProperty('--radius-sm', p[1]);
+      hl.setProperty('--bs-border-radius', p[0]); hl.setProperty('--bs-border-radius-sm', p[1]);
+    }
+    function applyBody() {
+      var b = document.body, bs = b.style, mode = (m.mode === 'light' || m.mode === 'dark') ? m.mode : null;
+      if (mode) b.setAttribute('data-bs-theme', mode);
+      if (m.base && m.base !== 'neutral') b.setAttribute('data-base-theme', m.base);
+      if (m.compact === '1') b.classList.add('layout-compact');
+      if (m.boxed === '1') b.classList.add('layout-boxed');
+      var light = (mode || 'dark') === 'light';
+      if (m.accent && (t = THEMES[m.accent])) {
+        bs.setProperty('--accent', t.base); bs.setProperty('--accent-h', t.hi);
+        bs.setProperty('--accent-bg', 'rgba(' + t.rgb + ',' + (light ? '.08' : '.12') + ')');
+        bs.setProperty('--bs-primary', t.base); bs.setProperty('--bs-primary-rgb', t.rgb);
+      }
+      if (m.font && FONTS[m.font]) bs.setProperty('--sans', FONTS[m.font].stack);
+      if (m.radius && R[m.radius]) {
+        var q = R[m.radius];
+        bs.setProperty('--radius', q[0]); bs.setProperty('--radius-sm', q[1]);
+        bs.setProperty('--bs-border-radius', q[0]); bs.setProperty('--bs-border-radius-sm', q[1]);
+      }
+    }
+    if (document.body) applyBody();
+    else {
+      var mo = new MutationObserver(function () { if (document.body) { mo.disconnect(); applyBody(); } });
+      mo.observe(document.documentElement, { childList: true });
+      document.addEventListener('DOMContentLoaded', applyBody);
+    }
+  } catch (e) {}
+})();
+</script>
+
+</head>
+<body data-bs-theme="dark">
+
+<!-- ═══ TOAST CONTAINER ═══════════════════════════════════════════════════ -->
+<div id="toast-container"></div>
+<input type="file" id="drop-file" class="d-none" multiple>
+
+<!-- ═══ APP SHELL ══════════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark"><i class="hgi-stroke hgi-flowchart-01"></i></div>
+      Superbyte
+      <span>/ admin console</span>
+    </div>
+    <div id="nav-scroll">
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-dashboard-speed-01 sg-icon"></i> General <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="index.html"><i class="hgi-stroke hgi-dashboard-speed-01"></i> Dashboard</a>
+      <a class="side-link" href="create.html"><i class="hgi-stroke hgi-cube"></i> Create</a>
+      <a class="side-link" href="analytics.html"><i class="hgi-stroke hgi-chart-line-data-01"></i> Analytics</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-database-01 sg-icon"></i> Data <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="records.html"><i class="hgi-stroke hgi-table-01"></i> Records</a>
+      <a class="side-link" href="users.html"><i class="hgi-stroke hgi-user-group"></i> Users</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-puzzle sg-icon"></i> Components <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="forms.html"><i class="hgi-stroke hgi-check-list"></i> Forms</a>
+      <a class="side-link" href="elements.html"><i class="hgi-stroke hgi-geometric-shapes-01"></i> Buttons &amp; Badges</a>
+      <a class="side-link" href="cards.html"><i class="hgi-stroke hgi-id-card-lanyard"></i> Cards &amp; Alerts</a>
+      <a class="side-link" href="overlays.html"><i class="hgi-stroke hgi-square-arrow-data-transfer-vertical"></i> Modals &amp; Tabs</a>
+      <a class="side-link" href="utilities.html"><i class="hgi-stroke hgi-sliders-horizontal"></i> Utilities</a>
+      <a class="side-link" href="components.html"><i class="hgi-stroke hgi-layers-01"></i> Components</a>
+      <a class="side-link" href="all-components.html"><i class="hgi-stroke hgi-layers-02"></i> All components</a>
+      <a class="side-link" href="icons.html"><i class="hgi-stroke hgi-grid-view"></i> Icons</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-pie-chart-01 sg-icon"></i> Visuals <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="tables.html"><i class="hgi-stroke hgi-table-02"></i> Tables</a>
+      <a class="side-link" href="charts.html"><i class="hgi-stroke hgi-chart-column"></i> Charts</a>
+      <a class="side-link" href="visuals.html"><i class="hgi-stroke hgi-magic-wand-01"></i> Widgets</a>
+      <a class="side-link" href="maps.html"><i class="hgi-stroke hgi-map-pin"></i> Maps</a>
+      <a class="side-link" href="echarts.html"><i class="hgi-stroke hgi-chart-line-data-02"></i> ECharts</a>
+      <a class="side-link" href="editors.html"><i class="hgi-stroke hgi-code"></i> Editors</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-grid-view sg-icon"></i> Apps <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="crm.html"><i class="hgi-stroke hgi-user-settings-01"></i> CRM</a>
+      <a class="side-link" href="ecommerce.html"><i class="hgi-stroke hgi-store-01"></i> E-commerce</a>
+      <a class="side-link" href="calendar.html"><i class="hgi-stroke hgi-calendar-01"></i> Calendar</a>
+      <a class="side-link" href="kanban.html"><i class="hgi-stroke hgi-kanban"></i> Kanban</a>
+      <a class="side-link" href="email.html"><i class="hgi-stroke hgi-mail-01"></i> Email</a>
+      <a class="side-link" href="file-manager.html"><i class="hgi-stroke hgi-folder-open"></i> File manager</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-file-01 sg-icon"></i> Pages <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="login.html"><i class="hgi-stroke hgi-login-01"></i> Login</a>
+      <a class="side-link" href="register.html"><i class="hgi-stroke hgi-user-add-01"></i> Register</a>
+      <a class="side-link" href="forgot.html"><i class="hgi-stroke hgi-key-01"></i> Forgot password</a>
+      <a class="side-link" href="reset.html"><i class="hgi-stroke hgi-circle-unlock-01"></i> Reset password</a>
+      <a class="side-link" href="lock.html"><i class="hgi-stroke hgi-lock"></i> Lock screen</a>
+      <a class="side-link" href="verify.html"><i class="hgi-stroke hgi-mail-open-01"></i> Verify email</a>
+      <a class="side-link" href="two-factor.html"><i class="hgi-stroke hgi-shield-01"></i> Two-factor auth</a>
+      <a class="side-link" href="session-expired.html"><i class="hgi-stroke hgi-transaction-history"></i> Session expired</a>
+      <a class="side-link" href="rtl.html"><i class="hgi-stroke hgi-arrow-left-right"></i> RTL preview</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-book-01 sg-icon"></i> Docs <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link active" href="docs.html"><i class="hgi-stroke hgi-book-01"></i> Docs</a>
+    </div>
+  </div>
+</div>
+    <div class="sidebar-footer">
+      <span class="plan-tag"><span class="status-dot on"></span>v2.5.0</span>
+      <button class="icon-btn" style="width:28px;height:28px" onclick="toggleTheme()" title="Toggle theme"><i class="hgi-stroke hgi-moon-01" id="theme-icon"></i></button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+
+    <!-- TOOLBAR -->
+    <div id="toolbar">
+      <button class="icon-btn sidebar-toggle-btn" onclick="openSidebar()" aria-label="Toggle navigation"><i class="hgi-stroke hgi-menu-02"></i></button>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"><i class="hgi-stroke hgi-add-01 me-1"></i> New</button>
+      <button class="btn btn-ghost" onclick="showToast('success','Data refreshed')" aria-label="Refresh data"><i class="hgi-stroke hgi-refresh-03"></i></button>
+      <div class="tb-sep d-none d-md-block"></div>
+      <nav class="breadcrumb-wrap d-none d-md-flex" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">Superbyte</li>
+          <li class="breadcrumb-item active" aria-current="page">Docs</li>
+        </ol>
+      </nav>
+      <div class="search-wrap ms-auto ms-md-0">
+        <i class="hgi-stroke hgi-search-01 search-icon"></i>
+        <input class="search-input" id="global-search" placeholder="Search…" autocomplete="off">
+      </div>
+      <div class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#themeCustomizer" title="Theme colors"><i class="hgi-stroke hgi-paint-board"></i></div>
+      <div class="dropdown">
+        <div class="icon-btn" data-bs-toggle="dropdown"><i class="hgi-stroke hgi-notification-01"></i><span class="ping">3</span></div>
+        <ul class="dropdown-menu dropdown-menu-end" style="width:300px">
+          <li class="dropdown-header px-2 pb-2">Notifications</li>
+          <li><a class="dropdown-item d-flex gap-2 py-2" href="#"><i class="hgi-stroke hgi-checkmark-circle-01 text-success mt-1"></i><span><strong class="d-block" style="color:var(--text)">Backup completed</strong><small style="color:var(--text3)">2 minutes ago</small></span></a></li>
+          <li><a class="dropdown-item d-flex gap-2 py-2" href="#"><i class="hgi-stroke hgi-user-add-01 mt-1" style="color:var(--accent-h)"></i><span><strong class="d-block" style="color:var(--text)">New user registered</strong><small style="color:var(--text3)">1 hour ago</small></span></a></li>
+          <li><a class="dropdown-item d-flex gap-2 py-2" href="#"><i class="hgi-stroke hgi-alert-02 mt-1" style="color:var(--yellow)"></i><span><strong class="d-block" style="color:var(--text)">Storage at 82%</strong><small style="color:var(--text3)">3 hours ago</small></span></a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-center" href="#" style="color:var(--accent-h)">View all</a></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <div class="avatar-btn" data-bs-toggle="dropdown">
+          <div class="avatar-circle">JC</div>
+          <div class="who d-none d-lg-block"><div class="n">John Canete</div><div class="r">Administrator</div></div>
+          <i class="hgi-stroke hgi-arrow-down-01 d-none d-lg-block" style="font-size:9px;color:var(--text3)"></i>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#"><i class="hgi-stroke hgi-user me-2"></i>Profile</a></li>
+          <li><a class="dropdown-item" href="#"><i class="hgi-stroke hgi-settings-01 me-2"></i>Settings</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-danger" href="#"><i class="hgi-stroke hgi-logout-01 me-2"></i>Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="content">
+
+      <section class="page-section active docs">
+        <div class="page-head">
+          <div><h1>Documentation</h1><p>superbyte admin console · v2.4.0</p></div>
+          <span class="lead-tag">html · css · vanilla js</span>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-lg-8">
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <h2><i class="hgi-stroke hgi-rocket-01"></i> Getting started</h2>
+                <p>Superbyte is a lightweight, dependency-free admin template built with plain HTML, CSS and vanilla JavaScript on top of Bootstrap 5. There is no build step — every page is a self-contained file you can open directly in the browser.</p>
+                <p>To get started, open <code>index.html</code> or run any local static server such as <code>npx serve</code> or Python's <code>python -m http.server</code>. No server is required: all assets ship locally under <code>vendor/</code>, so the template works fully offline.</p>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <h2><i class="hgi-stroke hgi-hierarchy-files"></i> File structure</h2>
+                <pre><code>superbyte-admin/
+├─ index.html          Dashboard (charts, stats, activity)
+├─ analytics.html      Analytics (bar chart, top pages)
+├─ records.html        Records (sortable data table)
+├─ users.html          Users (team grid)
+├─ forms.html          Forms (inputs, selects, switches)
+├─ elements.html       Buttons &amp; Badges
+├─ cards.html          Cards &amp; Alerts
+├─ overlays.html       Modals &amp; Tabs
+├─ utilities.html      Utilities (progress, pagination, toasts)
+├─ docs.html           This documentation page
+├─ assets/
+│  ├─ css/app.css      Design system: tokens + components
+│  ├─ js/app.js        Shared logic: theme, sidebar, toasts
+│  └─ img/favicon.svg
+└─ vendor/             Local libraries — no CDN required
+   ├─ bootstrap/       CSS + JS bundle (5.3.3)
+   ├─ hugeicons/       HugeIcons Stroke-Rounded CSS + webfonts
+   ├─ chart.js/        UMD build (4.4.1)
+   ├─ fonts/           Ubuntu + Ubuntu Mono (woff2)
+   └─ fonts.css        Local @font-face declarations</code></pre>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <h2><i class="hgi-stroke hgi-layers-01"></i> Pages</h2>
+                <p>Navigation links in the sidebar are regular <code>&lt;a&gt;</code> elements pointing at the corresponding file. Each page marks its own entry with the <code>active</code> class and hard-codes its breadcrumb label, so there is no routing layer to maintain.</p>
+                <table class="docs-table">
+                  <thead><tr><th>File</th><th>Purpose</th></tr></thead>
+                  <tbody>
+                    <tr><td>index.html</td><td>KPI stat cards, revenue line chart, traffic doughnut, activity feed, team quota.</td></tr>
+                    <tr><td>analytics.html</td><td>Sessions vs conversions bar chart, key metrics, top pages table.</td></tr>
+                    <tr><td>records.html</td><td>Filterable, sortable data table with row selection, bulk delete and a right-click context menu.</td></tr>
+                    <tr><td>users.html</td><td>Responsive team member grid with status dots.</td></tr>
+                    <tr><td>forms.html</td><td>Project settings form, field variations, file upload dropzone.</td></tr>
+                    <tr><td>elements.html</td><td>Buttons, segmented controls, badges, tags, status dots, icon tiles.</td></tr>
+                    <tr><td>cards.html</td><td>Feature cards, alert variants, empty state.</td></tr>
+                    <tr><td>overlays.html</td><td>Modal dialogs, accordion, vertical tabs.</td></tr>
+                    <tr><td>utilities.html</td><td>Progress bars, pagination, tooltips &amp; popovers, toast demos.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <h2><i class="hgi-stroke hgi-paint-board"></i> Customization</h2>
+                <p>Open the palette icon in the toolbar to access the theme customizer. Choices persist across every page via <code>localStorage</code> and are re-applied automatically on load.</p>
+                <h3>Appearance</h3>
+                <p>Dark and light modes are toggled with the <code>data-bs-theme</code> attribute on <code>&lt;body&gt;</code>. All colors are CSS custom properties defined in <code>assets/css/app.css</code>, so you can also restyle the whole template by overriding a handful of tokens:</p>
+                <pre><code>:root {
+  --bg: #0a0b0f;      /* app background   */
+  --surface: #111318; /* cards, sidebar    */
+  --surface2: #181b23;/* inputs, headers   */
+  --surface3: #1f2330;/* hovers, toasts    */
+  --border: #252a38;  /* hairline borders  */
+  --text: #e2e8f0;    /* primary text      */
+  --text2: #94a3b8;   /* secondary text    */
+  --text3: #64748b;   /* muted text        */
+}</code></pre>
+                <h3>Accent color</h3>
+                <p>The accent (primary color) is applied at runtime to the <code>--accent</code>, <code>--accent-h</code>, <code>--accent-bg</code> and <code>--bs-primary*</code> tokens. The bundled swatches are indigo, violet, fuchsia, pink, teal, sky, lime and orange.</p>
+                <h3>Corner radius</h3>
+                <p>Three radius presets (sharp / default / round) remap <code>--radius</code> and <code>--radius-sm</code>.</p>
+                <h3>Stored preferences</h3>
+                <table class="docs-table">
+                  <thead><tr><th>Key</th><th>Values</th></tr></thead>
+                  <tbody>
+                    <tr><td>grid_admin_theme</td><td><code>dark</code> | <code>light</code></td></tr>
+                    <tr><td>grid_admin_accent</td><td><code>indigo</code>, <code>violet</code>, <code>fuchsia</code>, <code>pink</code>, <code>teal</code>, <code>sky</code>, <code>lime</code>, <code>orange</code></td></tr>
+                    <tr><td>grid_admin_radius</td><td><code>4px</code> | <code>8px</code> | <code>14px</code></td></tr>
+                  </tbody>
+                </table>
+                <p>Clear them all with <code>localStorage.clear()</code> in the console to reset to the defaults.</p>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <h2><i class="hgi-stroke hgi-chart-line-data-01"></i> Charts</h2>
+                <p>Chart.js is only loaded on the pages that use it (<code>index.html</code> and <code>analytics.html</code>). Each of those pages defines its own <code>initCharts()</code> function and registers it as the shared chart hook:</p>
+                <pre><code>function initCharts() {
+  // ... build charts from themeVars() ...
+}
+window.__chartInit = initCharts;</code></pre>
+                <p><code>assets/js/app.js</code> calls <code>refreshCharts()</code> (which invokes <code>__chartInit</code> when present) every time the theme, accent or radius changes, so charts always re-render in the correct colors. Use <code>themeVars()</code> to resolve the active CSS token values at render time.</p>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <h2><i class="hgi-stroke hgi-add-circle"></i> Adding a new page</h2>
+                <ol style="font-size:13px;color:var(--text2);line-height:1.8;padding-left:18px;margin:0">
+                  <li>Copy any existing page and rename the <code>&lt;title&gt;</code> and breadcrumb label.</li>
+                  <li>Mark its sidebar link <code>active</code> and clear <code>active</code> from the others.</li>
+                  <li>Drop your content inside <code>&lt;div id="content"&gt;</code> using the shared <code>card</code>, <code>btn</code>, <code>form-control</code>, <code>data-table</code> classes.</li>
+                  <li>Include the scripts at the end of the body. For chart pages, load <code>vendor/chart.js/chart.umd.min.js</code> before your inline <code>initCharts</code>.</li>
+                  <li>Link the new file from the sidebar in every page.</li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <h2><i class="hgi-stroke hgi-copyright"></i> Vendors &amp; licenses</h2>
+                <p>All third-party libraries are bundled locally so the template works without an internet connection.</p>
+                <table class="docs-table">
+                  <thead><tr><th>Library</th><th>Version</th><th>License</th></tr></thead>
+                  <tbody>
+                    <tr><td>Bootstrap</td><td>5.3.3</td><td>MIT</td></tr>
+                    <tr><td>HugeIcons Stroke-Rounded</td><td>—</td><td>CC BY 4.0 / OFL 1.1</td></tr>
+                    <tr><td>Chart.js</td><td>4.4.1</td><td>MIT</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-lg-4 d-flex flex-column gap-3">
+
+            <div class="card">
+              <div class="card-header"><div class="card-title"><i class="hgi-stroke hgi-flash"></i> Quick reference</div></div>
+              <div class="card-body d-flex flex-column gap-2" style="font-size:12.5px;color:var(--text2)">
+                <span><span class="tag tag-slate">theme</span> Toggle dark/light instantly</span>
+                <span><span class="tag tag-slate">accent</span> 8 presets, persisted</span>
+                <span><span class="tag tag-slate">radius</span> Sharp / Default / Round</span>
+                <span><span class="tag tag-slate">charts</span> Re-render on theme change</span>
+                <span><span class="tag tag-slate">tables</span> Sort + bulk actions</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><div class="card-title"><i class="hgi-stroke hgi-wrench-01"></i> Common classes</div></div>
+              <div class="card-body d-flex flex-column gap-1" style="font-size:12px;color:var(--text2)">
+                <code>card</code>
+                <code>card-header / card-title</code>
+                <code>btn / btn-primary / btn-ghost</code>
+                <code>form-control / form-select</code>
+                <code>data-table</code>
+                <code>tag tag-*</code>
+                <code>stat-card</code>
+                <code>empty-state</code>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><div class="card-title"><i class="hgi-stroke hgi-keyboard"></i> Keyboard tips</div></div>
+              <div class="card-body d-flex flex-column gap-2" style="font-size:12.5px;color:var(--text2)">
+                <span><span class="tag tag-indigo">Enter</span> Activate focused nav / buttons</span>
+                <span><span class="tag tag-indigo">Click</span> Column headers sort the table</span>
+                <span><span class="tag tag-indigo">Right-click</span> Context menu on table rows</span>
+                <span><span class="tag tag-indigo">Scroll</span> Sidebar sections stay sticky</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><div class="card-title"><i class="hgi-stroke hgi-transaction-history"></i> Changelog</div></div>
+              <div class="card-body d-flex flex-column gap-3" style="font-size:12.5px">
+                <div><span class="tag tag-green mb-1">v2.4.0</span><div style="color:var(--text2)">Saved views, bulk record actions, right-click row menu, fresh accent palette.</div></div>
+                <div><span class="tag tag-slate mb-1">v2.3.0</span><div style="color:var(--text2)">Split into standalone pages; local vendor assets; live theme persistence.</div></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODALS ═══════════════════════════════════════════════════════════ -->
+<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"><span class="modal-icon"><i class="hgi-stroke hgi-folder-add"></i></span> New folder</div>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-floating">
+          <input class="form-control" id="create-name" placeholder="new-folder" autofocus>
+          <label for="create-name">Folder name</label>
+        </div>
+        <div class="form-text mt-2">Folder names must be unique within the current directory.</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal" onclick="showToast('success','Folder created')">Create</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"><span class="modal-icon"><i class="hgi-stroke hgi-cloud-upload"></i></span> Upload files</div>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="dropzone" style="border:2px dashed var(--border2);border-radius:var(--radius);padding:26px;text-align:center;color:var(--text3);font-size:13px">
+          <i class="hgi-stroke hgi-cloud-upload d-block mb-2" style="font-size:22px"></i>
+          Drop files here or click to browse<br><small style="font-size:11px">Max 50 MB per file</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" data-bs-dismiss="modal" onclick="showToast('success','Upload complete')">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"><span class="modal-icon danger"><i class="hgi-stroke hgi-alert-02"></i></span> Confirm delete</div>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"><p style="color:var(--text2);font-size:13px;margin:0">This action cannot be undone. The item will be permanently removed.</p></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-danger" data-bs-dismiss="modal" onclick="showToast('success','Item deleted')">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ THEME CUSTOMIZER ═════════════════════════════════════════════════ -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="themeCustomizer">
+  <div class="offcanvas-header">
+    <div class="offcanvas-title"><i class="hgi-stroke hgi-paint-board"></i> Theme customizer</div>
+    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+
+    <div class="customizer-section">
+      <div class="customizer-label">Appearance</div>
+      <div class="appearance-grid">
+        <div class="appearance-opt active" id="opt-dark" onclick="setAppearance('dark')"><i class="hgi-stroke hgi-moon-01"></i>Dark</div>
+        <div class="appearance-opt" id="opt-light" onclick="setAppearance('light')"><i class="hgi-stroke hgi-sun-01"></i>Light</div>
+      </div>
+    </div>
+
+    <div class="customizer-section">
+      <div class="customizer-label">Accent color</div>
+      <div class="swatch-grid" id="swatch-grid"></div>
+    </div>
+
+    <div class="customizer-section">
+      <div class="customizer-label">Corner radius</div>
+      <div class="radius-grid">
+        <div class="radius-opt active" id="radius-sharp" onclick="setRadius('4px','2px',this)">Sharp</div>
+        <div class="radius-opt" id="radius-default" onclick="setRadius('8px','4px',this)">Default</div>
+        <div class="radius-opt" id="radius-round" onclick="setRadius('14px','8px',this)">Round</div>
+      </div>
+    </div>
+
+    <div class="customizer-section">
+      <div class="customizer-label">Layout density</div>
+      <div class="appearance-grid">
+        <div class="appearance-opt" id="opt-compact" onclick="setCompact(true)"><i class="hgi-stroke hgi-drag-02"></i>Compact</div>
+        <div class="appearance-opt active" id="opt-roomy" onclick="setCompact(false)"><i class="hgi-stroke hgi-more-vertical"></i>Roomy</div>
+      </div>
+    </div>
+
+    <div class="customizer-section">
+      <div class="customizer-label">Content width</div>
+      <div class="appearance-grid">
+        <div class="appearance-opt active" id="opt-fluid" onclick="setBoxed(false)"><i class="hgi-stroke hgi-arrow-expand-01"></i>Fluid</div>
+        <div class="appearance-opt" id="opt-boxed" onclick="setBoxed(true)"><i class="hgi-stroke hgi-arrow-shrink-01"></i>Boxed</div>
+      </div>
+    </div>
+
+    <div class="customizer-section">
+      <div class="customizer-label">Base font size</div>
+      <input type="range" class="form-range" id="fs-range" min="13" max="17" value="14" oninput="setFontSize(this.value)">
+      <div class="d-flex justify-content-between" style="font-size:10.5px;color:var(--text3);margin-top:4px"><span>13</span><span id="fs-out">14px</span><span>17</span></div>
+    </div>
+
+    <div class="customizer-section mb-0">
+      <div class="customizer-label">Preview</div>
+      <div class="card p-3 d-flex flex-column gap-2">
+        <button class="btn btn-primary btn-sm">Primary button</button>
+        <span class="tag tag-indigo" id="preview-tag"><i class="hgi-stroke hgi-circle"></i> Sample tag</span>
+        <div class="progress"><div class="progress-bar" style="width:65%"></div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
