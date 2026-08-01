@@ -1,0 +1,118 @@
+/* ── Horizontal / topbar layout mode ───────────────────────────────────── */
+.layout-horizontal #app {
+  display: block;
+}
+
+.layout-horizontal #sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--toolbar-h);
+  border-right: none;
+  border-bottom: 1px solid var(--border);
+  flex-direction: row;
+  align-items: center;
+  overflow: visible;
+}
+
+.layout-horizontal #nav-scroll {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+.layout-horizontal .sidebar-logo {
+  border-bottom: none;
+  border-right: 1px solid var(--border);
+  min-width: 210px;
+}
+
+.layout-horizontal .side-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.layout-horizontal .side-group-toggle {
+  padding: 7px 11px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.layout-horizontal .side-link {
+  border-left: none;
+  border-bottom: 2px solid transparent;
+  padding: 7px 11px;
+  white-space: nowrap;
+}
+
+.layout-horizontal .side-link.active {
+  border-bottom-color: var(--accent);
+  border-left: none;
+}
+
+.layout-horizontal .side-submenu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 220px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .25);
+  padding: 8px;
+  z-index: 1100;
+}
+
+.layout-horizontal .side-group.open .side-submenu {
+  display: block;
+  animation: fadeIn .15s ease;
+}
+
+.layout-horizontal .side-submenu .side-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: none;
+  border-left: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  margin: 2px 0;
+}
+
+.layout-horizontal .side-submenu .side-link.active {
+  border-left-color: var(--accent);
+  border-bottom: none;
+  background: var(--accent-bg);
+  color: var(--accent-h);
+}
+
+.layout-horizontal #main {
+  margin-left: 0;
+  padding-top: calc(var(--toolbar-h) + 10px);
+}
+
+.layout-horizontal #toolbar {
+  position: sticky;
+  top: 0;
+}
+
+/* Responsive fallback for horizontal mode */
+@media (max-width: 991.98px) {
+  .layout-horizontal #sidebar {
+    height: auto;
+    min-height: var(--toolbar-h);
+    flex-wrap: wrap;
+  }
+
+  .layout-horizontal #nav-scroll {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

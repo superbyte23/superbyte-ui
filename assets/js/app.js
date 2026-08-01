@@ -172,6 +172,23 @@ function setBoxed(on) {
   if (optBoxed) optBoxed.classList.toggle('active', on);
   try { localStorage.setItem('grid_admin_boxed', on ? '1' : '0'); } catch (e) {}
 }
+function setLayoutMode(mode) {
+  const isHorizontal = mode === 'horizontal';
+  document.body.classList.toggle('layout-horizontal', isHorizontal);
+  setBoxed(mode === 'boxed');
+  try { localStorage.setItem('grid_admin_layout_mode', mode); } catch (e) {}
+
+  const layoutGroup = document.querySelector('[data-layout-group="layout"]');
+  if (layoutGroup) {
+    layoutGroup.classList.toggle('open', isHorizontal || layoutGroup.querySelector('.side-link.active'));
+    const toggle = layoutGroup.querySelector('.side-group-toggle');
+    if (toggle) toggle.setAttribute('aria-expanded', layoutGroup.classList.contains('open'));
+  }
+
+  document.querySelectorAll('[data-layout-mode]').forEach(link => {
+    link.classList.toggle('active', link.dataset.layoutMode === mode);
+  });
+}
 function setFontSize(n) {
   n = Math.min(17, Math.max(13, parseInt(n, 10)));
   document.documentElement.style.fontSize = n + 'px';
@@ -235,6 +252,16 @@ document.querySelectorAll('.side-group-toggle').forEach(t => {
 document.querySelectorAll('.side-group').forEach(g => {
   if (g.querySelector('.side-link.active')) g.classList.add('open');
 });
+document.querySelectorAll('[data-layout-mode]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    setLayoutMode(link.dataset.layoutMode);
+    const label = link.textContent.trim();
+    showToast('success', 'Layout switched to ' + label);
+  });
+});
+const savedLayoutMode = localStorage.getItem('grid_admin_layout_mode') || 'vertical';
+setLayoutMode(savedLayoutMode);
 document.querySelectorAll('.icon-btn, .avatar-btn').forEach(el => {
   el.setAttribute('tabindex', '0');
   el.addEventListener('keydown', e => {
