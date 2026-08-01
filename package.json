@@ -4,7 +4,7 @@
   "description": "A modern admin dashboard and management UI template, built with Bootstrap and plain HTML, CSS, and JavaScript.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node verify.cjs"
   },
   "keywords": [],
   "author": "",
