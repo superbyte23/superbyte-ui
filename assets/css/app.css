@@ -309,8 +309,8 @@ a { text-decoration: none; }
 
 /* Buttons — bootstrap bridge */
 .btn { font-family: var(--sans); font-weight: 600; font-size: 13px; border-radius: var(--radius-sm); }
-.btn-primary { background: var(--accent); border-color: var(--accent); }
-.btn-primary:hover, .btn-primary:focus { background: var(--accent-h); border-color: var(--accent-h); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.btn-primary:hover, .btn-primary:focus { background: var(--accent-h); border-color: var(--accent-h); color: var(--accent-text); }
 .btn-outline-secondary { color: var(--text2); border-color: var(--border2); }
 .btn-outline-secondary:hover { background: var(--surface2); color: var(--text); border-color: var(--border2); }
 .btn-ghost { background: var(--surface2); border: 1px solid var(--border2); color: var(--text2); }
@@ -495,7 +495,7 @@ a { text-decoration: none; }
 /* Pagination */
 .page-link { background: var(--surface2); border-color: var(--border2); color: var(--text2); font-family: var(--mono); font-size: 12.5px; }
 .page-link:hover { background: var(--surface3); color: var(--text); border-color: var(--border2); }
-.page-item.active .page-link { background: var(--accent); border-color: var(--accent); color: #fff; }
+.page-item.active .page-link { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
 .page-item.disabled .page-link { background: var(--surface2); color: var(--text3); }
 
 /* Tooltips */
@@ -549,7 +549,7 @@ a { text-decoration: none; }
 }
 .swatch:hover { transform: scale(1.1); }
 .swatch.active { border-color: var(--text); }
-.swatch.active::after { content: "\f282b"; font-family: "hugeicons-stroke-rounded"; color: #fff; font-size: 10px; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+.swatch.active::after { content: "\f282b"; font-family: "hugeicons-stroke-rounded"; color: var(--accent-text); font-size: 10px; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-shadow: 0 1px 2px rgba(0,0,0,.4); }
 .appearance-grid { display: flex; gap: 8px; }
 .appearance-opt {
   flex: 1; padding: 12px 8px; text-align: center; border-radius: var(--radius); cursor: pointer;
@@ -740,7 +740,7 @@ input[type="color"].form-control-color { width: 38px; height: 38px; padding: 3px
 .wizard-step { flex: 1; display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: var(--radius-sm); background: var(--surface2); border: 1px solid var(--border2); color: var(--text3); font-size: 12px; font-weight: 600; min-width: 120px; }
 .wizard-step .num { width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--surface3); font-size: 10px; font-family: var(--mono); flex-shrink: 0; }
 .wizard-step.active { border-color: var(--accent); background: var(--accent-bg); color: var(--accent-h); }
-.wizard-step.active .num { background: var(--accent); color: #fff; }
+.wizard-step.active .num { background: var(--accent); color: var(--accent-text); }
 .wizard-step.done { border-color: var(--green); color: var(--green); }
 .wizard-step.done .num { background: var(--green); color: #fff; }
 .wizard-pane { display: none; }
@@ -1097,7 +1097,7 @@ input[type="color"].form-control-color { width: 38px; height: 38px; padding: 3px
 
 /* ── CREATE PAGE (preset builder) ──────────────────────────────────────── */
 .preview-frame { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface2); padding: 18px; }
-.preview-logo { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, var(--accent), var(--accent-h)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.preview-logo { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, var(--accent), var(--accent-h)); color: var(--accent-text); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
 .preview-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
 .preview-stat-n { font-size: 17px; font-weight: 700; color: var(--text); font-family: var(--mono); }
 .preview-stat-l { font-size: 11px; color: var(--text3); margin-top: 2px; }

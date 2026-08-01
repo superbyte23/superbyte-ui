@@ -64,6 +64,15 @@ const THEMES = {
 };
 let activeThemeKey = 'indigo';
 
+function getContrastText(hex) {
+  const clean = String(hex).replace('#', '');
+  const r = parseInt(clean.substr(0, 2), 16);
+  const g = parseInt(clean.substr(2, 2), 16);
+  const b = parseInt(clean.substr(4, 2), 16);
+  const luma = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luma > 0.72 ? '#111827' : '#ffffff';
+}
+
 const swatchGrid = document.getElementById('swatch-grid');
 if (swatchGrid) {
   Object.entries(THEMES).forEach(([key, t]) => {
@@ -84,8 +93,10 @@ function applyThemeColor(key) {
   // own dark/light rule would otherwise win over an inherited value from html
   const light = document.body.getAttribute('data-bs-theme') === 'light';
   const root = document.body.style;
+  const contrastText = getContrastText(t.base);
   root.setProperty('--accent', t.base);
   root.setProperty('--accent-h', t.hi);
+  root.setProperty('--accent-text', contrastText);
   root.setProperty('--accent-bg', `rgba(${t.rgb},${light ? '.08' : '.12'})`);
   root.setProperty('--bs-primary', t.base);
   root.setProperty('--bs-primary-rgb', t.rgb);
