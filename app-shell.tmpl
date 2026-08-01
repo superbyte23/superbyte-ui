@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="vendor/fonts/theme-fonts.css">
 %PAGE_LIB_CSS%
 <link rel="stylesheet" href="assets/css/app.css">
-<link rel="stylesheet" href="assets/css/layout-modes.css">
 <script src="assets/js/theme-bootstrap.js"></script>
 
 </head>
@@ -34,59 +33,77 @@
       
     </div>
     <div id="nav-scroll">
-    <div class="nav-group-label">General</div>
-    <a class="side-link" href="index.html"><i class="hgi-stroke hgi-dashboard-speed-01"></i> Dashboard</a>
-    <a class="side-link" href="layouts.html"><i class="hgi-stroke hgi-grid-view"></i> Layouts</a>
-    <a class="side-link" href="create.html"><i class="hgi-stroke hgi-cube"></i> Create</a>
-    <a class="side-link" href="analytics.html"><i class="hgi-stroke hgi-chart-line-data-01"></i> Analytics</a>
-    <div class="side-group open" data-layout-group="layout">
-      <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="true" aria-haspopup="true"><i class="hgi-stroke hgi-grid-view sg-icon"></i> Layout <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
-      <div class="side-submenu">
-        <a class="side-link" href="layouts.html" data-layout-mode="vertical"><i class="hgi-stroke hgi-columns-03"></i> Vertical</a>
-        <a class="side-link" href="layouts.html" data-layout-mode="horizontal"><i class="hgi-stroke hgi-layout-top"></i> Horizontal</a>
-        <a class="side-link" href="layouts.html" data-layout-mode="boxed"><i class="hgi-stroke hgi-square-01"></i> Boxed</a>
-        <a class="side-link" href="layouts.html" data-layout-mode="fluid"><i class="hgi-stroke hgi-expand-01"></i> Container / Fluid</a>
-      </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-dashboard-speed-01 sg-icon"></i> General <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="index.html"><i class="hgi-stroke hgi-dashboard-speed-01"></i> Dashboard</a>
+      <a class="side-link" href="create.html"><i class="hgi-stroke hgi-cube"></i> Create</a>
+      <a class="side-link" href="analytics.html"><i class="hgi-stroke hgi-chart-line-data-01"></i> Analytics</a>
     </div>
-    <div class="nav-group-label">Data</div>
-    <a class="side-link" href="records.html"><i class="hgi-stroke hgi-table-01"></i> Records</a>
-    <a class="side-link" href="users.html"><i class="hgi-stroke hgi-user-group"></i> Users</a>
-    <div class="nav-group-label">Components</div>
-    <a class="side-link" href="forms.html"><i class="hgi-stroke hgi-check-list"></i> Forms</a>
-    <a class="side-link" href="elements.html"><i class="hgi-stroke hgi-geometric-shapes-01"></i> Buttons &amp; Badges</a>
-    <a class="side-link" href="cards.html"><i class="hgi-stroke hgi-id-card-lanyard"></i> Cards &amp; Alerts</a>
-    <a class="side-link" href="overlays.html"><i class="hgi-stroke hgi-square-arrow-data-transfer-vertical"></i> Modals &amp; Tabs</a>
-    <a class="side-link" href="utilities.html"><i class="hgi-stroke hgi-sliders-horizontal"></i> Utilities</a>
-    <a class="side-link" href="components.html"><i class="hgi-stroke hgi-layers-01"></i> Components</a>
-    <a class="side-link" href="all-components.html"><i class="hgi-stroke hgi-layers-02"></i> All components</a>
-      <a class="side-link" href="icons.html"><i class="hgi-stroke hgi-grid-view"></i> Icons</a>
-    <div class="nav-group-label">Visuals</div>
-    <a class="side-link" href="tables.html"><i class="hgi-stroke hgi-table-02"></i> Tables</a>
-    <a class="side-link" href="charts.html"><i class="hgi-stroke hgi-chart-column"></i> Charts</a>
-    <a class="side-link" href="visuals.html"><i class="hgi-stroke hgi-magic-wand-01"></i> Widgets</a>
-    <a class="side-link" href="maps.html"><i class="hgi-stroke hgi-map-pin"></i> Maps</a>
-    <a class="side-link" href="echarts.html"><i class="hgi-stroke hgi-chart-line-data-02"></i> ECharts</a>
-    <a class="side-link" href="editors.html"><i class="hgi-stroke hgi-code"></i> Editors</a>
-    <div class="nav-group-label">Apps</div>
-    <a class="side-link" href="crm.html"><i class="hgi-stroke hgi-user-settings-01"></i> CRM</a>
-    <a class="side-link" href="ecommerce.html"><i class="hgi-stroke hgi-store-01"></i> E-commerce</a>
-    <a class="side-link" href="calendar.html"><i class="hgi-stroke hgi-calendar-01"></i> Calendar</a>
-    <a class="side-link" href="kanban.html"><i class="hgi-stroke hgi-kanban"></i> Kanban</a>
-    <a class="side-link" href="email.html"><i class="hgi-stroke hgi-mail-01"></i> Email</a>
-    <a class="side-link" href="file-manager.html"><i class="hgi-stroke hgi-folder-open"></i> File manager</a>
-    <div class="nav-group-label">Pages</div>
-    <a class="side-link" href="login.html"><i class="hgi-stroke hgi-login-01"></i> Login</a>
-    <a class="side-link" href="register.html"><i class="hgi-stroke hgi-user-add-01"></i> Register</a>
-    <a class="side-link" href="forgot.html"><i class="hgi-stroke hgi-key-01"></i> Forgot password</a>
-    <a class="side-link" href="reset.html"><i class="hgi-stroke hgi-circle-unlock-01"></i> Reset password</a>
-    <a class="side-link" href="lock.html"><i class="hgi-stroke hgi-lock"></i> Lock screen</a>
-    <a class="side-link" href="verify.html"><i class="hgi-stroke hgi-mail-open-01"></i> Verify email</a>
-    <a class="side-link" href="two-factor.html"><i class="hgi-stroke hgi-shield-01"></i> Two-factor auth</a>
-    <a class="side-link" href="session-expired.html"><i class="hgi-stroke hgi-transaction-history"></i> Session expired</a>
-    <a class="side-link" href="rtl.html"><i class="hgi-stroke hgi-arrow-left-right"></i> RTL preview</a>
-    <div class="nav-group-label">Docs</div>
-    <a class="side-link" href="docs.html"><i class="hgi-stroke hgi-book-01"></i> Docs</a>
   </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-database-01 sg-icon"></i> Data <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="records.html"><i class="hgi-stroke hgi-table-01"></i> Records</a>
+      <a class="side-link" href="users.html"><i class="hgi-stroke hgi-user-group"></i> Users</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-puzzle sg-icon"></i> Components <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="forms.html"><i class="hgi-stroke hgi-check-list"></i> Forms</a>
+      <a class="side-link" href="elements.html"><i class="hgi-stroke hgi-geometric-shapes-01"></i> Buttons &amp; Badges</a>
+      <a class="side-link" href="cards.html"><i class="hgi-stroke hgi-id-card-lanyard"></i> Cards &amp; Alerts</a>
+      <a class="side-link" href="overlays.html"><i class="hgi-stroke hgi-square-arrow-data-transfer-vertical"></i> Modals &amp; Tabs</a>
+      <a class="side-link" href="utilities.html"><i class="hgi-stroke hgi-sliders-horizontal"></i> Utilities</a>
+      <a class="side-link" href="components.html"><i class="hgi-stroke hgi-layers-01"></i> Components</a>
+      <a class="side-link" href="all-components.html"><i class="hgi-stroke hgi-layers-02"></i> All components</a>
+      <a class="side-link" href="icons.html"><i class="hgi-stroke hgi-grid-view"></i> Icons</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-pie-chart-01 sg-icon"></i> Visuals <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="tables.html"><i class="hgi-stroke hgi-table-02"></i> Tables</a>
+      <a class="side-link" href="charts.html"><i class="hgi-stroke hgi-chart-column"></i> Charts</a>
+      <a class="side-link" href="visuals.html"><i class="hgi-stroke hgi-magic-wand-01"></i> Widgets</a>
+      <a class="side-link" href="maps.html"><i class="hgi-stroke hgi-map-pin"></i> Maps</a>
+      <a class="side-link" href="echarts.html"><i class="hgi-stroke hgi-chart-line-data-02"></i> ECharts</a>
+      <a class="side-link" href="editors.html"><i class="hgi-stroke hgi-code"></i> Editors</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-grid-view sg-icon"></i> Apps <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="crm.html"><i class="hgi-stroke hgi-user-settings-01"></i> CRM</a>
+      <a class="side-link" href="ecommerce.html"><i class="hgi-stroke hgi-store-01"></i> E-commerce</a>
+      <a class="side-link" href="calendar.html"><i class="hgi-stroke hgi-calendar-01"></i> Calendar</a>
+      <a class="side-link" href="kanban.html"><i class="hgi-stroke hgi-kanban"></i> Kanban</a>
+      <a class="side-link" href="email.html"><i class="hgi-stroke hgi-mail-01"></i> Email</a>
+      <a class="side-link" href="file-manager.html"><i class="hgi-stroke hgi-folder-open"></i> File manager</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-file-01 sg-icon"></i> Pages <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="login.html"><i class="hgi-stroke hgi-login-01"></i> Login</a>
+      <a class="side-link" href="register.html"><i class="hgi-stroke hgi-user-add-01"></i> Register</a>
+      <a class="side-link" href="forgot.html"><i class="hgi-stroke hgi-key-01"></i> Forgot password</a>
+      <a class="side-link" href="reset.html"><i class="hgi-stroke hgi-circle-unlock-01"></i> Reset password</a>
+      <a class="side-link" href="lock.html"><i class="hgi-stroke hgi-lock"></i> Lock screen</a>
+      <a class="side-link" href="verify.html"><i class="hgi-stroke hgi-mail-open-01"></i> Verify email</a>
+      <a class="side-link" href="two-factor.html"><i class="hgi-stroke hgi-shield-01"></i> Two-factor auth</a>
+      <a class="side-link" href="session-expired.html"><i class="hgi-stroke hgi-transaction-history"></i> Session expired</a>
+      <a class="side-link" href="rtl.html"><i class="hgi-stroke hgi-arrow-left-right"></i> RTL preview</a>
+    </div>
+  </div>
+  <div class="side-group">
+    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-book-01 sg-icon"></i> Docs <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
+    <div class="side-submenu">
+      <a class="side-link" href="docs.html"><i class="hgi-stroke hgi-book-01"></i> Docs</a>
+    </div>
+  </div>
+</div>
     <div class="sidebar-footer">
       <span class="plan-tag"><span class="status-dot on"></span>v2.5.0</span>
       <button class="icon-btn" style="width:28px;height:28px" onclick="toggleTheme()" title="Toggle theme"><i class="hgi-stroke hgi-moon-01" id="theme-icon"></i></button>

@@ -186,6 +186,12 @@ function setBoxed(on) {
   try { localStorage.setItem('grid_admin_boxed', on ? '1' : '0'); } catch (e) {}
 }
 function setLayoutMode(mode) {
+  // Horizontal (topbar) mode requires assets/css/layout-modes.css, which is
+  // only loaded on the layouts.html showcase. On pages without it a persisted
+  // "horizontal" setting must not add a body class with no matching CSS —
+  // fall back to vertical so the layout can't silently break.
+  const hasLayoutCss = !!document.querySelector('link[href*="layout-modes.css"]');
+  if (mode === 'horizontal' && !hasLayoutCss) mode = 'vertical';
   const isHorizontal = mode === 'horizontal';
   document.body.classList.toggle('layout-horizontal', isHorizontal);
   setBoxed(mode === 'boxed');
@@ -369,7 +375,7 @@ if (dropFile) {
       return;
     }
     bodyEl.innerHTML = results.map(l =>
-      `<a class="qs-item" href="${l.href}"><span class="qs-label">${esc(l.label)}</span><span class="qs-hint">${esc(l.href)}</span></a>`).join('');
+      `<a class="qs-item" href="${esc(l.href)}"><span class="qs-label">${esc(l.label)}</span><span class="qs-hint">${esc(l.href)}</span></a>`).join('');
     mark();
   }
   function mark() {
