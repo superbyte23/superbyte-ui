@@ -1172,7 +1172,7 @@ input[type="color"].form-control-color { width: 38px; height: 38px; padding: 3px
 .side-group.open .side-group-toggle .sg-chev { transform: rotate(180deg); }
 .side-submenu { display: none; }
 .side-group.open .side-submenu { display: block; animation: fadeIn .15s ease; }
-.side-submenu .side-link { padding-left: 41px; }
+.side-submenu .side-link { padding-left: 15px; }
 .side-submenu .side-link.active { background: var(--accent-bg); color: var(--accent-h); border-left-color: var(--accent); }
 
 /* Layout showcase */
