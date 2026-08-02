@@ -585,17 +585,51 @@ timeline, funnel-bar, skeleton). app.js: toasts, theme, layout, chart hook.
   `probe-rtl-h.cjs` all green; `node --check` both JS files. theme-bootstrap.js
   stays LF (CRLF=0, LF=89).
 
+## Refresh nudge: `.page-section` fadeIn entrance animation (DONE — THE real bug)
+- User still saw movement after the font fix, reported as "nudges/shifts a bit
+  right after load" on ALL shell pages except `create.html`. Headless CDP never
+  reproduced it (headless skips the visible animation), and scroll-position
+  probes showed nothing because it is NOT scroll — it's a visual animation.
+- Root cause (`assets/css/app.css`): `.page-section { display: none; animation:
+  fadeIn .18s ease; }` where `@keyframes fadeIn` goes `from { opacity: 0;
+  transform: translateY(4px) }`. Every shell page has exactly ONE hardcoded
+  `<section class="page-section active">`, so on every load the whole content
+  section faded in from `opacity:0` and slid up 4px — a visible post-load
+  "nudge". `create.html` has NO `.page-section` (it's the only stable page),
+  which is why it always behaved.
+- Confirmed in a VISIBLE Chrome (CDP 9224, `Temp\opencode\probe-anim.cjs`):
+  the section rendered at `o=0 ty=translateY(4px)` for 23-27 frames
+  (~180ms) on all-components/index, and `NONE`/0 frames on create.html.
+- Fix: dropped `animation: fadeIn .18s ease;` from `.page-section` (kept
+  `display:none`/`.active` and the `@keyframes fadeIn` itself — still used by
+  `.detail-row.show`, `.wizard-pane.active`, `.side-group.open .side-submenu`,
+  all dynamic/user-triggered).
+- Verified in visible Chrome after the fix: probe-anim shows `o=1 ty=none` from
+  the very first frame; `trace-stress.cjs` — scroll restores PIXEL-EXACT
+  (1420→1420, the old constant +4 landing offset was the transform being
+  absorbed into restoration) 8/8 locked, 0 mutations after FCP.
+  `verify-sb.cjs` ALL PASS, `verify-combo.cjs` green incl. scroll 390→390,
+  `verify-horizontal-mobile3.cjs`, `diff-drawer.cjs`, `probe-rtl-boxed.cjs`,
+  `probe-rtl-h.cjs` green, `node --check` app.js OK.
+- LESSON for future verification: headless Chrome (the 9222 profile runs
+  `--headless=new`) does NOT render CSS animations/timing like a real window.
+  For anything visual, reproduce in a visible browser
+  (`Start-Process chrome.exe --remote-debugging-port=9224 --user-data-dir=
+  Temp\opencode\chrome-visible`). Also note CDP evaluate can hang after a
+  killed probe wedges the tab — restart the visible profile or `Page.reload`
+  can wedge; `Page.navigate`-only probes (probe-cls/probe-fonts2) are robust.
+
 ## Next Move
 - No open work. Scroll-jump on refresh is fully resolved: theme-bootstrap.js
   applies all three layout axes (nav × width × density) pre-paint, honoring
-  legacy condensed/comfy prefs, eagerly loads the in-use fonts so they are
-  ready before first paint, and app.js's early-apply syncs from the rendered
-  `<body>` classes (single source of truth) so it can never toggle a layout
-  class after first paint. Re-run before declaring done:
-  `node --check assets/js/app.js assets/js/theme-bootstrap.js`, plus
-  `Temp\opencode\verify-combo.cjs`, `verify-sb.cjs`,
-  `verify-horizontal-mobile3.cjs`, `diff-drawer.cjs`, `probe-rtl-boxed.cjs`,
-  `probe-rtl-h.cjs`, `scroll-diag.cjs`, `trace-pages.cjs`, `trace-legacy.cjs`,
-  and the full regression suite (verify.cjs, smoke.cjs,
-  nav-consistency.cjs, cdp-sweep.cjs).
+  legacy condensed/comfy prefs, eagerly loads the in-use fonts before first
+  paint, app.js's early-apply syncs from the rendered `<body>` classes, and
+  the `.page-section` fadeIn entrance animation (the actual visible "nudge")
+  is removed so content renders static and pixel-exact from first paint.
+  Re-run before declaring done: `node --check assets/js/app.js
+  assets/js/theme-bootstrap.js`, plus `Temp\opencode\verify-combo.cjs`,
+  `verify-sb.cjs`, `verify-horizontal-mobile3.cjs`, `diff-drawer.cjs`,
+  `probe-rtl-boxed.cjs`, `probe-rtl-h.cjs`, `trace-stress.cjs`,
+  `probe-anim.cjs` (visible browser), and the full regression suite
+  (verify.cjs, smoke.cjs, nav-consistency.cjs, cdp-sweep.cjs).
 - Optional pending (low): re-run cdp-hgi-check.cjs icon sanity on a clean profile.
