@@ -187,6 +187,7 @@
     min-height: 0;
     flex-direction: column;
     flex-wrap: nowrap;
+    align-items: stretch;
     transform: translateX(-100%);
   }
 
