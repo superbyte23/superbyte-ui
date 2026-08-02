@@ -413,10 +413,38 @@ timeline, funnel-bar, skeleton). app.js: toasts, theme, layout, chart hook.
   horizontal hides it; mobile (390px): toggle stays visible right-aligned in
   mini, no hover-replace.
 
+## Horizontal layout: mobile fallback (DONE)
+- On mobile (≤991.98px) `layout-horizontal` now renders the standard vertical
+  off-canvas drawer instead of the broken top bar. Rules in `layout-modes.css`
+  under the "Mobile fallback" media query: `#sidebar` fixed, width
+  `var(--sidebar-w)`, `transform:translateX(-100%)` (off-canvas), `#sidebar.open`
+  slides in; `#nav-scroll` back to block scroll; `.side-group` static block;
+  submenus static in-page and shown only via `.side-group.open` (replaces
+  hover-only); `.side-link.active` gets the left accent border; `.sidebar-footer`
+  normal; `#main{margin-left:0}`, `#toolbar` sticky; `.sidebar-toggle-btn`
+  shown; overlay `.open` displayed. RTL mobile horizontal still inherits the RTL
+  drawer from app.css.
+- **Bug found + fixed during verification:** the base horizontal rule sets
+  `#sidebar { height: var(--toolbar-h) }`; the fallback didn't clear it, so the
+  drawer was only 56px tall (top/bottom ignored). Fix: `height: auto;` in the
+  fallback so `top:0; bottom:0` stretch it full-height.
+- app.js submenu click guard (~line 266) now uses `horizontalDesktop` =
+  `layout-horizontal && matchMedia('(min-width:992px)').matches`; mini-sidebar
+  keeps `miniSidebarDesktop`. On mobile-horizontal the accordion click works
+  again (drawer submenus are `display:none` until `.open`).
+- Verified headless (CDP 9222, `Temp\opencode\verify-horizontal-mobile3.cjs`):
+  390px — sidebar off-canvas (translateX(-100%), 232px), burger `.sidebar-toggle-btn`
+  shown + `#toolbar` sticky; burger opens drawer + overlay; submenu hit-testable
+  (full-height drawer); hover does NOT open submenu; click opens (submenu block),
+  click again closes. Desktop regression `hover-test.cjs` still green (hover
+  flyouts, click-inert). `node --check assets/js/app.js` + `verify-sb.cjs` pass.
+
 ## Next Move
 - No open work. Sidebar collapse toggle (vertical ↔ mini-sidebar) added and
   verified headless (positioning, hover-replace, mode toggle, horizontal hide,
-  mobile override, glyph rendering). Suggested re-run before declaring done:
+  mobile override, glyph rendering). Horizontal layout now falls back to the
+  vertical off-canvas drawer on mobile (verified headless at 390px; desktop
+  horizontal unchanged). Suggested re-run before declaring done:
   `node --check assets/js/app.js`, plus the regression suite (verify.cjs,
   smoke.cjs, nav-consistency.cjs, cdp-sweep.cjs).
 - Optional pending (low): re-run cdp-hgi-check.cjs icon sanity on a clean profile.

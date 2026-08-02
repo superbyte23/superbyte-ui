@@ -266,11 +266,13 @@ function closeSidebar(){ document.getElementById('sidebar').classList.remove('op
 document.querySelectorAll('.side-group-toggle').forEach(t => {
   t.addEventListener('click', () => {
     // Auto-show modes: dropdowns open on hover (or keyboard .kb-open).
-    // Horizontal is always auto-show; mini-sidebar only keeps the click-toggle
-    // accordion on mobile (below the desktop breakpoint).
-    const horizontal = document.body.classList.contains('layout-horizontal');
+    // Horizontal is always auto-show on desktop; below the desktop breakpoint
+    // it falls back to the vertical off-canvas drawer, so the click-accordion
+    // stays active. Mini-sidebar only keeps the click-toggle accordion on
+    // mobile too.
+    const horizontalDesktop = document.body.classList.contains('layout-horizontal') && window.matchMedia('(min-width: 992px)').matches;
     const miniSidebarDesktop = document.body.classList.contains('layout-mini-sidebar') && window.matchMedia('(min-width: 992px)').matches;
-    if (horizontal || miniSidebarDesktop) return;
+    if (horizontalDesktop || miniSidebarDesktop) return;
     const g = t.closest('.side-group');
     g.classList.toggle('open');
     t.setAttribute('aria-expanded', g.classList.contains('open'));

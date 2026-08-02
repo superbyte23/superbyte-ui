@@ -174,35 +174,125 @@
   }
 }
 
-/* Responsive fallback: nav groups wrap onto extra rows (still a top bar,
-   no off-canvas drawer), and the toolbar scrolls away with the content. */
+/* Mobile fallback: horizontal behaves like the vertical layout — the top bar
+   collapses into the off-canvas sidebar drawer opened by the toolbar burger. */
 @media (max-width: 991.98px) {
   .layout-horizontal #sidebar {
-    position: sticky;
+    position: fixed;
     top: 0;
-    width: 100%;
+    bottom: 0;
+    left: 0;
+    width: var(--sidebar-w);
     height: auto;
-    min-height: var(--toolbar-h);
-    flex-wrap: wrap;
-    transform: none;
+    min-height: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    transform: translateX(-100%);
+  }
+
+  .layout-horizontal #sidebar.open {
+    transform: translateX(0);
+  }
+
+  .layout-horizontal .sidebar-logo {
+    border-bottom: 1px solid var(--border);
+    border-right: none;
+    min-width: 0;
   }
 
   .layout-horizontal #nav-scroll {
-    width: 100%;
-    flex-wrap: wrap;
+    display: block;
+    align-items: normal;
+    gap: 0;
+    padding: 14px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-wrap: nowrap;
+    width: auto;
   }
 
-  .layout-horizontal .sidebar-toggle-btn {
+  .layout-horizontal .side-group {
+    position: static;
+    display: block;
+  }
+
+  .layout-horizontal .side-group-toggle {
+    padding: 9px 18px;
+    border-radius: 0;
+    white-space: normal;
+  }
+
+  .layout-horizontal .side-link {
+    border-left: 2px solid transparent;
+    border-bottom: none;
+    padding: 8px 18px;
+    white-space: normal;
+  }
+
+  .layout-horizontal .side-link.active {
+    border-bottom-color: transparent;
+    border-left: 2px solid var(--accent);
+  }
+
+  .layout-horizontal .side-submenu {
+    position: static;
+    top: auto;
+    left: auto;
+    min-width: 0;
+    box-shadow: none;
+    border: none;
+    padding: 0 0 0 6px;
+    z-index: auto;
+  }
+
+  .layout-horizontal .side-submenu::before {
     display: none;
   }
 
-  .layout-horizontal #sidebar-overlay {
+  .layout-horizontal .side-group:hover > .side-submenu,
+  .layout-horizontal .side-group.kb-open > .side-submenu {
     display: none;
+  }
+
+  .layout-horizontal .side-group.open > .side-submenu {
+    display: block;
+    animation: fadeIn .15s ease;
+  }
+
+  .layout-horizontal .side-submenu .side-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px 8px 44px;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .layout-horizontal .sidebar-footer {
+    margin-left: 0;
+    border-top: 1px solid var(--border);
+    border-left: none;
+    padding: 12px 14px;
+    height: auto;
+    gap: 0;
+  }
+
+  .layout-horizontal #main {
+    margin-left: 0;
+    padding-top: 0;
   }
 
   .layout-horizontal #toolbar {
-    position: static;
-    top: auto;
+    position: sticky;
+    top: 0;
+  }
+
+  .layout-horizontal .sidebar-toggle-btn {
+    display: inline-flex;
+  }
+
+  .layout-horizontal #sidebar-overlay.open {
+    display: block;
   }
 }
 
