@@ -1,6 +1,6 @@
 # Superbyte Admin — Session Handoff
 
-Saved: Sat Aug 01 2026. Next session: read this first, then continue from **Next Move**.
+Saved: Sun Aug 02 2026. Next session: read this first, then continue from **Next Move**.
 
 ## Project
 Static Bootstrap 5.3.3 UI at `C:\Users\Windows\Downloads\superbyte-admin`.
@@ -81,8 +81,14 @@ Also: `node --check assets/js/app.js` and `assets/js/auth.js`.
 - **RTL:** `rtl.html` loads `vendor/bootstrap/css/bootstrap.rtl.min.css` and sets
   `dir="rtl"`; toggle swaps stylesheet href + `dir`. RTL overrides live in
   `assets/css/app.css` under LAYOUT FEATURES (`[dir="rtl"]` rules).
-- **Layout controls:** Compact/Roomy, Fluid/Boxed (1440px), Base font size 13–17.
-  On all 15 shell pages incl. auth theme button (`.auth-theme-btn`, top-right).
+- **Layout modes:** `layouts.html` is a live gallery for 8 modes persisted to
+  `grid_admin_layout_mode` and applied on every shell page: vertical, horizontal
+  (topbar nav), boxed (1440px), fluid, contained (1200px), mini-sidebar (68px icon
+  rail + topbar flyouts), condensed (compact toolbar), comfy (roomy toolbar).
+  Frame modes (boxed/fluid/contained/horizontal/mini-sidebar) are mutually exclusive;
+  condensed/comfy are density. Mode CSS lives in `assets/css/layout-modes.css`,
+  linked on all pages. Base font size 13–17. Auth pages are standalone (no
+  `#app` shell) so layout classes are inert there.
 - Theme customizer sections: Appearance, Accent, Radius, Layout density,
   Content width, Base font size, Preview.
 
@@ -296,12 +302,121 @@ timeline, funnel-bar, skeleton). app.js: toasts, theme, layout, chart hook.
 - No JS console/exception errors on create.html (both with and without the preset
   URL).
 
+## Layout modes (DONE — 8 modes, switcher on every page)
+- `layouts.html` is a live 8-mode gallery; each page persists its mode in
+  `localStorage.grid_admin_layout_mode`; `app.js` `setLayoutMode(mode)` (~line 188)
+  applies body classes. Frame classes `.layout-boxed`/`.layout-fluid`/
+  `.layout-contained`/`.layout-horizontal`/`.layout-mini-sidebar` are mutually
+  exclusive; `condensed`→`setCompact(true)`, `comfy`→`setCompact(false)`.
+- `assets/css/layout-modes.css` is linked in `<head>` of all 36 pages +
+  `app-shell.tmpl` (this fixed the cross-page bug where horizontal applied
+  globally but its CSS only loaded on layouts.html).
+- **Layout switcher placement (this session):** removed from the General
+  section; now TWO places on all 28 shell pages + template (auth pages have no
+  shell):
+  - a standalone sidebar `.side-group[data-layout-group="layout"]` with the 8
+    `data-layout-mode` links (page-accordion in vertical, flyout in
+    horizontal/mini-sidebar), placed as a sibling of General, never inside it;
+  - a **toolbar dropdown** (button `data-layout-toolbar` + `.dropdown-menu`)
+    right before the theme-customizer icon, identical on every shell page.
+  Applied via `Temp\opencode\add-layout-menu.cjs` (regex, indent-aware,
+  EOL/BOM-preserving). `setLayoutMode` toggles `.active` on every
+  `[data-layout-mode]` link (sidebar + toolbar + gallery = 2 active markers).
+- **Horizontal / mini-sidebar top-nav (hover-only, no click pinning):** dropdowns
+  auto-show on `:hover` only (NO `:focus-within` — a mouse click focuses the
+  toggle which pinned the dropdown open even when hovering other menus, the
+  reported bug). Keyboard access is wired via a `kb-open` class: `kbNav` flag
+  set on keydown / cleared on mousedown; `.side-group` `focusin` adds
+  `kb-open`, `focusout` (outside group) removes it. Clicks are a no-op in
+  horizontal and in mini-sidebar on desktop (≥992px); mini-sidebar keeps the
+  click-accordion on mobile. Hovering a top-level menu gives the "active" look
+  (accent icon, full-strength label, rotated chevron) via
+  `.side-group:hover > .side-group-toggle` rules in layout-modes.css.
+- Verified headless (CDP, port 9222): click-without-hover stays closed, click
+  then hover another menu stays closed, hover-open + `::before` gap bridge +
+  into-dropdown stay open, leave closes, submenu links clickable; toolbar
+  "Horizontal" click sets `layout-horizontal` + persists + marks active;
+  hover active accent on sidebar group. Scripts: `Temp\opencode\hover-test.cjs`,
+  `Temp\opencode\verify-menus.cjs`, `Temp\opencode\static-server.cjs` (port
+  8765).
+
+## Individual layout pages (DONE — 8 preset pages + layouts.html hub)
+- 8 new pages, one per mode: `layout-vertical.html`, `layout-horizontal.html`,
+  `layout-boxed.html`, `layout-fluid.html`, `layout-contained.html`,
+  `layout-mini-sidebar.html`, `layout-condensed.html`, `layout-comfy.html`.
+  Each is a full standalone shell page (same as every other page) that FORCES
+  its mode on load via a small script AFTER `assets/js/app.js`:
+  `<script>setLayoutMode('horizontal');</script>` (etc.). The forced call
+  overrides whatever is saved in `grid_admin_layout_mode`, so e.g.
+  `layout-horizontal.html` always renders horizontal even if storage says
+  vertical. Per-page content: page-head + "All layouts" button back to
+  `layouts.html`, wireframe card + "what changes" trait list, a preset/Re-apply
+  toolbar, and an "All layout modes" grid of 8 anchor cards (current mode
+  marked active) for cross-navigation.
+- `layouts.html` is now the **hub**: the old live-switch demo was replaced by a
+  grid of 8 `<a class="layout-card">` links that navigate to the individual
+  pages (the gallery `<script>` IIFE and the `applyLayoutMode`/`resetLayoutDemo`
+  handlers were removed). Its style block gained `color:inherit;
+  text-decoration:none` on `.layout-card` so anchors render like the old cards.
+- **Switcher `href`s repointed everywhere** (all 28 shell pages +
+  `layouts.html` + the 8 new pages + `app-shell.tmpl` = 37 files): each
+  `data-layout-mode` link now points at its own page, e.g.
+  `href="layout-horizontal.html" data-layout-mode="horizontal"`. Because
+  `app.js:301-308` `preventDefault()`s on `[data-layout-mode]` clicks, a normal
+  click still switches the mode in-place on the current page (verified); the
+  `href` only matters for middle-click / open-in-new-tab, which lands on the
+  correct preset page. The plain General → "Layouts" side-link keeps pointing
+  at `layouts.html` (the hub). Breadcrumbs on the new pages are
+  `Superbyte UI / Layouts (link) / <Mode>`.
+- Generator: `Temp\opencode\generate-layout-pages.cjs` (idempotent; reads the
+  hub shell and stamps each mode's content + forced `setLayoutMode`). Helper:
+  `Temp\opencode\normalize-indent.cjs` fixed the `<div id="content">` indent.
+- Verified headless (CDP, `Temp\opencode\verify-layout-pages.cjs`): card click
+  on the hub navigates to the preset page and forces its mode (body
+  `layout-horizontal`, storage `horizontal`, 2 active markers, breadcrumb
+  "Layouts / Horizontal", active card highlighted); `layout-vertical.html`
+  forces vertical even when storage says horizontal; `layout-condensed.html`
+  applies `layout-compact`; horizontal top-nav group opens on hover with the
+  accent active look and 8 submenu links; toolbar switcher still works in-place
+  on the new pages (clicking "Boxed" on `layout-horizontal.html` applies boxed
+  without navigating). Regression: `hover-test.cjs` + `verify-menus.cjs` both
+  still green.
+
+## Sidebar collapse toggle: vertical ↔ mini-sidebar (DONE)
+- A single `.sidebar-toggle` button is injected into `.sidebar-logo` by app.js on
+  every shell page (guarded: skip if `.sidebar-toggle` already present). Icon:
+  `<i class="hgi hgi-stroke hgi-sidebar-left-01"></i>`. Clicking calls
+  `setLayoutMode(body.classList.contains('layout-mini-sidebar') ? 'vertical' :
+  'mini-sidebar')` — collapses/expands the sidebar between the full vertical and
+  the 68px mini rail (persists `grid_admin_layout_mode`).
+- Placement/CSS (layout-modes.css, section "Sidebar collapse toggle"): base
+  `.sidebar-toggle` is `display:flex; width/height:28px; margin-left:auto`
+  (right of the logo, exact 18px padding accounted) and shows in every mode with
+  a left sidebar (vertical, boxed, fluid, contained, condensed, comfy).
+  `.layout-horizontal .sidebar-toggle` is `display:none`.
+  Mini-sidebar: toggle hidden, and at `@media (min-width:992px)` hovering the
+  logo hides `.logo-mark` and shows the toggle centered in the rail (28px);
+  mobile override re-shows the toggle right-aligned with no hover-replace.
+- Icon glyph: `hgi-sidebar-left-01` was NOT in the used subset — added
+  `.hgi-stroke.hgi-sidebar-left-01::before { content: "\f25f3"; }` to
+  `vendor/hugeicons/css/hugeicons-used.css` AND rebuilt the subset webfont
+  (224 → 225 glyphs) in pure JS (Temp\opencode\fontwork\add-glyph.cjs using
+  `subset-font` + `fontkit`): subset the full TTF to the old cmap ∪ U+F25F3,
+  wrote ttf/woff/woff2. fontkit diff vs the original: 0 of 224 glyph paths
+  changed; `0xf25f3` present (id 162). Rendered glyph verified via canvas
+  `measureText` = 14px at 14px font (matches dashboard/flowchart).
+- Verified headless (CDP 9222, `Temp\opencode\verify-logo-toggle.cjs` +
+  `verify-logo-toggle-mobile.cjs`): vertical shows toggle at right of logo
+  (btn right 213 vs logo right 231), click → `layout-mini-sidebar` + storage
+  `mini-sidebar` + 68px rail; mini hover → logo-mark hidden + 28px toggle
+  centered (btn l20–r48 in 68px rail); click toggle → back to vertical (232px);
+  horizontal hides it; mobile (390px): toggle stays visible right-aligned in
+  mini, no hover-replace.
+
 ## Next Move
-- No open work. Full regression suite re-run green AFTER the create.html fix:
-  verify.cjs (ALL CHECKS PASSED, 0 external refs), smoke.cjs (10/10),
-  nav-consistency.cjs (26 pages/1 variant), cdp-submenu.cjs (9/9),
-  cdp-all-components.cjs (13/13), sweep-all-components.cjs (4 widths),
-  cdp-sweep.cjs (12 pages × 3 widths clean), cdp-hgi-check.cjs
-  (fontsLoaded, emptyGlyphs:0; "missing" list is the known file:// cssRules
-  cross-origin artifact).
+- No open work. Sidebar collapse toggle (vertical ↔ mini-sidebar) added and
+  verified headless (positioning, hover-replace, mode toggle, horizontal hide,
+  mobile override, glyph rendering). Suggested re-run before declaring done:
+  `node --check assets/js/app.js`, plus the regression suite (verify.cjs,
+  smoke.cjs, nav-consistency.cjs, cdp-sweep.cjs).
 - Optional pending (low): re-run cdp-hgi-check.cjs icon sanity on a clean profile.

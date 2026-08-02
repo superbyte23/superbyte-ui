@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Superbyte UI — Layouts</title>
+<title>Superbyte UI — Horizontal layout</title>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="vendor/hugeicons/css/hugeicons-used.css">
@@ -215,7 +215,8 @@
       <nav class="breadcrumb-wrap d-none d-md-flex" aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
           <li class="breadcrumb-item">Superbyte UI</li>
-          <li class="breadcrumb-item active" aria-current="page">Layouts</li>
+          <li class="breadcrumb-item"><a href="layouts.html">Layouts</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Horizontal</li>
         </ol>
       </nav>
       <div class="search-wrap ms-auto ms-md-0">
@@ -248,18 +249,48 @@
         </ul>
       </div>
     </div>    <div id="content">
-      <section class="page-section active" id="page-layouts">
+      <section class="page-section active" id="page-layout-horizontal">
         <div class="page-head">
-          <div><h1>Page layouts</h1><p>Eight preset pages, one per layout mode. Open any card to preview that layout live — the mode is applied automatically and saved for the whole UI.</p></div>
+          <div><h1>Horizontal layout</h1><p>Navigation lives in the top bar; no left sidebar.</p></div>
+          <a class="btn btn-ghost" href="layouts.html"><i class="hgi-stroke hgi-grid-view me-1"></i> All layouts</a>
         </div>
 
-        <div class="layout-mode-grid">
+        <div class="row g-3 mb-4">
+          <div class="col-xl-4">
+            <div class="card p-3 h-100">
+              <div class="customizer-label mb-2">Wireframe</div>
+              <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="52" height="8" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="4" y="15" width="52" height="19" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="8" y="19" width="14" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="25" y="19" width="14" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="42" y="19" width="10" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <div class="card p-3 h-100">
+              <div class="customizer-label mb-2">What changes in this mode</div>
+              <ul class="mb-0" style="color:var(--text2);font-size:13px;padding-left:18px">
+                <li>Navigation moves to the top bar; no left sidebar</li>
+                <li>Submenus auto-open on hover (keyboard accessible)</li>
+                <li>Toolbar sits below the top navigation</li>
+                <li>Content uses the full viewport width</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="layout-toolbar">
+          <div>This page is preset to <span class="layout-current">Horizontal</span>. You can switch modes anytime from the sidebar or the theme customizer.</div>
+          <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-ghost btn-sm" onclick="if(window.setLayoutMode)setLayoutMode('horizontal')"><i class="hgi-stroke hgi-refresh-03 me-1"></i> Re-apply</button>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <div class="customizer-label mb-2">All layout modes</div>
+          <div class="layout-mode-grid">
           <a class="layout-card" href="layout-vertical.html" aria-label="Vertical layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="22" y="14" width="34" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="26" y="18" width="13" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="42" y="18" width="13" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="26" y="27" width="26" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
             <span class="layout-name">Vertical <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
             <span class="layout-desc">Sidebar on the left, toolbar on top, full-width content.</span>
           </a>
-          <a class="layout-card" href="layout-horizontal.html" aria-label="Horizontal layout">
+          <a class="layout-card active" href="layout-horizontal.html" aria-label="Horizontal layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="52" height="8" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="4" y="15" width="52" height="19" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="8" y="19" width="14" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="25" y="19" width="14" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="42" y="19" width="10" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
             <span class="layout-name">Horizontal <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
             <span class="layout-desc">Navigation lives in the top bar; no left sidebar.</span>
@@ -294,11 +325,7 @@
             <span class="layout-name">Comfy <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
             <span class="layout-desc">Vertical frame with a roomy toolbar and relaxed spacing.</span>
           </a>
-        </div>
-
-        <div class="alert alert-info d-flex gap-2 align-items-center mt-4" style="margin-bottom:0">
-          <i class="hgi-stroke hgi-information-circle"></i>
-          <div>Your selection is saved to <code>grid_admin_layout_mode</code> and applied to every page of the UI. Each card above opens a dedicated page preset to that mode; the sidebar navigates to a preset page for each mode, and the theme customizer switches modes from anywhere. Horizontal, mini-sidebar and condensed modes need the stylesheet in <code>assets/css/layout-modes.css</code>, which is loaded by all pages.</div>
+          </div>
         </div>
       </section>
     </div>
@@ -390,5 +417,6 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script src="assets/js/app.js"></script>
+<script>setLayoutMode('horizontal');</script>
 </body>
 </html>

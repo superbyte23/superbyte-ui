@@ -47,7 +47,6 @@
     else {
       var mo = new MutationObserver(function () { if (document.body) { mo.disconnect(); applyBody(); } });
       mo.observe(document.documentElement, { childList: true });
-      document.addEventListener('DOMContentLoaded', applyBody);
     }
   } catch (e) {}
 })();

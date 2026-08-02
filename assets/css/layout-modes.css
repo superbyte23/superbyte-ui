@@ -1,10 +1,15 @@
 /* ── Horizontal / topbar layout mode ───────────────────────────────────── */
+/* The sidebar becomes a sticky top navigation bar; the toolbar sticks just
+   below it. Both are in-flow (sticky) so a wrapping nav row grows naturally
+   instead of being cut off. Dropdowns must never be inside a scroll
+   container: overflow-x:auto on #nav-scroll makes overflow-y compute to
+   "auto" too, which clips the absolutely-positioned submenus. */
 .layout-horizontal #app {
   display: block;
 }
 
 .layout-horizontal #sidebar {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -15,6 +20,14 @@
   flex-direction: row;
   align-items: center;
   overflow: visible;
+  z-index: 1030;
+}
+
+.layout-horizontal .sidebar-logo {
+  border-bottom: none;
+  border-right: 1px solid var(--border);
+  min-width: 210px;
+  flex-shrink: 0;
 }
 
 .layout-horizontal #nav-scroll {
@@ -22,20 +35,17 @@
   align-items: center;
   gap: 6px;
   padding: 0 10px;
-  overflow-x: auto;
-  overflow-y: visible;
-}
-
-.layout-horizontal .sidebar-logo {
-  border-bottom: none;
-  border-right: 1px solid var(--border);
-  min-width: 210px;
+  overflow: visible;
+  flex-wrap: nowrap;
+  flex: 1;
+  min-width: 0;
 }
 
 .layout-horizontal .side-group {
   position: relative;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .layout-horizontal .side-group-toggle {
@@ -70,9 +80,45 @@
   z-index: 1100;
 }
 
-.layout-horizontal .side-group.open .side-submenu {
+/* Bridge over the 8px gap between the main menu and its dropdown, so moving
+   the cursor from one into the other never drops the :hover state. */
+.layout-horizontal .side-submenu::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+
+/* Auto-show only, exactly like the mini-sidebar rail: dropdowns appear on hover
+   and stay open while the pointer travels into them via the ::before bridge.
+   Note: no :focus-within — a mouse click focuses the toggle, which would pin
+   the dropdown open even when hovering other menus. Keyboard access is wired
+   via the .kb-open class in app.js instead. Click / .open state is ignored. */
+.layout-horizontal .side-group.open > .side-submenu {
+  display: none;
+}
+.layout-horizontal .side-group:hover > .side-submenu,
+.layout-horizontal .side-group.kb-open > .side-submenu {
   display: block;
   animation: fadeIn .15s ease;
+}
+
+/* Active state on the top-level menu: the same look the click-toggle used to
+   give via .open (accent icon, full-strength label, rotated chevron). */
+.layout-horizontal .side-group:hover > .side-group-toggle,
+.layout-horizontal .side-group.kb-open > .side-group-toggle {
+  color: var(--text);
+  background: var(--surface2);
+}
+.layout-horizontal .side-group:hover > .side-group-toggle .sg-icon,
+.layout-horizontal .side-group.kb-open > .side-group-toggle .sg-icon {
+  color: var(--accent-h);
+}
+.layout-horizontal .side-group:hover > .side-group-toggle .sg-chev,
+.layout-horizontal .side-group.kb-open > .side-group-toggle .sg-chev {
+  transform: rotate(180deg);
 }
 
 .layout-horizontal .side-submenu .side-link {
@@ -93,26 +139,336 @@
   color: var(--accent-h);
 }
 
+.layout-horizontal .sidebar-footer {
+  margin-left: auto;
+  border-top: none;
+  border-left: 1px solid var(--border);
+  padding: 0 12px;
+  height: var(--toolbar-h);
+  gap: 8px;
+}
+
 .layout-horizontal #main {
   margin-left: 0;
-  padding-top: calc(var(--toolbar-h) + 10px);
+  padding-top: 0;
 }
 
 .layout-horizontal #toolbar {
   position: sticky;
-  top: 0;
+  top: var(--toolbar-h);
 }
 
-/* Responsive fallback for horizontal mode */
+/* Between the off-canvas breakpoint and ~1200px keep the nav on one row by
+   collapsing the logo to its mark. */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .layout-horizontal .sidebar-logo {
+    min-width: 56px;
+    width: 56px;
+    padding: 0;
+    justify-content: center;
+    font-size: 0;
+  }
+
+  .layout-horizontal .sidebar-logo .logo-mark {
+    font-size: 13px;
+  }
+}
+
+/* Responsive fallback: nav groups wrap onto extra rows (still a top bar,
+   no off-canvas drawer), and the toolbar scrolls away with the content. */
 @media (max-width: 991.98px) {
   .layout-horizontal #sidebar {
+    position: sticky;
+    top: 0;
+    width: 100%;
     height: auto;
     min-height: var(--toolbar-h);
     flex-wrap: wrap;
+    transform: none;
   }
 
   .layout-horizontal #nav-scroll {
     width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .layout-horizontal .sidebar-toggle-btn {
+    display: none;
+  }
+
+  .layout-horizontal #sidebar-overlay {
+    display: none;
+  }
+
+  .layout-horizontal #toolbar {
+    position: static;
+    top: auto;
+  }
+}
+
+/* RTL: mirror the top bar */
+[dir="rtl"].layout-horizontal .sidebar-logo {
+  border-right: none;
+  border-left: 1px solid var(--border);
+}
+
+[dir="rtl"].layout-horizontal .sidebar-footer {
+  margin-left: 0;
+  margin-right: auto;
+  border-left: none;
+  border-right: 1px solid var(--border);
+}
+
+[dir="rtl"].layout-horizontal .side-submenu {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"].layout-horizontal .side-submenu .side-link {
+  border-left: none;
+  border-right: 2px solid transparent;
+}
+
+[dir="rtl"].layout-horizontal .side-submenu .side-link.active {
+  border-left: none;
+  border-right-color: var(--accent);
+}
+
+[dir="rtl"].layout-horizontal #main {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* ── Content width: fluid / contained ───────────────────────────────────── */
+.layout-fluid #content,
+.layout-contained #content {
+  max-width: none;
+}
+
+.layout-contained #content {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 1240px) {
+  .layout-contained #content {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* ── Sidebar collapse toggle: vertical ↔ mini-sidebar ──────────────────────── */
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text3);
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color .15s ease, background .15s ease;
+}
+
+.sidebar-toggle:hover {
+  color: var(--accent-h);
+  background: var(--surface2);
+}
+
+.layout-horizontal .sidebar-toggle {
+  display: none;
+}
+
+/* ── Mini Sidebar: icon rail + top toolbar ──────────────────────────────────── */
+.layout-mini-sidebar #sidebar {
+  width: 68px;
+}
+
+.layout-mini-sidebar #main {
+  margin-left: 68px;
+}
+
+.layout-mini-sidebar .sidebar-logo {
+  justify-content: center;
+  padding: 0;
+  gap: 0;
+  font-size: 0;
+}
+
+.layout-mini-sidebar .sidebar-logo .logo-mark {
+  font-size: 13px;
+}
+
+.layout-mini-sidebar .sidebar-toggle {
+  display: none;
+  margin-left: 0;
+  font-size: 14px;
+}
+
+@media (min-width: 992px) {
+  .layout-mini-sidebar .sidebar-logo:hover .sidebar-toggle {
+    display: flex;
+  }
+
+  .layout-mini-sidebar .sidebar-logo:hover .logo-mark {
+    display: none;
+  }
+}
+
+.layout-mini-sidebar #nav-scroll {
+  overflow: visible;
+  padding: 12px 0;
+}
+
+.layout-mini-sidebar .side-group {
+  position: relative;
+}
+
+.layout-mini-sidebar .side-group-toggle {
+  justify-content: center;
+  padding: 11px 0;
+  font-size: 0;
+  gap: 0;
+}
+
+.layout-mini-sidebar .side-group-toggle .sg-icon {
+  font-size: 14px;
+}
+
+.layout-mini-sidebar .side-group-toggle .sg-chev {
+  display: none;
+}
+
+.layout-mini-sidebar .side-submenu,
+.layout-mini-sidebar .side-group.open .side-submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: calc(100% + 2px);
+  min-width: 200px;
+  z-index: 1050;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .28);
+  padding: 6px;
+}
+
+.layout-mini-sidebar .side-group:hover > .side-submenu,
+.layout-mini-sidebar .side-group.kb-open > .side-submenu {
+  display: block;
+  animation: fadeIn .15s ease;
+}
+
+.layout-mini-sidebar .side-group:hover > .side-group-toggle,
+.layout-mini-sidebar .side-group.kb-open > .side-group-toggle {
+  color: var(--text);
+  background: var(--surface2);
+}
+.layout-mini-sidebar .side-group:hover > .side-group-toggle .sg-icon,
+.layout-mini-sidebar .side-group.kb-open > .side-group-toggle .sg-icon {
+  color: var(--accent-h);
+}
+
+.layout-mini-sidebar .side-submenu .side-link {
+  border-left: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  margin: 2px 0;
+}
+
+.layout-mini-sidebar .side-submenu .side-link.active {
+  border-left-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent-h);
+}
+
+.layout-mini-sidebar .sidebar-footer {
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.layout-mini-sidebar .sidebar-footer .plan-tag {
+  display: none;
+}
+
+[dir="rtl"].layout-mini-sidebar #main {
+  margin-left: 0;
+  margin-right: 68px;
+}
+
+[dir="rtl"].layout-mini-sidebar .side-submenu {
+  left: auto;
+  right: calc(100% + 2px);
+}
+
+[dir="rtl"].layout-mini-sidebar .side-submenu .side-link {
+  border-left: none;
+  border-right: 2px solid transparent;
+}
+
+[dir="rtl"].layout-mini-sidebar .side-submenu .side-link.active {
+  border-left: none;
+  border-right-color: var(--accent);
+}
+
+@media (max-width: 991.98px) {
+  .layout-mini-sidebar #sidebar {
+    width: 232px;
+  }
+
+  .layout-mini-sidebar #main {
+    margin-left: 0;
+  }
+
+  .layout-mini-sidebar .sidebar-logo {
     justify-content: flex-start;
+    padding: 0 18px;
+    gap: 10px;
+    font-size: 15px;
+  }
+
+  .layout-mini-sidebar .sidebar-toggle {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .layout-mini-sidebar .side-group-toggle {
+    justify-content: flex-start;
+    padding: 8px 18px;
+    font-size: 13px;
+  }
+
+  .layout-mini-sidebar .side-group-toggle .sg-chev {
+    display: inline;
+  }
+
+  .layout-mini-sidebar .side-group.open .side-submenu {
+    display: block;
+    position: static;
+    min-width: 0;
+    box-shadow: none;
+    border: none;
+    padding: 0 0 0 6px;
+    animation: none;
+  }
+
+  .layout-mini-sidebar .sidebar-footer {
+    justify-content: space-between;
+    padding: 12px 14px;
+  }
+
+  .layout-mini-sidebar .sidebar-footer .plan-tag {
+    display: inline;
+  }
+
+  [dir="rtl"].layout-mini-sidebar #main {
+    margin-right: 0;
   }
 }

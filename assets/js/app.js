@@ -118,7 +118,7 @@ function setRadius(radius, radiusSm, el) {
 
 /* ── THEME: base (neutral) palette ───────────────────────────────────────
    Keys map to CSS overrides in app.css via body[data-base-theme="…"],
-   combined with [data-bs-theme="light"/"dark"]. "neutral" is the default
+   mini-sidebar with [data-bs-theme="light"/"dark"]. "neutral" is the default
    (no override needed). */
 const BASE_THEMES = {
   neutral: { name:'Neutral' },
@@ -186,14 +186,25 @@ function setBoxed(on) {
   try { localStorage.setItem('grid_admin_boxed', on ? '1' : '0'); } catch (e) {}
 }
 function setLayoutMode(mode) {
-  const isHorizontal = mode === 'horizontal';
-  document.body.classList.toggle('layout-horizontal', isHorizontal);
-  setBoxed(mode === 'boxed');
+  const b = document.body.classList;
+  // Page-frame classes (container width + nav position) are mutually exclusive.
+  b.remove('layout-boxed', 'layout-fluid', 'layout-contained', 'layout-horizontal', 'layout-mini-sidebar');
+  if (mode === 'horizontal') { b.add('layout-horizontal'); setBoxed(false); }
+  else if (mode === 'mini-sidebar') { b.add('layout-mini-sidebar'); setBoxed(false); }
+  else if (mode === 'boxed') setBoxed(true);
+  else if (mode === 'fluid') { b.add('layout-fluid'); setBoxed(false); }
+  else if (mode === 'contained') { b.add('layout-contained'); setBoxed(false); }
+  else setBoxed(false); // vertical + anything else → clean default width
+
+  // Density (orthogonal to the frame) — condensed is compact, comfy is roomy.
+  if (mode === 'condensed') setCompact(true);
+  else if (mode === 'comfy') setCompact(false);
+
   try { localStorage.setItem('grid_admin_layout_mode', mode); } catch (e) {}
 
   const layoutGroup = document.querySelector('[data-layout-group="layout"]');
   if (layoutGroup) {
-    layoutGroup.classList.toggle('open', isHorizontal || layoutGroup.querySelector('.side-link.active'));
+    layoutGroup.classList.toggle('open', mode === 'mini-sidebar' || layoutGroup.querySelector('.side-link.active'));
     const toggle = layoutGroup.querySelector('.side-group-toggle');
     if (toggle) toggle.setAttribute('aria-expanded', layoutGroup.classList.contains('open'));
   }
@@ -254,6 +265,12 @@ function closeSidebar(){ document.getElementById('sidebar').classList.remove('op
 /* ── SIDEBAR SUB-MENUS ─────────────────────────────────────────────────── */
 document.querySelectorAll('.side-group-toggle').forEach(t => {
   t.addEventListener('click', () => {
+    // Auto-show modes: dropdowns open on hover (or keyboard .kb-open).
+    // Horizontal is always auto-show; mini-sidebar only keeps the click-toggle
+    // accordion on mobile (below the desktop breakpoint).
+    const horizontal = document.body.classList.contains('layout-horizontal');
+    const miniSidebarDesktop = document.body.classList.contains('layout-mini-sidebar') && window.matchMedia('(min-width: 992px)').matches;
+    if (horizontal || miniSidebarDesktop) return;
     const g = t.closest('.side-group');
     g.classList.toggle('open');
     t.setAttribute('aria-expanded', g.classList.contains('open'));
@@ -262,11 +279,47 @@ document.querySelectorAll('.side-group-toggle').forEach(t => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t.click(); }
   });
 });
+/* Keyboard access for the auto-show top nav / rail: Tab to a top-level menu
+   and it opens (via .kb-open); the dropdown stays open while focus is inside
+   the group. Mouse clicks never pin a dropdown open — that's hover-only. */
+let kbNav = false;
+document.addEventListener('keydown', () => { kbNav = true; });
+document.addEventListener('mousedown', () => { kbNav = false; });
+document.querySelectorAll('.side-group').forEach(g => {
+  g.addEventListener('focusin', () => {
+    if (kbNav && (document.body.classList.contains('layout-horizontal') || document.body.classList.contains('layout-mini-sidebar'))) {
+      g.classList.add('kb-open');
+    }
+  });
+  g.addEventListener('focusout', e => {
+    if (!g.contains(e.relatedTarget)) g.classList.remove('kb-open');
+  });
+});
 document.querySelectorAll('.side-group').forEach(g => {
   if (g.querySelector('.side-link.active')) g.classList.add('open');
 });
+/* Sidebar collapse/expand toggle between the full vertical sidebar and the
+   mini-sidebar rail. Always present; CSS shows it on the right of the logo in
+   the vertical family and as a hover-reveal replacing the logo mark in the
+   mini-sidebar. Clicking switches between the two modes. */
+(function initSidebarToggle() {
+  const logo = document.querySelector('.sidebar-logo');
+  if (!logo || logo.querySelector('.sidebar-toggle')) return;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'sidebar-toggle';
+  btn.title = 'Toggle sidebar';
+  btn.setAttribute('aria-label', 'Toggle sidebar');
+  btn.innerHTML = '<i class="hgi hgi-stroke hgi-sidebar-left-01"></i>';
+  btn.addEventListener('click', () => {
+    setLayoutMode(document.body.classList.contains('layout-mini-sidebar') ? 'vertical' : 'mini-sidebar');
+  });
+  logo.appendChild(btn);
+})();
 document.querySelectorAll('[data-layout-mode]').forEach(link => {
   link.addEventListener('click', e => {
+    // Sidebar links (data-layout-nav) navigate to the dedicated preset pages.
+    if (link.hasAttribute('data-layout-nav')) return;
     e.preventDefault();
     setLayoutMode(link.dataset.layoutMode);
     const label = link.textContent.trim();
