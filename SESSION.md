@@ -522,14 +522,50 @@ timeline, funnel-bar, skeleton). app.js: toasts, theme, layout, chart hook.
   `node --check` both JS files. Probes:
   `Temp\opencode\verify-combo.cjs` (main), `verify-gen.cjs`, `final-check.cjs`.
 
+## Refresh scroll-jump: legacy density divergence + sync-from-body (DONE)
+- Symptom: legacy users (prefs saved by the old 8-page model) still saw a
+  moving scroll on refresh even after the pre-paint fix.
+- Root cause: legacy `grid_admin_layout_mode` values `'condensed'`/`'comfy'`
+  carried a DENSITY signal, but theme-bootstrap.js derived density only from
+  `grid_admin_compact` while app.js's early-apply derived compact from the
+  legacy nav value. Any disagreement (e.g. `mode='condensed'`+`compact='0'`,
+  or `mode='comfy'`+`compact='1'`) made app.js toggle `layout-compact` AFTER
+  the pre-paint pass — a late class change that shifts the restored scroll
+  position on slow devices.
+- Fix part 1 (`assets/js/theme-bootstrap.js`): density derivation now honors
+  legacy `'condensed'`/`'comfy'` in the nav key (so the saved preference
+  survives migration), otherwise falls back to `grid_admin_compact`.
+- Fix part 2 (`assets/js/app.js` early-apply, ~line 345): instead of
+  re-deriving layout from localStorage, read the classes already on `<body>`
+  (`layout-fluid/boxed/contained`, `layout-horizontal`/`layout-mini-sidebar`,
+  `layout-compact`) as the single source of truth and only sync storage +
+  `.active` markers. If the pre-paint pass has not run yet (no width class on
+  body), mirror theme-bootstrap's exact derivation (incl. the legacy-density
+  signal) so both scripts always agree regardless of script ordering. Legacy
+  `mode=condensed` migrates to `mode=vertical`+`compact='1'` (comfy →
+  `compact='0'`). All customizer links only use vertical/horizontal/mini-sidebar,
+  so the interactive path never passes legacy values.
+- Verified (CDP 9222): `trace-legacy.cjs` — legacy condensed keeps
+  `layout-compact` from first paint, comfy never shows it, new-model
+  horizontal+boxed stable; `trace-fcp.cjs` — first-rAF samples already settled
+  for all three; `trace-pages.cjs` — index/charts/echarts/visuals/all-components
+  restore scroll exactly (deltaFromTarget=0); `trace-reload9.cjs` — original
+  74→54 repro now locks stable (y pinned, classes constant); `verify-combo.cjs`
+  — all 8 assertions green incl. scroll 390→390; `verify-sb.cjs`,
+  `verify-horizontal-mobile3.cjs`, `diff-drawer.cjs`, `probe-rtl-boxed.cjs`,
+  `probe-rtl-h.cjs` all green; `node --check` both JS files. NOTE: keep both
+  JS files LF (repo standard) — the edit tool once wrote CRLF into
+  theme-bootstrap.js; convert back before committing.
+
 ## Next Move
-- No open work. Layout refactor to two orthogonal axes (navigation × content
-  width) is complete and verified headless: switcher UI patched everywhere,
-  11 preset pages + hub rebuilt, combo forcing + in-place switching + mobile
-  fallback + scroll stability all green. Suggested re-run before declaring
-  done: `node --check assets/js/app.js assets/js/theme-bootstrap.js`, plus
-  `Temp\opencode\verify-combo.cjs`, `verify-sb.cjs`, `verify-horizontal-mobile3.cjs`,
-  `diff-drawer.cjs`, `probe-rtl-boxed.cjs`, `probe-rtl-h.cjs`, and the
-  full regression suite (verify.cjs, smoke.cjs, nav-consistency.cjs,
-  cdp-sweep.cjs).
+- No open work. Scroll-jump on refresh is fully resolved: theme-bootstrap.js
+  applies all three layout axes (nav × width × density) pre-paint, honoring
+  legacy condensed/comfy prefs, and app.js's early-apply syncs from the
+  rendered `<body>` classes (single source of truth) so it can never toggle a
+  layout class after first paint. Suggested re-run before declaring done:
+  `node --check assets/js/app.js assets/js/theme-bootstrap.js`, plus
+  `Temp\opencode\verify-combo.cjs`, `verify-sb.cjs`,
+  `verify-horizontal-mobile3.cjs`, `diff-drawer.cjs`, `probe-rtl-boxed.cjs`,
+  `probe-rtl-h.cjs`, and the full regression suite (verify.cjs, smoke.cjs,
+  nav-consistency.cjs, cdp-sweep.cjs).
 - Optional pending (low): re-run cdp-hgi-check.cjs icon sanity on a clean profile.

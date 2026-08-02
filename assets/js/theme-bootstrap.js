@@ -43,7 +43,10 @@
       if (dPage) dens = dPage[1];
       if (!nav) nav = L.getItem('grid_admin_layout_mode');
       if (!width) width = L.getItem('grid_admin_width_mode') || (m.boxed === '1' ? 'boxed' : 'fluid');
-      if (!dens) dens = m.compact === '1' ? 'condensed' : 'comfy';
+      // Legacy pre-split prefs stored the density in the nav key as
+      // 'condensed'/'comfy'; honor them here so the saved preference survives
+      // migration (new-model prefs use grid_admin_compact).
+      if (!dens) dens = (nav === 'condensed' || nav === 'comfy') ? nav : (m.compact === '1' ? 'condensed' : 'comfy');
       if (nav === 'horizontal') b.classList.add('layout-horizontal');
       else if (nav === 'mini-sidebar') b.classList.add('layout-mini-sidebar');
       if (width === 'boxed') b.classList.add('layout-boxed');

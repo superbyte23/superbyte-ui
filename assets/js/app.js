@@ -344,18 +344,41 @@ document.querySelectorAll('[data-width-mode]').forEach(opt => {
 });
 // Dedicated preset pages (layout-*.html) force their own axes even if storage
 // says otherwise — match theme-bootstrap.js so the layout never reflows late.
-// Classes were already applied pre-paint by theme-bootstrap.js; this pass only
-// keeps storage + customizer active markers in sync (all idempotent).
+// theme-bootstrap.js applied the classes pre-paint, before first paint; this
+// pass reads what is already on <body> as the single source of truth and only
+// syncs storage + customizer active markers (all idempotent), so the layout can
+// never change after the browser restores the scroll position on refresh. If
+// the pre-paint pass has not run yet, the exact same derivation is mirrored
+// here so both scripts always agree.
 const comboPage = /layout-(vertical|horizontal|mini-sidebar)(?:-(boxed|contained))?\.html$/.exec(location.pathname);
 const densityPage = /layout-(condensed|comfy)\.html$/.exec(location.pathname);
-const storedWidth = localStorage.getItem('grid_admin_width_mode') || (localStorage.getItem('grid_admin_boxed') === '1' ? 'boxed' : 'fluid');
-if (densityPage) {
-  setCompact(densityPage[1] === 'condensed');
+const bodyCls = document.body.classList;
+const storedNav = localStorage.getItem('grid_admin_layout_mode');
+const storedCompact = localStorage.getItem('grid_admin_compact');
+const preApplied = bodyCls.contains('layout-fluid') || bodyCls.contains('layout-boxed')
+  || bodyCls.contains('layout-contained');
+let nav = comboPage ? comboPage[1] : null;
+let width = comboPage ? (comboPage[2] || 'fluid') : null;
+let compact;
+if (preApplied) {
+  if (!nav) nav = bodyCls.contains('layout-horizontal') ? 'horizontal'
+    : bodyCls.contains('layout-mini-sidebar') ? 'mini-sidebar' : 'vertical';
+  if (!width) width = bodyCls.contains('layout-boxed') ? 'boxed'
+    : bodyCls.contains('layout-contained') ? 'contained' : 'fluid';
+  compact = bodyCls.contains('layout-compact');
 } else {
-  setLayoutMode(comboPage ? comboPage[1] : (localStorage.getItem('grid_admin_layout_mode') || 'vertical'));
-  setCompact(localStorage.getItem('grid_admin_compact') === '1');
+  if (!nav) nav = (storedNav === 'horizontal' || storedNav === 'mini-sidebar' || storedNav === 'vertical') ? storedNav : 'vertical';
+  if (!width) width = localStorage.getItem('grid_admin_width_mode') || (localStorage.getItem('grid_admin_boxed') === '1' ? 'boxed' : 'fluid');
+  // Mirrors theme-bootstrap.js: legacy condensed/comfy in the nav key is a
+  // density signal, not a nav frame.
+  compact = densityPage ? densityPage[1] === 'condensed'
+    : (storedNav === 'condensed' || storedNav === 'comfy') ? storedNav === 'condensed'
+    : storedCompact === '1';
 }
-setWidthMode(comboPage ? (comboPage[2] || 'fluid') : storedWidth);
+if (densityPage) compact = densityPage[1] === 'condensed';
+setLayoutMode(nav);
+setCompact(compact);
+setWidthMode(width);
 // Highlight the matching sidebar Layout shortcut (data-layout-page) on preset
 // pages; non-preset pages leave the sidebar Layout menu unhighlighted.
 const pageKey = densityPage ? densityPage[1] : (comboPage ? comboPage[1] + (comboPage[2] ? '-' + comboPage[2] : '') : null);
