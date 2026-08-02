@@ -458,6 +458,15 @@
   animation: fadeIn .15s ease;
 }
 
+.layout-mini-sidebar .side-submenu::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+}
+
 .layout-mini-sidebar .side-group:hover > .side-group-toggle,
 .layout-mini-sidebar .side-group.kb-open > .side-group-toggle {
   color: var(--text);
@@ -498,6 +507,11 @@
 [dir="rtl"] .layout-mini-sidebar .side-submenu {
   left: auto;
   right: calc(100% + 2px);
+}
+
+[dir="rtl"] .layout-mini-sidebar .side-submenu::before {
+  left: auto;
+  right: -8px;
 }
 
 [dir="rtl"] .layout-mini-sidebar .side-submenu .side-link {
