@@ -28,8 +28,25 @@
       var b = document.body, bs = b.style, mode = (m.mode === 'light' || m.mode === 'dark') ? m.mode : null;
       if (mode) b.setAttribute('data-bs-theme', mode);
       if (m.base && m.base !== 'neutral') b.setAttribute('data-base-theme', m.base);
-      if (m.compact === '1') b.classList.add('layout-compact');
-      if (m.boxed === '1') b.classList.add('layout-boxed');
+      // Layout mode: a dedicated preset page (layout-*.html) forces its own
+      // mode; otherwise use the saved mode. Applying it here — at body
+      // creation, before first paint — keeps scroll restoration accurate on
+      // refresh (no reflow/scroll jump when app.js re-applies it later).
+      var lm = L.getItem('grid_admin_layout_mode');
+      var fm = (location.pathname.match(/layout-(vertical|horizontal|boxed|fluid|contained|mini-sidebar|condensed|comfy)\.html$/) || [])[1];
+      if (fm) lm = fm;
+      if (lm) {
+        if (lm === 'boxed') b.classList.add('layout-boxed');
+        else if (lm === 'fluid') b.classList.add('layout-fluid');
+        else if (lm === 'contained') b.classList.add('layout-contained');
+        else if (lm === 'horizontal') b.classList.add('layout-horizontal');
+        else if (lm === 'mini-sidebar') b.classList.add('layout-mini-sidebar');
+        if (lm === 'condensed') b.classList.add('layout-compact');
+        else if (lm === 'comfy') b.classList.remove('layout-compact');
+      } else {
+        if (m.compact === '1') b.classList.add('layout-compact');
+        if (m.boxed === '1') b.classList.add('layout-boxed');
+      }
       var light = (mode || 'dark') === 'light';
       if (m.accent && (t = THEMES[m.accent])) {
         bs.setProperty('--accent', t.base); bs.setProperty('--accent-h', t.hi);

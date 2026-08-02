@@ -439,6 +439,36 @@ timeline, funnel-bar, skeleton). app.js: toasts, theme, layout, chart hook.
   click again closes. Desktop regression `hover-test.cjs` still green (hover
   flyouts, click-inert). `node --check assets/js/app.js` + `verify-sb.cjs` pass.
 
+## Refresh scroll-jump: apply layout mode before first paint (DONE)
+- Symptom: refreshing a shell page in a non-default layout (horizontal /
+  mini-sidebar / boxed / …) caused a small scroll jump. Root cause: the saved
+  layout mode was applied by `app.js` at the END of `<body>`
+  (`setLayoutMode(savedLayoutMode)`, ~line 331) — AFTER first paint and AFTER
+  the browser restored the scroll position. When the mode reflowed the page
+  (sidebar 232px→68px, main margin, etc.), the restored position shifted and
+  the page visibly scrolled.
+- Fix: apply the mode EARLY at body creation in `assets/js/theme-bootstrap.js`
+  `applyBody()`: reads `grid_admin_layout_mode` (or the forced mode when the URL
+  is a `layout-*.html` preset page) and adds the frame/density classes
+  (`layout-boxed/fluid/contained/horizontal/mini-sidebar`, `layout-compact` for
+  condensed). Legacy `grid_admin_compact`/`grid_admin_boxed` path kept when no
+  mode key exists.
+- `app.js` line ~331 now uses the same forced-page detection so it re-applies
+  the identical mode (idempotent, no flash even when storage disagrees with the
+  preset page). theme-bootstrap.js is a single external file referenced by all
+  44 shell pages (`<script src="assets/js/theme-bootstrap.js">`), so one edit
+  covers every page. NOTE: `Temp\opencode\inject-theme-bootstrap.cjs` is the OLD
+  inline-injection generator (points at gridline-admin); pages now use the
+  external file — do not regenerate from it.
+- Verified (CDP 9222): `layout-mini-sidebar` class now applied at t≈163
+  (before first paint ≈212; previously t≈389 after paint), scroll restores to a
+  stable position. Forced pages still beat storage (storage mini-sidebar →
+  layout-horizontal.html renders horizontal, 2 active markers); saved boxed
+  applies `layout-boxed`; no saved mode → clean vertical; condensed →
+  `layout-compact`. Regression: hover-test.cjs (desktop horizontal),
+  verify-horizontal-mobile3.cjs (mobile fallback), verify-logo-toggle.cjs all
+  green; `node --check` + `verify-sb.cjs` pass.
+
 ## Next Move
 - No open work. Sidebar collapse toggle (vertical ↔ mini-sidebar) added and
   verified headless (positioning, hover-replace, mode toggle, horizontal hide,

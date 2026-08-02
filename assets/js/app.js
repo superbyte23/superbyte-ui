@@ -328,7 +328,10 @@ document.querySelectorAll('[data-layout-mode]').forEach(link => {
     showToast('success', 'Layout switched to ' + label);
   });
 });
-const savedLayoutMode = localStorage.getItem('grid_admin_layout_mode') || 'vertical';
+// Dedicated preset pages (layout-*.html) force their own mode even if storage
+// says otherwise — match theme-bootstrap.js so the layout never reflows late.
+const forcedLayout = /layout-(vertical|horizontal|boxed|fluid|contained|mini-sidebar|condensed|comfy)\.html$/.exec(location.pathname);
+const savedLayoutMode = forcedLayout ? forcedLayout[1] : (localStorage.getItem('grid_admin_layout_mode') || 'vertical');
 setLayoutMode(savedLayoutMode);
 document.querySelectorAll('.icon-btn, .avatar-btn').forEach(el => {
   el.setAttribute('tabindex', '0');
