@@ -472,6 +472,7 @@
   border-left: 2px solid transparent;
   border-radius: var(--radius-sm);
   margin: 2px 0;
+  padding-left: 15px;
 }
 
 .layout-mini-sidebar .side-submenu .side-link.active {
