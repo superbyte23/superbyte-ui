@@ -557,15 +557,45 @@ timeline, funnel-bar, skeleton). app.js: toasts, theme, layout, chart hook.
   JS files LF (repo standard) — the edit tool once wrote CRLF into
   theme-bootstrap.js; convert back before committing.
 
+## Refresh scroll-jump: fonts ready before first paint (DONE)
+- Symptom: after the layout pre-paint fix, heavier pages still showed a small
+  scroll shift on refresh while `create.html` was rock-stable. Diagnosis (A/B
+  probe, `Temp\opencode\scroll-diag.cjs`): zero DOM/layout mutations after FCP
+  on every page, final restore exact — the visible snap was normal browser
+  behavior: Chrome restoring scroll after paint on slower pages + webfont
+  `font-display: swap` swapping in after paint (Ubuntu/Ubuntu Mono + theme
+  fonts) and shifting text metrics. create.html is small/fast so its layout
+  and restore complete before first paint — the user asked that every page
+  behave like it.
+- Fix (`assets/js/theme-bootstrap.js`, head pre-paint script): right after the
+  `FONTS` map, kick off `document.fonts.load('400 14px "<family>"')` for the
+  active body family (400/500/700) plus Ubuntu Mono (400/700) so the fonts in
+  use are ready before first paint and never swap post-paint. Cached fonts
+  resolve near-instantly; the call is wrapped in try/catch and guarded on
+  `document.fonts`. The active family comes from `m.font` (default Ubuntu).
+- Verified (CDP 9222): `scroll-diag.cjs` — scroll position locks from the very
+  first rAF on every page (index constant `y=56`, all-components `y=1424`);
+  `fontsReady` (238–312ms) always precedes `fcp` (303–378ms); `trace-pages.cjs`
+  — index/charts/echarts/visuals/all-components all single-sample LOCKED
+  (no movement at all; headless restore lands at target+4, a static invisible
+  offset, then stays); `trace-fcp.cjs` first sample settled; `trace-legacy.cjs`
+  legacy condensed/comfy + horizontal+boxed single-sample stable;
+  `verify-combo.cjs` 8/8 green; `verify-sb.cjs`,
+  `verify-horizontal-mobile3.cjs`, `diff-drawer.cjs`, `probe-rtl-boxed.cjs`,
+  `probe-rtl-h.cjs` all green; `node --check` both JS files. theme-bootstrap.js
+  stays LF (CRLF=0, LF=89).
+
 ## Next Move
 - No open work. Scroll-jump on refresh is fully resolved: theme-bootstrap.js
   applies all three layout axes (nav × width × density) pre-paint, honoring
-  legacy condensed/comfy prefs, and app.js's early-apply syncs from the
-  rendered `<body>` classes (single source of truth) so it can never toggle a
-  layout class after first paint. Suggested re-run before declaring done:
+  legacy condensed/comfy prefs, eagerly loads the in-use fonts so they are
+  ready before first paint, and app.js's early-apply syncs from the rendered
+  `<body>` classes (single source of truth) so it can never toggle a layout
+  class after first paint. Re-run before declaring done:
   `node --check assets/js/app.js assets/js/theme-bootstrap.js`, plus
   `Temp\opencode\verify-combo.cjs`, `verify-sb.cjs`,
   `verify-horizontal-mobile3.cjs`, `diff-drawer.cjs`, `probe-rtl-boxed.cjs`,
-  `probe-rtl-h.cjs`, and the full regression suite (verify.cjs, smoke.cjs,
+  `probe-rtl-h.cjs`, `scroll-diag.cjs`, `trace-pages.cjs`, `trace-legacy.cjs`,
+  and the full regression suite (verify.cjs, smoke.cjs,
   nav-consistency.cjs, cdp-sweep.cjs).
 - Optional pending (low): re-run cdp-hgi-check.cjs icon sanity on a clean profile.
