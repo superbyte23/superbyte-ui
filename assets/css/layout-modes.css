@@ -379,11 +379,11 @@
 
 /* ── Mini Sidebar: icon rail + top toolbar ──────────────────────────────────── */
 .layout-mini-sidebar #sidebar {
-  width: 68px;
+  width: var(--toolbar-h);
 }
 
 .layout-mini-sidebar #main {
-  margin-left: 68px;
+  margin-left: var(--toolbar-h);
 }
 
 .layout-mini-sidebar .sidebar-logo {
@@ -492,7 +492,7 @@
 
 [dir="rtl"] .layout-mini-sidebar #main {
   margin-left: 0;
-  margin-right: 68px;
+  margin-right: var(--toolbar-h);
 }
 
 [dir="rtl"] .layout-mini-sidebar .side-submenu {
