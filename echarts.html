@@ -45,14 +45,15 @@
   <div class="side-group" data-layout-group="layout">
     <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-grid-view sg-icon"></i> Layout <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
     <div class="side-submenu">
-      <a class="side-link" data-layout-nav="1" href="layout-vertical.html" data-layout-mode="vertical"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical</a>
-      <a class="side-link" data-layout-nav="1" href="layout-horizontal.html" data-layout-mode="horizontal"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal</a>
-      <a class="side-link" data-layout-nav="1" href="layout-boxed.html" data-layout-mode="boxed"><i class="hgi-stroke hgi-arrow-shrink-01"></i> Boxed</a>
-      <a class="side-link" data-layout-nav="1" href="layout-fluid.html" data-layout-mode="fluid"><i class="hgi-stroke hgi-maximize-01"></i> Fluid</a>
-      <a class="side-link" data-layout-nav="1" href="layout-contained.html" data-layout-mode="contained"><i class="hgi-stroke hgi-square-arrow-down-01"></i> Contained</a>
-      <a class="side-link" data-layout-nav="1" href="layout-mini-sidebar.html" data-layout-mode="mini-sidebar"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar</a>
-      <a class="side-link" data-layout-nav="1" href="layout-condensed.html" data-layout-mode="condensed"><i class="hgi-stroke hgi-drag-02"></i> Condensed</a>
-      <a class="side-link" data-layout-nav="1" href="layout-comfy.html" data-layout-mode="comfy"><i class="hgi-stroke hgi-more-horizontal"></i> Comfy</a>
+      <a class="side-link" data-layout-nav="1" data-layout-page="vertical" href="layout-vertical.html"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical</a>
+      <a class="side-link" data-layout-nav="1" data-layout-page="horizontal" href="layout-horizontal.html"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal</a>
+      <a class="side-link" data-layout-nav="1" data-layout-page="mini-sidebar" href="layout-mini-sidebar.html"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar</a>
+      <a class="side-link" data-layout-nav="1" data-layout-page="vertical-boxed" href="layout-vertical-boxed.html"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical + Boxed</a>
+      <a class="side-link" data-layout-nav="1" data-layout-page="vertical-contained" href="layout-vertical-contained.html"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical + Contained</a>
+      <a class="side-link" data-layout-nav="1" data-layout-page="horizontal-boxed" href="layout-horizontal-boxed.html"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal + Boxed</a>
+      <a class="side-link" data-layout-nav="1" data-layout-page="horizontal-contained" href="layout-horizontal-contained.html"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal + Contained</a>
+      <a class="side-link" data-layout-nav="1" data-layout-page="mini-boxed" href="layout-mini-boxed.html"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar + Boxed</a>
+      <a class="side-link" data-layout-nav="1" data-layout-page="mini-contained" href="layout-mini-contained.html"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar + Contained</a>
     </div>
   </div>
   <div class="side-group">
@@ -332,21 +333,17 @@
     <div class="customizer-section">
       <div class="customizer-label">Content width</div>
       <div class="appearance-grid">
-        <div class="appearance-opt active" id="opt-fluid" onclick="setBoxed(false)"><i class="hgi-stroke hgi-arrow-expand-01"></i>Fluid</div>
-        <div class="appearance-opt" id="opt-boxed" onclick="setBoxed(true)"><i class="hgi-stroke hgi-arrow-shrink-01"></i>Boxed</div>
+        <div class="appearance-opt" data-width-mode="fluid"><i class="hgi-stroke hgi-arrow-expand-01"></i>Fluid</div>
+        <div class="appearance-opt" data-width-mode="boxed"><i class="hgi-stroke hgi-arrow-shrink-01"></i>Boxed</div>
+        <div class="appearance-opt" data-width-mode="contained"><i class="hgi-stroke hgi-square-arrow-down-01"></i>Contained</div>
       </div>
     </div>
     <div class="customizer-section">
-      <div class="customizer-label">Layout mode</div>
+      <div class="customizer-label">Navigation</div>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
         <div class="appearance-opt" data-layout-mode="vertical"><i class="hgi-stroke hgi-sidebar-left"></i>Vertical</div>
         <div class="appearance-opt" data-layout-mode="horizontal"><i class="hgi-stroke hgi-arrow-expand-01"></i>Horizontal</div>
-        <div class="appearance-opt" data-layout-mode="boxed"><i class="hgi-stroke hgi-arrow-shrink-01"></i>Boxed</div>
-        <div class="appearance-opt" data-layout-mode="fluid"><i class="hgi-stroke hgi-maximize-01"></i>Fluid</div>
-        <div class="appearance-opt" data-layout-mode="contained"><i class="hgi-stroke hgi-square-arrow-down-01"></i>Contained</div>
         <div class="appearance-opt" data-layout-mode="mini-sidebar"><i class="hgi-stroke hgi-layers-01"></i>Mini Sidebar</div>
-        <div class="appearance-opt" data-layout-mode="condensed"><i class="hgi-stroke hgi-drag-02"></i>Condensed</div>
-        <div class="appearance-opt" data-layout-mode="comfy"><i class="hgi-stroke hgi-more-horizontal"></i>Comfy</div>
       </div>
     </div>
 

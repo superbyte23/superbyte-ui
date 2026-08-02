@@ -177,24 +177,13 @@ function setCompact(on) {
   if (optRoomy) optRoomy.classList.toggle('active', !on);
   try { localStorage.setItem('grid_admin_compact', on ? '1' : '0'); } catch (e) {}
 }
-function setBoxed(on) {
-  document.body.classList.toggle('layout-boxed', on);
-  const optFluid = document.getElementById('opt-fluid');
-  const optBoxed = document.getElementById('opt-boxed');
-  if (optFluid) optFluid.classList.toggle('active', !on);
-  if (optBoxed) optBoxed.classList.toggle('active', on);
-  try { localStorage.setItem('grid_admin_boxed', on ? '1' : '0'); } catch (e) {}
-}
+const WIDTH_MODES = ['boxed', 'fluid', 'contained'];
 function setLayoutMode(mode) {
   const b = document.body.classList;
-  // Page-frame classes (container width + nav position) are mutually exclusive.
-  b.remove('layout-boxed', 'layout-fluid', 'layout-contained', 'layout-horizontal', 'layout-mini-sidebar');
-  if (mode === 'horizontal') { b.add('layout-horizontal'); setBoxed(false); }
-  else if (mode === 'mini-sidebar') { b.add('layout-mini-sidebar'); setBoxed(false); }
-  else if (mode === 'boxed') setBoxed(true);
-  else if (mode === 'fluid') { b.add('layout-fluid'); setBoxed(false); }
-  else if (mode === 'contained') { b.add('layout-contained'); setBoxed(false); }
-  else setBoxed(false); // vertical + anything else → clean default width
+  // Navigation frame: vertical (no class) / horizontal / mini-sidebar — mutually exclusive.
+  b.remove('layout-horizontal', 'layout-mini-sidebar');
+  if (mode === 'horizontal') b.add('layout-horizontal');
+  else if (mode === 'mini-sidebar') b.add('layout-mini-sidebar');
 
   // Density (orthogonal to the frame) — condensed is compact, comfy is roomy.
   if (mode === 'condensed') setCompact(true);
@@ -211,6 +200,21 @@ function setLayoutMode(mode) {
 
   document.querySelectorAll('[data-layout-mode]').forEach(link => {
     link.classList.toggle('active', link.dataset.layoutMode === mode);
+  });
+}
+function setWidthMode(mode) {
+  const b = document.body.classList;
+  // Content width: fluid (default) / boxed / contained — mutually exclusive.
+  b.remove('layout-boxed', 'layout-contained', 'layout-fluid');
+  if (mode === 'boxed') b.add('layout-boxed');
+  else if (mode === 'contained') b.add('layout-contained');
+  else if (mode === 'fluid') b.add('layout-fluid');
+  try {
+    localStorage.setItem('grid_admin_width_mode', mode);
+    localStorage.setItem('grid_admin_boxed', mode === 'boxed' ? '1' : '0');
+  } catch (e) {}
+  document.querySelectorAll('[data-width-mode]').forEach(link => {
+    link.classList.toggle('active', link.dataset.widthMode === mode);
   });
 }
 function setFontSize(n) {
@@ -328,11 +332,38 @@ document.querySelectorAll('[data-layout-mode]').forEach(link => {
     showToast('success', 'Layout switched to ' + label);
   });
 });
-// Dedicated preset pages (layout-*.html) force their own mode even if storage
+// Content width is an orthogonal axis (boxed / fluid / contained) switched
+// in place from the customizer — no navigation involved.
+document.querySelectorAll('[data-width-mode]').forEach(opt => {
+  opt.addEventListener('click', e => {
+    e.preventDefault();
+    setWidthMode(opt.dataset.widthMode);
+    const label = opt.textContent.trim();
+    showToast('success', 'Content width switched to ' + label);
+  });
+});
+// Dedicated preset pages (layout-*.html) force their own axes even if storage
 // says otherwise — match theme-bootstrap.js so the layout never reflows late.
-const forcedLayout = /layout-(vertical|horizontal|boxed|fluid|contained|mini-sidebar|condensed|comfy)\.html$/.exec(location.pathname);
-const savedLayoutMode = forcedLayout ? forcedLayout[1] : (localStorage.getItem('grid_admin_layout_mode') || 'vertical');
-setLayoutMode(savedLayoutMode);
+// Classes were already applied pre-paint by theme-bootstrap.js; this pass only
+// keeps storage + customizer active markers in sync (all idempotent).
+const comboPage = /layout-(vertical|horizontal|mini-sidebar)(?:-(boxed|contained))?\.html$/.exec(location.pathname);
+const densityPage = /layout-(condensed|comfy)\.html$/.exec(location.pathname);
+const storedWidth = localStorage.getItem('grid_admin_width_mode') || (localStorage.getItem('grid_admin_boxed') === '1' ? 'boxed' : 'fluid');
+if (densityPage) {
+  setCompact(densityPage[1] === 'condensed');
+} else {
+  setLayoutMode(comboPage ? comboPage[1] : (localStorage.getItem('grid_admin_layout_mode') || 'vertical'));
+  setCompact(localStorage.getItem('grid_admin_compact') === '1');
+}
+setWidthMode(comboPage ? (comboPage[2] || 'fluid') : storedWidth);
+// Highlight the matching sidebar Layout shortcut (data-layout-page) on preset
+// pages; non-preset pages leave the sidebar Layout menu unhighlighted.
+const pageKey = densityPage ? densityPage[1] : (comboPage ? comboPage[1] + (comboPage[2] ? '-' + comboPage[2] : '') : null);
+if (pageKey) {
+  document.querySelectorAll('[data-layout-page]').forEach(link => {
+    link.classList.toggle('active', link.dataset.layoutPage === pageKey);
+  });
+}
 document.querySelectorAll('.icon-btn, .avatar-btn').forEach(el => {
   el.setAttribute('tabindex', '0');
   el.addEventListener('keydown', e => {
@@ -523,8 +554,6 @@ if (dropFile) {
     const theme = localStorage.getItem('grid_admin_theme');
     const accent = localStorage.getItem('grid_admin_accent');
     const radius = localStorage.getItem('grid_admin_radius');
-    const compact = localStorage.getItem('grid_admin_compact');
-    const boxed = localStorage.getItem('grid_admin_boxed');
     const fontsize = localStorage.getItem('grid_admin_fontsize');
     const basetheme = localStorage.getItem('grid_admin_basetheme');
     const font = localStorage.getItem('grid_admin_font');
@@ -539,8 +568,6 @@ if (dropFile) {
       document.body.setAttribute('data-base-theme', basetheme);
     }
     if (font && FONTS[font]) setFont(font);
-    setCompact(compact === '1');
-    setBoxed(boxed === '1');
     if (fontsize && fontsize >= 13 && fontsize <= 17) setFontSize(fontsize);
   } catch (e) {}
   refreshCharts();

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Superbyte UI — Boxed layout</title>
+<title>Superbyte UI — Horizontal + Contained layout</title>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="vendor/hugeicons/css/hugeicons-used.css">
@@ -127,14 +127,15 @@
       <div class="side-group open" data-layout-group="layout">
         <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="true"><i class="hgi-stroke hgi-grid-view sg-icon"></i> Layout <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
         <div class="side-submenu">
-          <a class="side-link" data-layout-nav="1" href="layout-vertical.html" data-layout-mode="vertical"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical</a>
-          <a class="side-link" data-layout-nav="1" href="layout-horizontal.html" data-layout-mode="horizontal"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal</a>
-          <a class="side-link" data-layout-nav="1" href="layout-boxed.html" data-layout-mode="boxed"><i class="hgi-stroke hgi-arrow-shrink-01"></i> Boxed</a>
-          <a class="side-link" data-layout-nav="1" href="layout-fluid.html" data-layout-mode="fluid"><i class="hgi-stroke hgi-maximize-01"></i> Fluid</a>
-          <a class="side-link" data-layout-nav="1" href="layout-contained.html" data-layout-mode="contained"><i class="hgi-stroke hgi-square-arrow-down-01"></i> Contained</a>
-          <a class="side-link" data-layout-nav="1" href="layout-mini-sidebar.html" data-layout-mode="mini-sidebar"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar</a>
-          <a class="side-link" data-layout-nav="1" href="layout-condensed.html" data-layout-mode="condensed"><i class="hgi-stroke hgi-drag-02"></i> Condensed</a>
-          <a class="side-link" data-layout-nav="1" href="layout-comfy.html" data-layout-mode="comfy"><i class="hgi-stroke hgi-more-horizontal"></i> Comfy</a>
+          <a class="side-link" data-layout-nav="1" data-layout-page="vertical" href="layout-vertical.html"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical</a>
+          <a class="side-link" data-layout-nav="1" data-layout-page="horizontal" href="layout-horizontal.html"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal</a>
+          <a class="side-link" data-layout-nav="1" data-layout-page="mini-sidebar" href="layout-mini-sidebar.html"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar</a>
+          <a class="side-link" data-layout-nav="1" data-layout-page="vertical-boxed" href="layout-vertical-boxed.html"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical + Boxed</a>
+          <a class="side-link" data-layout-nav="1" data-layout-page="vertical-contained" href="layout-vertical-contained.html"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical + Contained</a>
+          <a class="side-link" data-layout-nav="1" data-layout-page="horizontal-boxed" href="layout-horizontal-boxed.html"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal + Boxed</a>
+          <a class="side-link" data-layout-nav="1" data-layout-page="horizontal-contained" href="layout-horizontal-contained.html"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal + Contained</a>
+          <a class="side-link" data-layout-nav="1" data-layout-page="mini-boxed" href="layout-mini-boxed.html"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar + Boxed</a>
+          <a class="side-link" data-layout-nav="1" data-layout-page="mini-contained" href="layout-mini-contained.html"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar + Contained</a>
         </div>
       </div>
       <div class="side-group">
@@ -216,7 +217,7 @@
         <ol class="breadcrumb mb-0">
           <li class="breadcrumb-item">Superbyte UI</li>
           <li class="breadcrumb-item"><a href="layouts.html">Layouts</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Boxed</li>
+          <li class="breadcrumb-item active" aria-current="page">Horizontal + Contained</li>
         </ol>
       </nav>
       <div class="search-wrap ms-auto ms-md-0">
@@ -248,10 +249,10 @@
           <li><a class="dropdown-item text-danger" href="#"><i class="hgi-stroke hgi-logout-01 me-2"></i>Sign out</a></li>
         </ul>
       </div>
-    </div>    <div id="content">
-      <section class="page-section active" id="page-layout-boxed">
+    </div>        <div id="content">
+      <section class="page-section active" id="page-layout-horizontal-contained">
         <div class="page-head">
-          <div><h1>Boxed layout</h1><p>Vertical frame with content capped at 1440px and centered.</p></div>
+          <div><h1>Horizontal + Contained</h1><p>Top-bar navigation with content column capped at 1200px.</p></div>
           <a class="btn btn-ghost" href="layouts.html"><i class="hgi-stroke hgi-grid-view me-1"></i> All layouts</a>
         </div>
 
@@ -259,26 +260,26 @@
           <div class="col-xl-4">
             <div class="card p-3 h-100">
               <div class="customizer-label mb-2">Wireframe</div>
-              <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="27" y="14" width="24" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="30" y="18" width="18" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="30" y="27" width="18" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
+              <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="52" height="8" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="15" width="16" height="19" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="25" y="19" width="10" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="25" y="27" width="10" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
             </div>
           </div>
           <div class="col-xl-8">
             <div class="card p-3 h-100">
               <div class="customizer-label mb-2">What changes in this mode</div>
               <ul class="mb-0" style="color:var(--text2);font-size:13px;padding-left:18px">
-                <li>Page content is capped at 1440px and centered</li>
-                <li>The outer gutters show the page background</li>
-                <li>Keeps the left sidebar and top toolbar</li>
-                <li>Useful for very wide screens</li>
+                <li>Navigation moves to the top bar; no left sidebar</li>
+                <li>Submenus auto-open on hover (keyboard accessible)</li>
+                <li>Toolbar sits below the top navigation</li>
+                <li>Content column is capped at 1200px and centered</li>
               </ul>
             </div>
           </div>
         </div>
 
         <div class="layout-toolbar">
-          <div>This page is preset to <span class="layout-current">Boxed</span>. You can switch modes anytime from the sidebar or the theme customizer.</div>
+          <div>This page is preset to <span class="layout-current">Horizontal + Contained</span>. You can switch modes anytime from the Layout menu in the sidebar or the theme customizer.</div>
           <div class="d-flex align-items-center gap-2">
-            <button class="btn btn-ghost btn-sm" onclick="if(window.setLayoutMode)setLayoutMode('boxed')"><i class="hgi-stroke hgi-refresh-03 me-1"></i> Re-apply</button>
+            <button class="btn btn-ghost btn-sm" onclick="if(window.setLayoutMode)setLayoutMode('horizontal');if(window.setWidthMode)setWidthMode('contained')"><i class="hgi-stroke hgi-refresh-03 me-1"></i> Re-apply</button>
           </div>
         </div>
 
@@ -295,25 +296,40 @@
             <span class="layout-name">Horizontal <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
             <span class="layout-desc">Navigation lives in the top bar; no left sidebar.</span>
           </a>
-          <a class="layout-card active" href="layout-boxed.html" aria-label="Boxed layout">
-            <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="27" y="14" width="24" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="30" y="18" width="18" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="30" y="27" width="18" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
-            <span class="layout-name">Boxed <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
-            <span class="layout-desc">Vertical frame with content capped at 1440px and centered.</span>
-          </a>
-          <a class="layout-card" href="layout-fluid.html" aria-label="Fluid layout">
-            <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="22" y="14" width="34" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="26" y="18" width="26" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="26" y="27" width="26" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
-            <span class="layout-name">Fluid <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
-            <span class="layout-desc">Vertical frame, content stretches edge to edge.</span>
-          </a>
-          <a class="layout-card" href="layout-contained.html" aria-label="Contained layout">
-            <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="31" y="14" width="16" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="34" y="18" width="10" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="34" y="27" width="10" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
-            <span class="layout-name">Contained <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
-            <span class="layout-desc">Vertical frame, content column capped at 1200px.</span>
-          </a>
           <a class="layout-card" href="layout-mini-sidebar.html" aria-label="Mini Sidebar layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="7" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="14" y="4" width="42" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="14" y="14" width="42" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="18" y="18" width="13" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="34" y="18" width="13" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="18" y="27" width="22" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
             <span class="layout-name">Mini Sidebar <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
             <span class="layout-desc">Icon rail on the left plus navigation in the top bar.</span>
+          </a>
+          <a class="layout-card" href="layout-vertical-boxed.html" aria-label="Vertical + Boxed layout">
+            <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="27" y="14" width="24" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="30" y="18" width="18" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="30" y="27" width="18" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
+            <span class="layout-name">Vertical + Boxed <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
+            <span class="layout-desc">Sidebar frame with content capped at 1440px and centered.</span>
+          </a>
+          <a class="layout-card" href="layout-vertical-contained.html" aria-label="Vertical + Contained layout">
+            <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="31" y="14" width="16" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="34" y="18" width="10" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="34" y="27" width="10" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
+            <span class="layout-name">Vertical + Contained <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
+            <span class="layout-desc">Sidebar frame with content column capped at 1200px.</span>
+          </a>
+          <a class="layout-card" href="layout-horizontal-boxed.html" aria-label="Horizontal + Boxed layout">
+            <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="52" height="8" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="18" y="15" width="24" height="19" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="22" y="19" width="16" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="22" y="27" width="16" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
+            <span class="layout-name">Horizontal + Boxed <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
+            <span class="layout-desc">Top-bar navigation with content capped at 1440px and centered.</span>
+          </a>
+          <a class="layout-card active" href="layout-horizontal-contained.html" aria-label="Horizontal + Contained layout">
+            <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="52" height="8" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="15" width="16" height="19" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="25" y="19" width="10" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="25" y="27" width="10" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
+            <span class="layout-name">Horizontal + Contained <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
+            <span class="layout-desc">Top-bar navigation with content column capped at 1200px.</span>
+          </a>
+          <a class="layout-card" href="layout-mini-boxed.html" aria-label="Mini Sidebar + Boxed layout">
+            <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="7" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="14" y="4" width="42" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="25" y="14" width="24" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="28" y="18" width="18" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="28" y="27" width="18" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
+            <span class="layout-name">Mini Sidebar + Boxed <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
+            <span class="layout-desc">Icon rail with content capped at 1440px and centered.</span>
+          </a>
+          <a class="layout-card" href="layout-mini-contained.html" aria-label="Mini Sidebar + Contained layout">
+            <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="7" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="14" y="4" width="42" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="29" y="14" width="16" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="32" y="18" width="10" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="32" y="27" width="10" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
+            <span class="layout-name">Mini Sidebar + Contained <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
+            <span class="layout-desc">Icon rail with content column capped at 1200px.</span>
           </a>
           <a class="layout-card" href="layout-condensed.html" aria-label="Condensed layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="6" width="15" height="26" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="6" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="22" y="13" width="34" height="19" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="26" y="17" width="26" height="5" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="26" y="25" width="26" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
@@ -389,21 +405,17 @@
     <div class="customizer-section">
       <div class="customizer-label">Content width</div>
       <div class="appearance-grid">
-        <div class="appearance-opt active" id="opt-fluid" onclick="setBoxed(false)"><i class="hgi-stroke hgi-arrow-expand-01"></i>Fluid</div>
-        <div class="appearance-opt" id="opt-boxed" onclick="setBoxed(true)"><i class="hgi-stroke hgi-arrow-shrink-01"></i>Boxed</div>
+        <div class="appearance-opt" data-width-mode="fluid"><i class="hgi-stroke hgi-arrow-expand-01"></i>Fluid</div>
+        <div class="appearance-opt" data-width-mode="boxed"><i class="hgi-stroke hgi-arrow-shrink-01"></i>Boxed</div>
+        <div class="appearance-opt" data-width-mode="contained"><i class="hgi-stroke hgi-square-arrow-down-01"></i>Contained</div>
       </div>
     </div>
     <div class="customizer-section">
-      <div class="customizer-label">Layout mode</div>
+      <div class="customizer-label">Navigation</div>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
         <div class="appearance-opt" data-layout-mode="vertical"><i class="hgi-stroke hgi-sidebar-left"></i>Vertical</div>
         <div class="appearance-opt" data-layout-mode="horizontal"><i class="hgi-stroke hgi-arrow-expand-01"></i>Horizontal</div>
-        <div class="appearance-opt" data-layout-mode="boxed"><i class="hgi-stroke hgi-arrow-shrink-01"></i>Boxed</div>
-        <div class="appearance-opt" data-layout-mode="fluid"><i class="hgi-stroke hgi-maximize-01"></i>Fluid</div>
-        <div class="appearance-opt" data-layout-mode="contained"><i class="hgi-stroke hgi-square-arrow-down-01"></i>Contained</div>
         <div class="appearance-opt" data-layout-mode="mini-sidebar"><i class="hgi-stroke hgi-layers-01"></i>Mini Sidebar</div>
-        <div class="appearance-opt" data-layout-mode="condensed"><i class="hgi-stroke hgi-drag-02"></i>Condensed</div>
-        <div class="appearance-opt" data-layout-mode="comfy"><i class="hgi-stroke hgi-more-horizontal"></i>Comfy</div>
       </div>
     </div>
     <div class="customizer-section">
@@ -417,6 +429,6 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script src="assets/js/app.js"></script>
-<script>setLayoutMode('boxed');</script>
+<script>setLayoutMode('horizontal'); setWidthMode('contained');</script>
 </body>
 </html>

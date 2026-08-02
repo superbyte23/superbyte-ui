@@ -28,25 +28,28 @@
       var b = document.body, bs = b.style, mode = (m.mode === 'light' || m.mode === 'dark') ? m.mode : null;
       if (mode) b.setAttribute('data-bs-theme', mode);
       if (m.base && m.base !== 'neutral') b.setAttribute('data-base-theme', m.base);
-      // Layout mode: a dedicated preset page (layout-*.html) forces its own
-      // mode; otherwise use the saved mode. Applying it here — at body
-      // creation, before first paint — keeps scroll restoration accurate on
-      // refresh (no reflow/scroll jump when app.js re-applies it later).
-      var lm = L.getItem('grid_admin_layout_mode');
-      var fm = (location.pathname.match(/layout-(vertical|horizontal|boxed|fluid|contained|mini-sidebar|condensed|comfy)\.html$/) || [])[1];
-      if (fm) lm = fm;
-      if (lm) {
-        if (lm === 'boxed') b.classList.add('layout-boxed');
-        else if (lm === 'fluid') b.classList.add('layout-fluid');
-        else if (lm === 'contained') b.classList.add('layout-contained');
-        else if (lm === 'horizontal') b.classList.add('layout-horizontal');
-        else if (lm === 'mini-sidebar') b.classList.add('layout-mini-sidebar');
-        if (lm === 'condensed') b.classList.add('layout-compact');
-        else if (lm === 'comfy') b.classList.remove('layout-compact');
-      } else {
-        if (m.compact === '1') b.classList.add('layout-compact');
-        if (m.boxed === '1') b.classList.add('layout-boxed');
-      }
+      // Layout is three orthogonal settings: navigation frame (vertical,
+      // horizontal, mini-sidebar), content width (boxed, fluid, contained) and
+      // density (condensed, comfy). Dedicated preset pages (layout-*.html)
+      // force their own axes; everything else uses the saved values. All of it
+      // is applied here — at body creation, before first paint — so the
+      // browser's scroll restoration on refresh never shifts afterwards.
+      var nav = null, width = null, dens = null;
+      var cPage = /layout-(vertical|horizontal|mini-sidebar)(?:-(boxed|contained))?\.html$/.exec(location.pathname);
+      var wPage = /layout-(boxed|fluid|contained)\.html$/.exec(location.pathname);
+      var dPage = /layout-(condensed|comfy)\.html$/.exec(location.pathname);
+      if (cPage) { nav = cPage[1]; width = cPage[2] || 'fluid'; }
+      if (wPage) width = wPage[1];
+      if (dPage) dens = dPage[1];
+      if (!nav) nav = L.getItem('grid_admin_layout_mode');
+      if (!width) width = L.getItem('grid_admin_width_mode') || (m.boxed === '1' ? 'boxed' : 'fluid');
+      if (!dens) dens = m.compact === '1' ? 'condensed' : 'comfy';
+      if (nav === 'horizontal') b.classList.add('layout-horizontal');
+      else if (nav === 'mini-sidebar') b.classList.add('layout-mini-sidebar');
+      if (width === 'boxed') b.classList.add('layout-boxed');
+      else if (width === 'contained') b.classList.add('layout-contained');
+      else b.classList.add('layout-fluid');
+      b.classList.toggle('layout-compact', dens === 'condensed');
       var light = (mode || 'dark') === 'light';
       if (m.accent && (t = THEMES[m.accent])) {
         bs.setProperty('--accent', t.base); bs.setProperty('--accent-h', t.hi);

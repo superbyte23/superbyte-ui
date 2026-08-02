@@ -469,12 +469,67 @@ timeline, funnel-bar, skeleton). app.js: toasts, theme, layout, chart hook.
   verify-horizontal-mobile3.cjs (mobile fallback), verify-logo-toggle.cjs all
   green; `node --check` + `verify-sb.cjs` pass.
 
+## Layout model: two orthogonal axes (DONE)
+- Navigation frame and content width are now INDEPENDENT axes and compose:
+  - **Navigation:** `vertical` (default) / `horizontal` / `mini-sidebar`
+    (`grid_admin_layout_mode`).
+  - **Content width:** `fluid` (default) / `boxed` (1440px cap) / `contained`
+    (1200px cap) (`grid_admin_width_mode`). Legacy `grid_admin_boxed` still read
+    as a fallback when no width key exists (and written back by `setWidthMode`).
+  - **Density:** `layout-compact` from `grid_admin_compact` (condensed/comfy
+    preset pages force it) — still orthogonal to both.
+- **theme-bootstrap.js** resolves the three axes pre-paint (no reflow after
+  first paint; scroll-jump fully gone). Forced-page regexes: nav/width combo
+  pages `layout-(vertical|horizontal|mini-sidebar)(?:-(boxed|contained))?\.html`,
+  width-only handled by combo (width default fluid), density pages
+  `layout-(condensed|comfy)\.html`. Width always adds one of
+  `layout-fluid/boxed/contained`; density toggles `layout-compact`.
+- **app.js** (`setLayoutMode`, `setWidthMode`): nav classes mutually exclusive,
+  width classes mutually exclusive; both write storage + toggle `.active` on
+  `[data-layout-mode]` / `[data-width-mode]` customizer options. `setBoxed()`
+  removed (create.html now calls `setWidthMode`). Early-apply block mirrors the
+  theme-bootstrap regexes (idempotent) + highlights the matching sidebar
+  shortcut `[data-layout-page]` on preset pages. `restorePrefs()` no longer
+  mutates layout.
+- **Switcher UI (app-shell.tmpl + all 36 customizer pages, LF shell / CRLF hub+layout):**
+  - Sidebar `Layout` menu: 9 shortcuts via `data-layout-page` +
+    `data-layout-nav="1"` (Vertical / Horizontal / Mini Sidebar / 6 combos);
+    no longer `data-layout-mode` (that attr is customizer-only now).
+  - Customizer: "Content width" group (`[data-width-mode]` Fluid/Boxed/Contained)
+    + "Navigation" group (`[data-layout-mode]` Vertical/Horizontal/Mini Sidebar)
+    replacing the old "Content width" (setBoxed) + 8-option "Layout mode"
+    sections.
+- **Preset pages:** 11 pages rebuilt from `layouts.html` shell (CRLF), old
+  `layout-boxed/fluid/contained.html` deleted. Combo pages force both axes
+  (`<script>setLayoutMode('x'); setWidthMode('y');</script>`); density pages
+  force `setCompact`. Hub `layouts.html` now shows an 11-card grid with the new
+  SVG thumbs (incl. horizontal-boxed/contained, mini-boxed/contained).
+  Generator: `Temp\opencode\generate-layout-pages2.cjs`.
+- **CSS:** boxed centering for vertical/horizontal/mini (`layout-modes.css` +
+  `app.css`); RTL boxed sidebar fix in `app.css`
+  (`@media (min-width:1440px) { [dir="rtl"] .layout-boxed #sidebar { left:auto; right: calc(50% - 720px) } }`);
+  RTL horizontal/mini selectors changed to descendant form
+  (`[dir="rtl"] .layout-horizontal` / `[dir="rtl"] .layout-mini-sidebar`) —
+  the old `[dir="rtl"].layout-…` form was dead (dir is on `<html>`, classes on
+  `<body>`).
+- Verified (CDP 9222): combo pages force both axes over storage (active
+  markers 1/1, sidebar shortcut active); in-place width/nav switching on normal
+  pages composes (boxed+mini-sidebar body classes); boxed degrades to full
+  width below 1440px; scroll restores exactly (390→390) on forced pages; RTL
+  boxed vertical @1800 → app 177,1440 side 1385,232 main 177,1208; RTL boxed
+  mini → side 1549,68. Regression green: verify-sb.cjs, diff-drawer.cjs,
+  verify-horizontal-mobile3.cjs, probe-rtl-boxed.cjs, probe-rtl-h.cjs;
+  `node --check` both JS files. Probes:
+  `Temp\opencode\verify-combo.cjs` (main), `verify-gen.cjs`, `final-check.cjs`.
+
 ## Next Move
-- No open work. Sidebar collapse toggle (vertical ↔ mini-sidebar) added and
-  verified headless (positioning, hover-replace, mode toggle, horizontal hide,
-  mobile override, glyph rendering). Horizontal layout now falls back to the
-  vertical off-canvas drawer on mobile (verified headless at 390px; desktop
-  horizontal unchanged). Suggested re-run before declaring done:
-  `node --check assets/js/app.js`, plus the regression suite (verify.cjs,
-  smoke.cjs, nav-consistency.cjs, cdp-sweep.cjs).
+- No open work. Layout refactor to two orthogonal axes (navigation × content
+  width) is complete and verified headless: switcher UI patched everywhere,
+  11 preset pages + hub rebuilt, combo forcing + in-place switching + mobile
+  fallback + scroll stability all green. Suggested re-run before declaring
+  done: `node --check assets/js/app.js assets/js/theme-bootstrap.js`, plus
+  `Temp\opencode\verify-combo.cjs`, `verify-sb.cjs`, `verify-horizontal-mobile3.cjs`,
+  `diff-drawer.cjs`, `probe-rtl-boxed.cjs`, `probe-rtl-h.cjs`, and the
+  full regression suite (verify.cjs, smoke.cjs, nav-consistency.cjs,
+  cdp-sweep.cjs).
 - Optional pending (low): re-run cdp-hgi-check.cjs icon sanity on a clean profile.

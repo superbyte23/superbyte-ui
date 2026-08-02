@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Superbyte UI — Horizontal layout</title>
+<title>Superbyte UI — Vertical + Contained layout</title>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="vendor/hugeicons/css/hugeicons-used.css">
@@ -217,7 +217,7 @@
         <ol class="breadcrumb mb-0">
           <li class="breadcrumb-item">Superbyte UI</li>
           <li class="breadcrumb-item"><a href="layouts.html">Layouts</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Horizontal</li>
+          <li class="breadcrumb-item active" aria-current="page">Vertical + Contained</li>
         </ol>
       </nav>
       <div class="search-wrap ms-auto ms-md-0">
@@ -250,9 +250,9 @@
         </ul>
       </div>
     </div>        <div id="content">
-      <section class="page-section active" id="page-layout-horizontal">
+      <section class="page-section active" id="page-layout-vertical-contained">
         <div class="page-head">
-          <div><h1>Horizontal</h1><p>Navigation lives in the top bar; no left sidebar.</p></div>
+          <div><h1>Vertical + Contained</h1><p>Sidebar frame with content column capped at 1200px.</p></div>
           <a class="btn btn-ghost" href="layouts.html"><i class="hgi-stroke hgi-grid-view me-1"></i> All layouts</a>
         </div>
 
@@ -260,26 +260,26 @@
           <div class="col-xl-4">
             <div class="card p-3 h-100">
               <div class="customizer-label mb-2">Wireframe</div>
-              <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="52" height="8" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="4" y="15" width="52" height="19" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="8" y="19" width="14" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="25" y="19" width="14" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="42" y="19" width="10" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
+              <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="31" y="14" width="16" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="34" y="18" width="10" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="34" y="27" width="10" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
             </div>
           </div>
           <div class="col-xl-8">
             <div class="card p-3 h-100">
               <div class="customizer-label mb-2">What changes in this mode</div>
               <ul class="mb-0" style="color:var(--text2);font-size:13px;padding-left:18px">
-                <li>Navigation moves to the top bar; no left sidebar</li>
-                <li>Submenus auto-open on hover (keyboard accessible)</li>
-                <li>Toolbar sits below the top navigation</li>
-                <li>Content stretches edge to edge — no side gutters</li>
+                <li>Left sidebar with grouped navigation and a footer</li>
+                <li>Top toolbar with search, actions and the user menu</li>
+                <li>The default navigation frame for the whole UI</li>
+                <li>Content column is capped at 1200px and centered</li>
               </ul>
             </div>
           </div>
         </div>
 
         <div class="layout-toolbar">
-          <div>This page is preset to <span class="layout-current">Horizontal</span>. You can switch modes anytime from the Layout menu in the sidebar or the theme customizer.</div>
+          <div>This page is preset to <span class="layout-current">Vertical + Contained</span>. You can switch modes anytime from the Layout menu in the sidebar or the theme customizer.</div>
           <div class="d-flex align-items-center gap-2">
-            <button class="btn btn-ghost btn-sm" onclick="if(window.setLayoutMode)setLayoutMode('horizontal');if(window.setWidthMode)setWidthMode('fluid')"><i class="hgi-stroke hgi-refresh-03 me-1"></i> Re-apply</button>
+            <button class="btn btn-ghost btn-sm" onclick="if(window.setLayoutMode)setLayoutMode('vertical');if(window.setWidthMode)setWidthMode('contained')"><i class="hgi-stroke hgi-refresh-03 me-1"></i> Re-apply</button>
           </div>
         </div>
 
@@ -291,7 +291,7 @@
             <span class="layout-name">Vertical <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
             <span class="layout-desc">Sidebar on the left, toolbar on top, full-width content.</span>
           </a>
-          <a class="layout-card active" href="layout-horizontal.html" aria-label="Horizontal layout">
+          <a class="layout-card" href="layout-horizontal.html" aria-label="Horizontal layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="52" height="8" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="4" y="15" width="52" height="19" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="8" y="19" width="14" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="25" y="19" width="14" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="42" y="19" width="10" height="11" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
             <span class="layout-name">Horizontal <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
             <span class="layout-desc">Navigation lives in the top bar; no left sidebar.</span>
@@ -306,7 +306,7 @@
             <span class="layout-name">Vertical + Boxed <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
             <span class="layout-desc">Sidebar frame with content capped at 1440px and centered.</span>
           </a>
-          <a class="layout-card" href="layout-vertical-contained.html" aria-label="Vertical + Contained layout">
+          <a class="layout-card active" href="layout-vertical-contained.html" aria-label="Vertical + Contained layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="31" y="14" width="16" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="34" y="18" width="10" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="34" y="27" width="10" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
             <span class="layout-name">Vertical + Contained <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
             <span class="layout-desc">Sidebar frame with content column capped at 1200px.</span>
@@ -429,6 +429,6 @@
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script src="assets/js/app.js"></script>
-<script>setLayoutMode('horizontal'); setWidthMode('fluid');</script>
+<script>setLayoutMode('vertical'); setWidthMode('contained');</script>
 </body>
 </html>

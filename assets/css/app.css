@@ -599,6 +599,7 @@ a { text-decoration: none; }
 .layout-boxed #app { max-width: 1440px; margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,.35); }
 @media (min-width: 1440px) {
   .layout-boxed #sidebar { left: calc(50% - 720px); }
+  [dir="rtl"] .layout-boxed #sidebar { left: auto; right: calc(50% - 720px); }
 }
 
 [dir="rtl"] #sidebar { left: auto; right: 0; border-right: none; border-left: 1px solid var(--border); }
