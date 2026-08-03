@@ -50,7 +50,8 @@ Most free admin templates give you a nice-looking dashboard page and stop there 
 ## Features
 
 - **App shell** — fixed sidebar, top toolbar, global search, notifications, and user profile dropdown
-- **Theme customizer** — light/dark mode, accent colors, border radius, font size, and compact/boxed layouts, all persisted via `localStorage`
+- **Layout modes** — vertical, horizontal, mini-sidebar navigation × fluid, boxed (Bootstrap container grid), contained content width, plus condensed/comfy density, all persisted via `localStorage` and switchable from any page
+- **Theme customizer** — light/dark mode, accent colors, border radius, font family and size, all persisted via `localStorage`
 - **Full page coverage** — see [Page Coverage](#page-coverage) below
 - **Reusable components** — buttons, badges, cards, alerts, modals, tabs, tables, and more
 - **No build step** — just static files, servable anywhere
@@ -63,7 +64,6 @@ Most free admin templates give you a nice-looking dashboard page and stop there 
 
 **UI & Charting Libraries**
 - Bootstrap Icons
-- Font Awesome
 - HugeIcons
 - Chart.js
 - ECharts
@@ -82,6 +82,7 @@ All dependencies are vendored locally under `vendor/` — no external CDN calls.
 | Components | Forms, Buttons & Badges, Cards & Alerts, Modals & Tabs, Utilities, Icons, Layouts, Components, All Components |
 | Visuals | Tables, Charts, Widgets, Maps, ECharts, Editors |
 | Apps | CRM, E-commerce, Calendar, Kanban, Email, File Manager |
+| Layout | Layout hub + 11 preset pages (vertical, horizontal, mini-sidebar × fluid, boxed, contained, plus condensed & comfy) |
 | Auth | Login, Register, Forgot/Reset Password, Lock Screen, Verify Email, Two-Factor Auth, Session Expired |
 | Other | RTL Preview, Docs |
 
@@ -101,7 +102,7 @@ All dependencies are vendored locally under `vendor/` — no external CDN calls.
 ├── overlays.html                 # Modals and tabs
 ├── utilities.html                # Utility classes
 ├── icons.html                   # Icon library preview
-├── layouts.html                  # Layout examples
+├── layouts.html                  # Layout mode hub page
 ├── charts.html                  # Chart demos
 ├── visuals.html                 # Widgets / visual blocks
 ├── maps.html                    # Map page using Leaflet
@@ -124,10 +125,14 @@ All dependencies are vendored locally under `vendor/` — no external CDN calls.
 ├── rtl.html                     # RTL preview page
 ├── create.html                  # Preset/theme generator page
 ├── docs.html                    # Documentation page
+├── layout-*.html                # 11 layout preset pages (one per mode/combo)
 ├── assets/
 │   ├── css/app.css              # Shared design system and layout styles
+│   ├── css/layout-modes.css     # Layout mode / frame styles
 │   ├── js/app.js                # Shared shell behavior, theme, and utilities
-│   └── js/auth.js               # Auth-related shared logic
+│   ├── js/theme-bootstrap.js    # Pre-paint theme + layout bootstrap
+│   ├── js/auth.js               # Auth-related shared logic
+│   └── js/icons-data.js         # Icon library data
 ├── vendor/                      # Vendored local libraries and assets
 ├── _pages/                      # Page fragments and page-specific scripts
 ├── app-shell.tmpl                # Shared shell template source
@@ -163,7 +168,8 @@ The built-in theme drawer lets you adjust, all persisted via `localStorage`:
 - Border radius
 - Font family and size
 - Compact vs. roomy layout density
-- Fluid vs. boxed content width
+- Content width: fluid, boxed (Bootstrap container grid — 540px @sm, 720px @md, 960px @lg, 1140px @xl, 1320px @xxl), or contained
+- Navigation frame: vertical sidebar, horizontal top nav, or mini-sidebar rail
 
 For deeper customization, the shared styles and behavior live in `assets/css/app.css` and `assets/js/app.js`.
 
