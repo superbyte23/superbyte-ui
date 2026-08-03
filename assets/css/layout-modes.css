@@ -364,6 +364,19 @@
   }
 }
 
+/* In contained mode the frame's horizontal bars follow the 1200px content
+   column: the horizontal top-nav bar, the toolbar beneath it and the page
+   footer all cap at the same width and stay centered. width:100% lets the
+   auto margins center them without collapsing the bars to their content. */
+.layout-horizontal.layout-contained #sidebar,
+.layout-horizontal.layout-contained #toolbar,
+.layout-horizontal.layout-contained .app-footer {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ── Sidebar collapse toggle: vertical ↔ mini-sidebar ──────────────────────── */
 .sidebar-toggle {
   display: flex;
