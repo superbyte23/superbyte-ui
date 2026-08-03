@@ -30,6 +30,13 @@
   --sidebar-w: 232px;
   --toolbar-h: 56px;
 
+  /* App-shell width tokens, anchored to Bootstrap's breakpoint scale so the
+     frame stays on the same grid as the framework. Contained mode follows the
+     xl breakpoint (1200px) exactly; boxed mode is a fixed 1440px frame
+     (the xxl breakpoint plus 40px of breathing room). */
+  --app-contained-w: var(--bs-breakpoint-xl);
+  --app-boxed-w: 1440px;
+
   /* Bootstrap variable bridge — makes native .btn/.card/.form-*/.modal etc.
      inherit this palette instead of Bootstrap's defaults */
   --bs-body-bg: var(--bg);
@@ -208,21 +215,19 @@ a { text-decoration: none; }
 .footer-copy { font-family: var(--mono); font-size: 9.5px; color: var(--text3); }
 
 /* ── MAIN ────────────────────────────────────────────────────────────────── */
-#main { flex: 1; display: flex; flex-direction: column; min-width: 0; margin-left: var(--sidebar-w); }
+/* Flex framing is Bootstrap utilities on the element (.d-flex .flex-column);
+   only the custom offset and sizing stay here. */
+#main { flex: 1; min-width: 0; margin-left: var(--sidebar-w); }
 
 /* ── TOPBAR / TOOLBAR ────────────────────────────────────────────────────── */
+/* Display/alignment/sticky are Bootstrap utilities on the element
+   (.d-flex .align-items-center .gap-2 .flex-shrink-0 .sticky-top); only the
+   frame look stays here. */
 #toolbar {
   height: var(--toolbar-h);
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 8px;
   padding: 0 18px;
-  flex-shrink: 0;
-  position: sticky;
-  top: 0;
-  z-index: 1020;
 }
 .tb-sep { width: 1px; height: 24px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
 .sidebar-toggle-btn { display: none; }
@@ -628,10 +633,12 @@ a { text-decoration: none; }
 .layout-compact .card-body { padding: 14px; }
 .layout-compact .page-head h1 { font-size: 18px; }
 
-.layout-boxed #app { max-width: 1440px; margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,.35); }
+.layout-boxed #app { max-width: var(--app-boxed-w); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,.35); }
+/* Media queries cannot read CSS custom properties, so the boxed width is
+   repeated literally here. */
 @media (min-width: 1440px) {
-  .layout-boxed #sidebar { left: calc(50% - 720px); }
-  [dir="rtl"] .layout-boxed #sidebar { left: auto; right: calc(50% - 720px); }
+  .layout-boxed #sidebar { left: calc(50% - var(--app-boxed-w) / 2); }
+  [dir="rtl"] .layout-boxed #sidebar { left: auto; right: calc(50% - var(--app-boxed-w) / 2); }
 }
 
 [dir="rtl"] #sidebar { left: auto; right: 0; border-right: none; border-left: 1px solid var(--border); }

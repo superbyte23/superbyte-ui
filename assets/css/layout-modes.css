@@ -352,11 +352,13 @@
 
 .layout-contained #content {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--app-contained-w);
   margin-left: auto;
   margin-right: auto;
 }
 
+/* Matches the contained column plus its padding; kept as a literal because
+   media queries cannot read CSS custom properties. */
 @media (min-width: 1240px) {
   .layout-contained #content {
     padding-left: 24px;
@@ -364,15 +366,15 @@
   }
 }
 
-/* In contained mode the frame's horizontal bars follow the 1200px content
-   column: the horizontal top-nav bar, the toolbar beneath it and the page
-   footer all cap at the same width and stay centered. width:100% lets the
-   auto margins center them without collapsing the bars to their content. */
+/* In contained mode the frame's horizontal bars follow the same column as
+   #content: the horizontal top-nav bar, the toolbar beneath it and the page
+   footer all cap at the contained width and stay centered. width:100% lets
+   the auto margins center them without collapsing the bars to their content. */
 .layout-horizontal.layout-contained #sidebar,
 .layout-horizontal.layout-contained #toolbar,
 .layout-horizontal.layout-contained .app-footer {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--app-contained-w);
   margin-left: auto;
   margin-right: auto;
 }
