@@ -110,6 +110,7 @@
 <div id="app">
   <div id="sidebar-overlay" onclick="closeSidebar()"></div>
   <div id="sidebar">
+    <div class="app-container">
     <div class="sidebar-logo">
       <div class="logo-mark"><i class="hgi-stroke hgi-flowchart-01"></i></div>
       Superbyte UI
@@ -216,10 +217,12 @@
           </ul>
         </div>
       </div>
+    </div>
   </div>
 
   <div id="main" class="d-flex flex-column">
-    <div id="toolbar" class="d-flex align-items-center gap-2 flex-shrink-0 sticky-top">
+    <div id="toolbar" class="flex-shrink-0 sticky-top">
+    <div class="app-container d-flex align-items-center gap-2 h-100">
       <button class="icon-btn sidebar-toggle-btn" onclick="openSidebar()" aria-label="Toggle navigation"><i class="hgi-stroke hgi-menu-02"></i></button>
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"><i class="hgi-stroke hgi-add-01 me-1"></i> New</button>
       <button class="btn btn-ghost" onclick="showToast('success','Data refreshed')" aria-label="Refresh data"><i class="hgi-stroke hgi-refresh-03"></i></button>
@@ -248,6 +251,7 @@
           <li><a class="dropdown-item text-center" href="#" style="color:var(--accent-h)">View all</a></li>
         </ul>
       </div>
+    </div>
     </div>        <div id="content">
       <section class="page-section active" id="page-layout-comfy">
         <div class="page-head">

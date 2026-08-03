@@ -112,6 +112,18 @@ a { text-decoration: none; }
    ══════════════════════════════════════════════════════════════════════════ */
 #app { display: flex; min-height: 100vh; }
 
+/* The frame's horizontal bars (top nav, toolbar, footer) span the full width
+   and wrap their inner content in .app-container — the Bootstrap-style
+   `bar > .container` pattern. In contained mode the wrapper caps at the
+   contained column so only the contents are constrained; otherwise it fills
+   the bar. */
+.app-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.layout-contained .app-container { max-width: var(--app-contained-w); }
+
 /* ── SIDEBAR ─────────────────────────────────────────────────────────────── */
 #sidebar {
   width: var(--sidebar-w);
@@ -124,6 +136,13 @@ a { text-decoration: none; }
   top: 0; bottom: 0; left: 0;
   z-index: 1030;
   transition: transform .2s ease;
+}
+#sidebar > .app-container {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .sidebar-logo {
   height: var(--toolbar-h);
@@ -222,13 +241,15 @@ a { text-decoration: none; }
 /* ── TOPBAR / TOOLBAR ────────────────────────────────────────────────────── */
 /* Display/alignment/sticky are Bootstrap utilities on the element
    (.d-flex .align-items-center .gap-2 .flex-shrink-0 .sticky-top); only the
-   frame look stays here. */
+   frame look stays here. The bar spans the full width; its inner content is
+   wrapped in .app-container, which carries the horizontal padding. */
 #toolbar {
   height: var(--toolbar-h);
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  padding: 0 18px;
+  padding: 0;
 }
+#toolbar > .app-container { padding-inline: 18px; }
 .tb-sep { width: 1px; height: 24px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
 .sidebar-toggle-btn { display: none; }
 
@@ -290,8 +311,12 @@ a { text-decoration: none; }
 
 /* ── CONTENT ─────────────────────────────────────────────────────────────── */
 #content { padding: 22px 18px 60px; flex: 1; }
+/* The footer bar spans the full width; in horizontal contained mode only its
+   inner content is pulled into the same column as #content (vertical mode
+   keeps the footer full-bleed, matching its sidebar-offset content column). */
 .app-footer { margin-top: auto; background: var(--surface); border-top: 1px solid var(--border); }
 .app-footer-inner { height: var(--toolbar-h); padding: 8px 18px; display: grid; grid-template-columns: auto minmax(190px, 250px) auto auto; align-items: center; gap: 18px; }
+.layout-horizontal.layout-contained .app-footer-inner { max-width: var(--app-contained-w); margin-left: auto; margin-right: auto; }
 .app-footer .footer-meta { justify-content: flex-start; }
 .app-footer .footer-storage { min-width: 0; }
 .app-footer .footer-links { gap: 14px; }
@@ -625,7 +650,8 @@ a { text-decoration: none; }
 /* ══════════════════════════════════════════════════════════════════════════
    LAYOUT FEATURES — compact mode, boxed content, RTL
    ══════════════════════════════════════════════════════════════════════════ */
-.layout-compact #toolbar { height: 48px; padding: 0 14px; }
+.layout-compact #toolbar { height: 48px; }
+.layout-compact #toolbar > .app-container { padding-inline: 14px; }
 .layout-compact .sidebar-logo { height: 48px; }
 .layout-compact #content { padding-top: 14px; }
 .layout-compact .page-head { margin-bottom: 14px; }

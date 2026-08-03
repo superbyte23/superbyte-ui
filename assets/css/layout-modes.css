@@ -17,10 +17,20 @@
   height: var(--toolbar-h);
   border-right: none;
   border-bottom: 1px solid var(--border);
-  flex-direction: row;
-  align-items: center;
+  display: block;
   overflow: visible;
   z-index: 1030;
+}
+
+/* The top-nav bar is full width; its inner content lives in .app-container,
+   which becomes the flex row here (and the column in vertical/mobile modes). */
+.layout-horizontal #sidebar > .app-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  min-width: 0;
+  padding-inline: 18px;
 }
 
 .layout-horizontal .sidebar-logo {
@@ -193,10 +203,19 @@
     width: var(--sidebar-w);
     height: auto;
     min-height: 0;
+    display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: stretch;
     transform: translateX(-100%);
+  }
+
+  .layout-horizontal #sidebar > .app-container {
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    height: auto;
+    padding: 0;
   }
 
   .layout-horizontal #sidebar.open {
@@ -364,19 +383,6 @@
     padding-left: 24px;
     padding-right: 24px;
   }
-}
-
-/* In contained mode the frame's horizontal bars follow the same column as
-   #content: the horizontal top-nav bar, the toolbar beneath it and the page
-   footer all cap at the contained width and stay centered. width:100% lets
-   the auto margins center them without collapsing the bars to their content. */
-.layout-horizontal.layout-contained #sidebar,
-.layout-horizontal.layout-contained #toolbar,
-.layout-horizontal.layout-contained .app-footer {
-  width: 100%;
-  max-width: var(--app-contained-w);
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* ── Sidebar collapse toggle: vertical ↔ mini-sidebar ──────────────────────── */
