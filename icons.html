@@ -150,10 +150,21 @@
     </div>
   </div>
 </div>
-    <div class="sidebar-footer">
-      <span class="plan-tag"><span class="status-dot on"></span>v2.5.0</span>
-      <button class="icon-btn" style="width:28px;height:28px" onclick="toggleTheme()" title="Toggle theme"><i class="hgi-stroke hgi-moon-01" id="theme-icon"></i></button>
-    </div>
+          <div class="sidebar-footer">
+        <div class="dropdown footer-user" id="footer-user">
+          <div class="avatar-btn" data-bs-toggle="dropdown">
+            <div class="avatar-circle">JC</div>
+            <div class="who"><div class="n">John Canete</div><div class="r">Administrator</div></div>
+            <i class="hgi-stroke hgi-arrow-up-01 footer-user-chev" style="font-size:9px;color:var(--text3)"></i>
+          </div>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#"><i class="hgi-stroke hgi-user me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="hgi-stroke hgi-settings-01 me-2"></i>Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#"><i class="hgi-stroke hgi-logout-01 me-2"></i>Sign out</a></li>
+          </ul>
+        </div>
+      </div>
   </div>
 
   <!-- MAIN -->
@@ -175,6 +186,7 @@
         <i class="hgi-stroke hgi-search-01 search-icon"></i>
         <input class="search-input" id="global-search" placeholder="Search…" autocomplete="off">
       </div>
+      <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme"><i class="hgi-stroke hgi-moon-01" id="theme-icon"></i></button>
       <div class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#themeCustomizer" title="Theme colors"><i class="hgi-stroke hgi-paint-board"></i></div>
       <div class="dropdown">
         <div class="icon-btn" data-bs-toggle="dropdown"><i class="hgi-stroke hgi-notification-01"></i><span class="ping">3</span></div>
@@ -185,19 +197,6 @@
           <li><a class="dropdown-item d-flex gap-2 py-2" href="#"><i class="hgi-stroke hgi-alert-02 mt-1" style="color:var(--yellow)"></i><span><strong class="d-block" style="color:var(--text)">Storage at 82%</strong><small style="color:var(--text3)">3 hours ago</small></span></a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item text-center" href="#" style="color:var(--accent-h)">View all</a></li>
-        </ul>
-      </div>
-      <div class="dropdown">
-        <div class="avatar-btn" data-bs-toggle="dropdown">
-          <div class="avatar-circle">JC</div>
-          <div class="who d-none d-lg-block"><div class="n">John Canete</div><div class="r">Administrator</div></div>
-          <i class="hgi-stroke hgi-arrow-down-01 d-none d-lg-block" style="font-size:9px;color:var(--text3)"></i>
-        </div>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="users.html"><i class="hgi-stroke hgi-user me-2"></i>Profile</a></li>
-          <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#themeCustomizer"><i class="hgi-stroke hgi-settings-01 me-2"></i>Settings</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-danger" href="login.html"><i class="hgi-stroke hgi-logout-01 me-2"></i>Sign out</a></li>
         </ul>
       </div>
     </div>
@@ -262,6 +261,14 @@
         <button class="btn btn-primary" data-bs-dismiss="modal" onclick="showToast('success','Folder created')">Create</button>
       </div>
     </div>
+    <footer class="app-footer">
+      <div class="app-footer-inner">
+        <div class="footer-meta"><span class="plan-tag"><span class="status-dot on"></span>v2.5.0</span><span class="footer-status"><span class="status-dot on"></span>System online · 99.9% uptime</span></div>
+        <div class="footer-storage"><div class="fs-label"><span>Storage</span><span>6.2 GB of 10 GB</span></div><div class="progress"><div class="progress-bar" style="width:62%"></div></div></div>
+        <div class="footer-links"><a href="docs.html">Docs</a><a href="#">Support</a><a href="#">Changelog</a></div>
+        <div class="footer-copy">© 2026 Superbyte UI</div>
+      </div>
+    </footer>
   </div>
 </div>
 

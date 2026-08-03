@@ -178,16 +178,34 @@ a { text-decoration: none; }
 .side-link .badge { margin-left: auto; }
 
 .sidebar-footer {
-  padding: 12px 14px;
+  height: var(--toolbar-h);
+  padding: 8px 14px;
   border-top: 1px solid var(--border);
   font-size: 11px;
   color: var(--text3);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 10px;
   flex-shrink: 0;
 }
 .sidebar-footer .plan-tag { font-family: var(--mono); }
+.footer-user .avatar-btn { padding: 4px; }
+.footer-user .avatar-btn .who { flex: 1; }
+.footer-user-chev { transition: transform .12s; }
+.footer-user.show .footer-user-chev { transform: rotate(180deg); }
+.footer-meta, .fs-label, .footer-links { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.footer-status { font-family: var(--mono); font-size: 9.5px; white-space: nowrap; }
+.footer-storage { font-family: var(--mono); font-size: 10px; }
+.fs-label { margin-bottom: 5px; }
+.fs-label span:last-child { color: var(--text2); }
+.footer-storage .progress { height: 4px; background: var(--surface3); border-radius: 99px; overflow: hidden; }
+.footer-storage .progress-bar { background: var(--accent); border-radius: inherit; }
+.footer-links { justify-content: flex-start; gap: 12px; }
+.footer-links a { color: var(--text3); font-size: 10px; transition: color .12s; }
+.footer-links a:hover { color: var(--accent-h); }
+.footer-copy { font-family: var(--mono); font-size: 9.5px; color: var(--text3); }
 
 /* ── MAIN ────────────────────────────────────────────────────────────────── */
 #main { flex: 1; display: flex; flex-direction: column; min-width: 0; margin-left: var(--sidebar-w); }
@@ -266,7 +284,21 @@ a { text-decoration: none; }
 .avatar-btn .who .r { font-size: 10.5px; color: var(--text3); font-family: var(--mono); }
 
 /* ── CONTENT ─────────────────────────────────────────────────────────────── */
-#content { padding: 22px 18px 60px; }
+#content { padding: 22px 18px 60px; flex: 1; }
+.app-footer { margin-top: auto; background: var(--surface); border-top: 1px solid var(--border); }
+.app-footer-inner { height: var(--toolbar-h); padding: 8px 18px; display: grid; grid-template-columns: auto minmax(190px, 250px) auto auto; align-items: center; gap: 18px; }
+.app-footer .footer-meta { justify-content: flex-start; }
+.app-footer .footer-storage { min-width: 0; }
+.app-footer .footer-links { gap: 14px; }
+.app-footer .footer-copy { white-space: nowrap; }
+@media (max-width: 767.98px) {
+  .app-footer-inner { height: auto; min-height: var(--toolbar-h); grid-template-columns: 1fr 1fr; gap: 12px 18px; }
+  .app-footer .footer-storage { grid-column: 1 / -1; grid-row: 1; }
+}
+@media (max-width: 479.98px) {
+  .app-footer-inner { grid-template-columns: 1fr; }
+  .app-footer .footer-storage { grid-column: auto; }
+}
 .page-section { display: none; }
 .page-section.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
@@ -627,11 +659,12 @@ a { text-decoration: none; }
    AUTH PAGES — centered card shell, no app shell
    ══════════════════════════════════════════════════════════════════════════ */
 .auth-page {
-  min-height: 100vh;
+  min-height: calc(100vh - var(--toolbar-h));
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 32px 20px;
   background: radial-gradient(1100px 480px at 15% -10%, var(--accent-bg), transparent 60%), var(--bg);
 }
+.auth-page-footer { position: relative; }
 .auth-card { width: 100%; max-width: 402px; }
 .auth-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; letter-spacing: -.3px; margin-bottom: 24px; justify-content: center; color: var(--text); }
 .auth-logo .logo-mark { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; background: var(--accent-bg); color: var(--accent-h); border-radius: var(--radius-sm); font-size: 14px; }

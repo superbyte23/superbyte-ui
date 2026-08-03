@@ -620,6 +620,19 @@ timeline, funnel-bar, skeleton). app.js: toasts, theme, layout, chart hook.
   can wedge; `Page.navigate`-only probes (probe-cls/probe-fonts2) are robust.
 
 ## Next Move
+- Footer/profile rework (DONE 2026-08-02): across all 39 shell pages, the user
+  dropdown now lives in the sidebar footer, and the light/dark toggle moved to
+  the toolbar. Version and uptime status, a storage meter, Docs/Support/
+  Changelog links, and copyright are now in a separate page footer at the
+  bottom of the main content area. `app.css` styles the page footer;
+  `layout-modes.css` condenses the sidebar to the profile control in horizontal
+  and mini-sidebar layouts. The same page footer is also present on all eight
+  auth/utility pages, for a total of 47 pages.
+  `app.js` changes the dropdown direction when horizontal layout crosses the
+  desktop breakpoint. Verified: 39 footers and 47 toolbar theme icons, no old
+  toolbar profile markup, `node --check assets/js/app.js
+  assets/js/theme-bootstrap.js`, and `git -c core.whitespace=cr-at-eol diff
+  --check` all pass.
 - No open work. Scroll-jump on refresh is fully resolved: theme-bootstrap.js
   applies all three layout axes (nav × width × density) pre-paint, honoring
   legacy condensed/comfy prefs, eagerly loads the in-use fonts before first

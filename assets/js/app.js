@@ -178,6 +178,13 @@ function setCompact(on) {
   try { localStorage.setItem('grid_admin_compact', on ? '1' : '0'); } catch (e) {}
 }
 const WIDTH_MODES = ['boxed', 'fluid', 'contained'];
+function syncFooterUserPlacement() {
+  const footerUser = document.getElementById('footer-user');
+  if (!footerUser) return;
+  const horizontalDesktop = document.body.classList.contains('layout-horizontal')
+    && window.matchMedia('(min-width: 992px)').matches;
+  footerUser.classList.toggle('dropup', !horizontalDesktop);
+}
 function setLayoutMode(mode) {
   const b = document.body.classList;
   // Navigation frame: vertical (no class) / horizontal / mini-sidebar — mutually exclusive.
@@ -201,6 +208,7 @@ function setLayoutMode(mode) {
   document.querySelectorAll('[data-layout-mode]').forEach(link => {
     link.classList.toggle('active', link.dataset.layoutMode === mode);
   });
+  syncFooterUserPlacement();
 }
 function setWidthMode(mode) {
   const b = document.body.classList;
@@ -379,6 +387,7 @@ if (densityPage) compact = densityPage[1] === 'condensed';
 setLayoutMode(nav);
 setCompact(compact);
 setWidthMode(width);
+window.addEventListener('resize', syncFooterUserPlacement);
 // Highlight the matching sidebar Layout shortcut (data-layout-page) on preset
 // pages; non-preset pages leave the sidebar Layout menu unhighlighted.
 const pageKey = densityPage ? densityPage[1] : (comboPage ? comboPage[1] + (comboPage[2] ? '-' + comboPage[2] : '') : null);
