@@ -705,6 +705,11 @@ a { text-decoration: none; }
 
 .layout-boxed #app { max-width: var(--app-boxed-w); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,.35); }
 
+/* Feature pages keep the page footer outside #app (body-level sibling), so cap
+   it to the same boxed width; pages whose footer lives inside #main are already
+   capped by the box. */
+.layout-boxed .app-footer { width: 100%; max-width: var(--app-boxed-w); margin-left: auto; margin-right: auto; }
+
 /* Boxed box follows the Bootstrap container scale. The fixed sidebar aligns
    to the box once the fixed-rail layout kicks in (>=992px); below that it is
    an off-canvas drawer anchored to the viewport edge. */
