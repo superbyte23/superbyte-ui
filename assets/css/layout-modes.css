@@ -174,6 +174,7 @@
 .layout-horizontal #main {
   margin-left: 0;
   padding-top: 0;
+  min-height: calc(100vh - var(--toolbar-h));
 }
 
 .layout-horizontal #toolbar {
@@ -402,6 +403,20 @@
 
   .layout-horizontal #app-overlay.open {
     display: block;
+  }
+}
+
+/* RTL: the horizontal fallback drawer mirrors to the right, like the vertical
+   drawer in app.css (app.css's [dir="rtl"] rules lose to the horizontal
+   translateX(-100%) above by source order, so pin it explicitly here). */
+@media (max-width: 991.98px) {
+  [dir="rtl"] .layout-horizontal #app-nav {
+    left: auto;
+    right: 0;
+    transform: translateX(100%);
+  }
+  [dir="rtl"] .layout-horizontal #app-nav.open {
+    transform: translateX(0);
   }
 }
 

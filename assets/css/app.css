@@ -749,12 +749,11 @@ a { text-decoration: none; }
    AUTH PAGES — centered card shell, no app shell
    ══════════════════════════════════════════════════════════════════════════ */
 .auth-page {
-  min-height: calc(100vh - var(--toolbar-h));
+  min-height: 100vh;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 32px 20px;
   background: radial-gradient(1100px 480px at 15% -10%, var(--accent-bg), transparent 60%), var(--bg);
 }
-.auth-page-footer { position: relative; }
 .auth-card { width: 100%; max-width: 402px; }
 .auth-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; letter-spacing: -.3px; margin-bottom: 24px; justify-content: center; color: var(--text); }
 .auth-logo .logo-mark { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; background: var(--accent-bg); color: var(--accent-h); border-radius: var(--radius-sm); font-size: 14px; }
