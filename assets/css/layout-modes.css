@@ -2,13 +2,13 @@
 /* The sidebar becomes a sticky top navigation bar; the toolbar sticks just
    below it. Both are in-flow (sticky) so a wrapping nav row grows naturally
    instead of being cut off. Dropdowns must never be inside a scroll
-   container: overflow-x:auto on #nav-scroll makes overflow-y compute to
+   container: overflow-x:auto on .app-navigation makes overflow-y compute to
    "auto" too, which clips the absolutely-positioned submenus. */
 .layout-horizontal #app {
   display: block;
 }
 
-.layout-horizontal #sidebar {
+.layout-horizontal #app-nav {
   position: sticky;
   top: 0;
   left: 0;
@@ -23,8 +23,12 @@
 }
 
 /* The top-nav bar is full width; its inner content lives in .app-container,
-   which becomes the flex row here (and the column in vertical/mobile modes). */
-.layout-horizontal #sidebar > .app-container {
+   which becomes the flex row here (and the column in vertical/mobile modes).
+   Restructured pages use a Bootstrap container class (.container / .container-xl)
+   as the same flex wrapper. */
+.layout-horizontal #app-nav > .app-container,
+.layout-horizontal #app-nav > .container,
+.layout-horizontal #app-nav > .container-xl {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -33,14 +37,17 @@
   padding-inline: 18px;
 }
 
-.layout-horizontal .sidebar-logo {
+.layout-horizontal .app-logo {
   border-bottom: none;
-  border-right: 1px solid var(--border);
+  border-right: none;
   min-width: 210px;
   flex-shrink: 0;
+  /* Sit flush on the bar's gutter (18px is only for the sidebar drawer) so the
+     brand mark lines up with the toolbar and content column below. */
+  padding-left: 0;
 }
 
-.layout-horizontal #nav-scroll {
+.layout-horizontal .app-navigation {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -149,17 +156,17 @@
   color: var(--accent-h);
 }
 
-.layout-horizontal .sidebar-footer {
+.layout-horizontal .app-user {
   margin-left: auto;
   border-top: none;
-  border-left: 1px solid var(--border);
-  padding: 0 10px;
+  border-left: none;
+  padding-inline: 10px 0;
   height: var(--toolbar-h);
   flex-direction: row;
   align-items: center;
   gap: 0;
 }
-.layout-horizontal .sidebar-footer > :not(.footer-user) { display: none; }
+.layout-horizontal .app-user > :not(.footer-user) { display: none; }
 .layout-horizontal .footer-user .avatar-btn { padding: 4px; }
 .layout-horizontal .footer-user-chev { transform: rotate(180deg); }
 .layout-horizontal .footer-user.show .footer-user-chev { transform: none; }
@@ -175,9 +182,10 @@
 }
 
 /* Between the off-canvas breakpoint and ~1200px keep the nav on one row by
-   collapsing the logo to its mark. */
+   collapsing the logo to its mark. Restructured pages cap the nav at
+   container's 960px here, so the menu groups are also compressed to fit. */
 @media (min-width: 992px) and (max-width: 1199.98px) {
-  .layout-horizontal .sidebar-logo {
+  .layout-horizontal .app-logo {
     min-width: 56px;
     width: 56px;
     padding: 0;
@@ -185,17 +193,78 @@
     font-size: 0;
   }
 
-  .layout-horizontal .sidebar-logo .logo-mark {
+  .layout-horizontal .app-logo .logo-mark {
     font-size: 13px;
   }
   .layout-horizontal .footer-user .who,
   .layout-horizontal .footer-user-chev { display: none; }
+
+  .layout-horizontal .app-navigation {
+    gap: 4px;
+    padding: 0 6px;
+  }
+  .layout-horizontal .side-group-toggle {
+    padding: 7px 6px;
+    gap: 6px;
+    font-size: 10.5px;
+    letter-spacing: .05em;
+  }
+}
+
+/* At 1200-1399 the contained column is Bootstrap's 1140px, which is not wide
+   enough for the full logo + all eight menu groups + the user chip. Reuse the
+   collapsed-logo / compact-group squeeze so the top nav still fits on one row.
+   Boxed follows the same 1140px box at this range, so it needs the same
+   squeeze (fluid keeps the roomy full-width bar untouched). */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  .layout-contained.layout-horizontal .app-logo,
+  .layout-boxed.layout-horizontal .app-logo {
+    min-width: 56px;
+    width: 56px;
+    padding: 0;
+    justify-content: center;
+    font-size: 0;
+  }
+
+  .layout-contained.layout-horizontal .app-logo .logo-mark,
+  .layout-boxed.layout-horizontal .app-logo .logo-mark {
+    font-size: 13px;
+  }
+  .layout-contained.layout-horizontal .footer-user .who,
+  .layout-contained.layout-horizontal .footer-user-chev,
+  .layout-boxed.layout-horizontal .footer-user .who,
+  .layout-boxed.layout-horizontal .footer-user-chev { display: none; }
+
+  .layout-contained.layout-horizontal .app-navigation,
+  .layout-boxed.layout-horizontal .app-navigation {
+    gap: 4px;
+    padding: 0 6px;
+  }
+  .layout-contained.layout-horizontal .side-group-toggle,
+  .layout-boxed.layout-horizontal .side-group-toggle {
+    padding: 7px 6px;
+    gap: 6px;
+    font-size: 10.5px;
+    letter-spacing: .05em;
+  }
+}
+
+/* At >=1400 the contained column is 1320px: the full logo fits, but the eight
+   full-size groups would still run past the user chip, so trim the group
+   padding slightly (contained and boxed, which shares the same 1320px box). */
+@media (min-width: 1400px) {
+  .layout-contained.layout-horizontal .side-group-toggle,
+  .layout-boxed.layout-horizontal .side-group-toggle {
+    padding: 7px 7px;
+    gap: 7px;
+    letter-spacing: .07em;
+  }
 }
 
 /* Mobile fallback: horizontal behaves like the vertical layout — the top bar
    collapses into the off-canvas sidebar drawer opened by the toolbar burger. */
 @media (max-width: 991.98px) {
-  .layout-horizontal #sidebar {
+  .layout-horizontal #app-nav {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -210,25 +279,29 @@
     transform: translateX(-100%);
   }
 
-  .layout-horizontal #sidebar > .app-container {
+  .layout-horizontal #app-nav > .app-container,
+  .layout-horizontal #app-nav > .container,
+  .layout-horizontal #app-nav > .container-xl {
     flex-direction: column;
     flex: 1;
     min-height: 0;
     height: auto;
     padding: 0;
+    align-items: stretch;
   }
 
-  .layout-horizontal #sidebar.open {
+  .layout-horizontal #app-nav.open {
     transform: translateX(0);
   }
 
-  .layout-horizontal .sidebar-logo {
+  .layout-horizontal .app-logo {
     border-bottom: 1px solid var(--border);
     border-right: none;
     min-width: 0;
+    padding: 0 18px;
   }
 
-  .layout-horizontal #nav-scroll {
+  .layout-horizontal .app-navigation {
     display: block;
     align-items: normal;
     gap: 0;
@@ -269,7 +342,7 @@
     min-width: 0;
     box-shadow: none;
     border: none;
-    padding: 0 0 0 6px;
+    padding: 0;
     z-index: auto;
   }
 
@@ -291,23 +364,25 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 18px 8px 44px;
+    padding: 8px 18px 8px 22px;
     margin: 0;
     border-radius: 0;
   }
 
-  .layout-horizontal .sidebar-footer {
+  .layout-horizontal .app-user {
     margin-left: 0;
     border-top: 1px solid var(--border);
     border-left: none;
-    padding: 12px 14px;
+    padding: 12px 18px;
     height: var(--toolbar-h);
     flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
     gap: 0;
   }
-  .layout-horizontal .sidebar-footer > :not(.footer-user) { display: none; }
-  .layout-horizontal .footer-user .avatar-btn { padding: 4px; }
+  .layout-horizontal .app-user > :not(.footer-user) { display: none; }
+  .layout-horizontal .footer-user { width: 100%; }
+  .layout-horizontal .footer-user .avatar-btn { padding: 4px; justify-content: space-between; }
   .layout-horizontal .footer-user-chev { transform: none; }
   .layout-horizontal .footer-user.show .footer-user-chev { transform: rotate(180deg); }
 
@@ -321,26 +396,26 @@
     top: 0;
   }
 
-  .layout-horizontal .sidebar-toggle-btn {
+  .layout-horizontal .app-nav-toggle {
     display: inline-flex;
   }
 
-  .layout-horizontal #sidebar-overlay.open {
+  .layout-horizontal #app-overlay.open {
     display: block;
   }
 }
 
 /* RTL: mirror the top bar */
-[dir="rtl"] .layout-horizontal .sidebar-logo {
+[dir="rtl"] .layout-horizontal .app-logo {
   border-right: none;
-  border-left: 1px solid var(--border);
+  border-left: none;
 }
 
-[dir="rtl"] .layout-horizontal .sidebar-footer {
+[dir="rtl"] .layout-horizontal .app-user {
   margin-left: 0;
   margin-right: auto;
   border-left: none;
-  border-right: 1px solid var(--border);
+  border-right: none;
 }
 
 [dir="rtl"] .layout-horizontal .side-submenu {
@@ -364,29 +439,63 @@
 }
 
 /* ── Content width: fluid / contained ───────────────────────────────────── */
-.layout-fluid #content,
-.layout-contained #content {
+/* Non-restructured pages cap #content with the token. Restructured pages use
+   Bootstrap's container class (.container / .container-xl) as the content
+   column, so Bootstrap's breakpoint widths apply instead of the token. */
+.layout-fluid #content:not(.container):not(.container-xl),
+.layout-contained #content:not(.container):not(.container-xl) {
   max-width: none;
 }
 
-.layout-contained #content {
+.layout-contained #content:not(.container):not(.container-xl) {
   width: 100%;
   max-width: var(--app-contained-w);
   margin-left: auto;
   margin-right: auto;
 }
 
+.layout-contained #content.container,
+.layout-contained #content.container-xl {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.layout-fluid #content.container,
+.layout-fluid #content.container-xl,
+.layout-boxed #content.container,
+.layout-boxed #content.container-xl {
+  max-width: none;
+}
+
 /* Matches the contained column plus its padding; kept as a literal because
-   media queries cannot read CSS custom properties. */
+   media queries cannot read CSS custom properties. The bar inners get the
+   same gutter as #content so the top nav / toolbar / footer line up with the
+   content column. Boxed shares the same column width, so it gets the same
+   gutter for a consistent feel. */
 @media (min-width: 1240px) {
-  .layout-contained #content {
+  .layout-contained #content,
+  .layout-contained #toolbar > .app-container,
+  .layout-contained #toolbar > .container,
+  .layout-contained #toolbar > .container-xl,
+  .layout-horizontal.layout-contained #app-nav > .app-container,
+  .layout-horizontal.layout-contained #app-nav > .container,
+  .layout-horizontal.layout-contained #app-nav > .container-xl,
+  .layout-horizontal.layout-contained .app-footer-inner,
+  .layout-boxed #content,
+  .layout-boxed #toolbar > .app-container,
+  .layout-boxed #toolbar > .container,
+  .layout-boxed #toolbar > .container-xl,
+  .layout-horizontal.layout-boxed #app-nav > .app-container,
+  .layout-horizontal.layout-boxed #app-nav > .container,
+  .layout-horizontal.layout-boxed #app-nav > .container-xl,
+  .layout-horizontal.layout-boxed .app-footer-inner {
     padding-left: 24px;
     padding-right: 24px;
   }
 }
 
 /* ── Sidebar collapse toggle: vertical ↔ mini-sidebar ──────────────────────── */
-.sidebar-toggle {
+.app-nav-collapse {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -404,17 +513,17 @@
   transition: color .15s ease, background .15s ease;
 }
 
-.sidebar-toggle:hover {
+.app-nav-collapse:hover {
   color: var(--accent-h);
   background: var(--surface2);
 }
 
-.layout-horizontal .sidebar-toggle {
+.layout-horizontal .app-nav-collapse {
   display: none;
 }
 
 /* ── Mini Sidebar: icon rail + top toolbar ──────────────────────────────────── */
-.layout-mini-sidebar #sidebar {
+.layout-mini-sidebar #app-nav {
   width: var(--toolbar-h);
 }
 
@@ -422,34 +531,34 @@
   margin-left: var(--toolbar-h);
 }
 
-.layout-mini-sidebar .sidebar-logo {
+.layout-mini-sidebar .app-logo {
   justify-content: center;
   padding: 0;
   gap: 0;
   font-size: 0;
 }
 
-.layout-mini-sidebar .sidebar-logo .logo-mark {
+.layout-mini-sidebar .app-logo .logo-mark {
   font-size: 13px;
 }
 
-.layout-mini-sidebar .sidebar-toggle {
+.layout-mini-sidebar .app-nav-collapse {
   display: none;
   margin-left: 0;
   font-size: 14px;
 }
 
 @media (min-width: 992px) {
-  .layout-mini-sidebar .sidebar-logo:hover .sidebar-toggle {
+  .layout-mini-sidebar .app-logo:hover .app-nav-collapse {
     display: flex;
   }
 
-  .layout-mini-sidebar .sidebar-logo:hover .logo-mark {
+  .layout-mini-sidebar .app-logo:hover .logo-mark {
     display: none;
   }
 }
 
-.layout-mini-sidebar #nav-scroll {
+.layout-mini-sidebar .app-navigation {
   overflow: visible;
   padding: 12px 0;
 }
@@ -526,13 +635,13 @@
   color: var(--accent-h);
 }
 
-.layout-mini-sidebar .sidebar-footer {
+.layout-mini-sidebar .app-user {
   justify-content: center;
   padding: 10px 0;
   align-items: center;
 }
 
-.layout-mini-sidebar .sidebar-footer > :not(.footer-user) { display: none; }
+.layout-mini-sidebar .app-user > :not(.footer-user) { display: none; }
 .layout-mini-sidebar .footer-user .avatar-btn { padding: 4px; }
 .layout-mini-sidebar .footer-user .who,
 .layout-mini-sidebar .footer-user-chev { display: none; }
@@ -565,7 +674,7 @@
 [dir="rtl"] .layout-mini-sidebar .footer-user .dropdown-menu { left: auto !important; right: calc(100% + 8px) !important; }
 
 @media (max-width: 991.98px) {
-  .layout-mini-sidebar #sidebar {
+  .layout-mini-sidebar #app-nav {
     width: 232px;
   }
 
@@ -573,14 +682,14 @@
     margin-left: 0;
   }
 
-  .layout-mini-sidebar .sidebar-logo {
+  .layout-mini-sidebar .app-logo {
     justify-content: flex-start;
     padding: 0 18px;
     gap: 10px;
     font-size: 15px;
   }
 
-  .layout-mini-sidebar .sidebar-toggle {
+  .layout-mini-sidebar .app-nav-collapse {
     display: flex;
     margin-left: auto;
   }
@@ -605,13 +714,13 @@
     animation: none;
   }
 
-  .layout-mini-sidebar .sidebar-footer {
+  .layout-mini-sidebar .app-user {
     justify-content: initial;
     padding: 12px 14px;
     align-items: stretch;
   }
 
-  .layout-mini-sidebar .sidebar-footer > :not(.footer-user) { display: flex; }
+  .layout-mini-sidebar .app-user > :not(.footer-user) { display: flex; }
   .layout-mini-sidebar .footer-user .who,
   .layout-mini-sidebar .footer-user-chev { display: initial; }
   .layout-mini-sidebar .footer-user .dropdown-menu { left: auto !important; right: 0 !important; top: auto !important; bottom: 100% !important; transform: none !important; }

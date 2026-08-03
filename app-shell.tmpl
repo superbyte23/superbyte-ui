@@ -24,16 +24,16 @@
 <!-- ═══ APP SHELL ══════════════════════════════════════════════════════════ -->
 <div id="app">
 
-  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+  <div id="app-overlay" onclick="closeAppNav()"></div>
 
   <!-- SIDEBAR -->
-  <div id="sidebar">
-    <div class="sidebar-logo">
+  <div id="app-nav">
+    <div class="app-logo">
       <div class="logo-mark"><i class="hgi-stroke hgi-flowchart-01"></i></div>
       Superbyte UI
       
     </div>
-    <div id="nav-scroll">
+    <nav id="app-navigation" class="app-navigation">
     <div class="nav-group-label">General</div>
     <a class="side-link" href="index.html"><i class="hgi-stroke hgi-dashboard-speed-01"></i> Dashboard</a>
     <a class="side-link" href="create.html"><i class="hgi-stroke hgi-cube"></i> Create</a>
@@ -90,8 +90,8 @@
         <a class="side-link" data-layout-nav="1" data-layout-page="mini-contained" href="layout-mini-contained.html"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar + Contained</a>
       </div>
     </div>
-  </div>
-    <div class="sidebar-footer">
+  </nav>
+    <div class="app-user">
       <span class="plan-tag"><span class="status-dot on"></span>v2.5.0</span>
       <button class="icon-btn" style="width:28px;height:28px" onclick="toggleTheme()" title="Toggle theme"><i class="hgi-stroke hgi-moon-01" id="theme-icon"></i></button>
     </div>
@@ -102,7 +102,7 @@
 
     <!-- TOOLBAR -->
     <div id="toolbar">
-      <button class="icon-btn sidebar-toggle-btn" onclick="openSidebar()" aria-label="Toggle navigation"><i class="hgi-stroke hgi-menu-02"></i></button>
+      <button class="icon-btn app-nav-toggle" onclick="openAppNav()" aria-label="Toggle navigation"><i class="hgi-stroke hgi-menu-02"></i></button>
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"><i class="hgi-stroke hgi-add-01 me-1"></i> New</button>
       <button class="btn btn-ghost" onclick="showToast('success','Data refreshed')" aria-label="Refresh data"><i class="hgi-stroke hgi-refresh-03"></i></button>
       <div class="tb-sep d-none d-md-block"></div>

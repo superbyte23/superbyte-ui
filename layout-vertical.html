@@ -108,15 +108,15 @@
 <div id="toast-container"></div>
 <input type="file" id="drop-file" class="d-none" multiple>
 <div id="app">
-  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
-  <div id="sidebar">
-    <div class="app-container">
-    <div class="sidebar-logo">
+  <div id="app-overlay" onclick="closeAppNav()"></div>
+  <div id="app-nav">
+    <div class="container">
+    <div class="app-logo">
       <div class="logo-mark"><i class="hgi-stroke hgi-flowchart-01"></i></div>
       Superbyte UI
       
     </div>
-    <div id="nav-scroll">
+    <nav id="app-navigation" class="app-navigation">
       <div class="side-group">
         <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-dashboard-speed-01 sg-icon"></i> General <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
         <div class="side-submenu">
@@ -201,8 +201,8 @@
           <a class="side-link" href="docs.html"><i class="hgi-stroke hgi-book-01"></i> Docs</a>
         </div>
       </div>
-    </div>
-          <div class="sidebar-footer">
+    </nav>
+          <div class="app-user">
         <div class="dropdown footer-user" id="footer-user">
           <div class="avatar-btn" data-bs-toggle="dropdown">
             <div class="avatar-circle">JC</div>
@@ -222,8 +222,8 @@
 
   <div id="main" class="d-flex flex-column">
     <div id="toolbar" class="flex-shrink-0 sticky-top">
-    <div class="app-container d-flex align-items-center gap-2 h-100">
-      <button class="icon-btn sidebar-toggle-btn" onclick="openSidebar()" aria-label="Toggle navigation"><i class="hgi-stroke hgi-menu-02"></i></button>
+    <div class="container d-flex align-items-center gap-2 h-100">
+      <button class="icon-btn app-nav-toggle" onclick="openAppNav()" aria-label="Toggle navigation"><i class="hgi-stroke hgi-menu-02"></i></button>
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"><i class="hgi-stroke hgi-add-01 me-1"></i> New</button>
       <button class="btn btn-ghost" onclick="showToast('success','Data refreshed')" aria-label="Refresh data"><i class="hgi-stroke hgi-refresh-03"></i></button>
       <div class="tb-sep d-none d-md-block"></div>
@@ -252,7 +252,7 @@
         </ul>
       </div>
     </div>
-    </div>        <div id="content">
+    </div>        <div id="content" class="container">
       <section class="page-section active" id="page-layout-vertical">
         <div class="page-head">
           <div><h1>Vertical</h1><p>Sidebar on the left, toolbar on top, full-width content.</p></div>
@@ -307,7 +307,7 @@
           <a class="layout-card" href="layout-vertical-boxed.html" aria-label="Vertical + Boxed layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="27" y="14" width="24" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="30" y="18" width="18" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="30" y="27" width="18" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
             <span class="layout-name">Vertical + Boxed <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
-            <span class="layout-desc">Sidebar frame with content capped at 1440px and centered.</span>
+            <span class="layout-desc">Sidebar frame in a boxed page on Bootstrap's container grid (540px @sm, 720px @md, 960px @lg, 1140px @xl, 1320px @xxl).</span>
           </a>
           <a class="layout-card" href="layout-vertical-contained.html" aria-label="Vertical + Contained layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="15" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="4" width="34" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="31" y="14" width="16" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="34" y="18" width="10" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="34" y="27" width="10" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
@@ -317,7 +317,7 @@
           <a class="layout-card" href="layout-horizontal-boxed.html" aria-label="Horizontal + Boxed layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="52" height="8" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="18" y="15" width="24" height="19" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="22" y="19" width="16" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="22" y="27" width="16" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
             <span class="layout-name">Horizontal + Boxed <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
-            <span class="layout-desc">Top-bar navigation with content capped at 1440px and centered.</span>
+            <span class="layout-desc">Top-bar navigation in a boxed page on Bootstrap's container grid (540px @sm, 720px @md, 960px @lg, 1140px @xl, 1320px @xxl).</span>
           </a>
           <a class="layout-card" href="layout-horizontal-contained.html" aria-label="Horizontal + Contained layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="52" height="8" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="22" y="15" width="16" height="19" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="25" y="19" width="10" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="25" y="27" width="10" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
@@ -327,7 +327,7 @@
           <a class="layout-card" href="layout-mini-boxed.html" aria-label="Mini Sidebar + Boxed layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="7" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="14" y="4" width="42" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="25" y="14" width="24" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="28" y="18" width="18" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="28" y="27" width="18" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
             <span class="layout-name">Mini Sidebar + Boxed <i class="layout-check hgi-stroke hgi-tick-01"></i></span>
-            <span class="layout-desc">Icon rail with content capped at 1440px and centered.</span>
+            <span class="layout-desc">Icon rail in a boxed page on Bootstrap's container grid (540px @sm, 720px @md, 960px @lg, 1140px @xl, 1320px @xxl).</span>
           </a>
           <a class="layout-card" href="layout-mini-contained.html" aria-label="Mini Sidebar + Contained layout">
             <span class="layout-thumb"><svg viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="7" height="30" rx="2" fill="var(--accent)" opacity=".22" stroke="var(--accent)"/><rect x="14" y="4" width="42" height="7" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="29" y="14" width="16" height="20" rx="2" fill="var(--surface3)" stroke="var(--border2)"/><rect x="32" y="18" width="10" height="6" rx="1" fill="var(--surface2)" stroke="var(--border2)"/><rect x="32" y="27" width="10" height="4" rx="1" fill="var(--surface2)" stroke="var(--border2)"/></svg></span>
@@ -349,7 +349,7 @@
       </section>
     </div>
     <footer class="app-footer">
-      <div class="app-footer-inner">
+      <div class="app-footer-inner d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
         <div class="footer-meta"><span class="plan-tag"><span class="status-dot on"></span>v2.5.0</span><span class="footer-status"><span class="status-dot on"></span>System online · 99.9% uptime</span></div>
         <div class="footer-storage"><div class="fs-label"><span>Storage</span><span>6.2 GB of 10 GB</span></div><div class="progress"><div class="progress-bar" style="width:62%"></div></div></div>
         <div class="footer-links"><a href="docs.html">Docs</a><a href="#">Support</a><a href="#">Changelog</a></div>

@@ -271,8 +271,8 @@ function themeVars() {
 }
 
 /* ── SIDEBAR ───────────────────────────────────────────────────────────── */
-function openSidebar(){ document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebar-overlay').classList.add('open'); }
-function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebar-overlay').classList.remove('open'); }
+function openAppNav(){ document.getElementById('app-nav').classList.add('open'); document.getElementById('app-overlay').classList.add('open'); }
+function closeAppNav(){ document.getElementById('app-nav').classList.remove('open'); document.getElementById('app-overlay').classList.remove('open'); }
 
 /* ── SIDEBAR SUB-MENUS ─────────────────────────────────────────────────── */
 document.querySelectorAll('.side-group-toggle').forEach(t => {
@@ -317,11 +317,11 @@ document.querySelectorAll('.side-group').forEach(g => {
    the vertical family and as a hover-reveal replacing the logo mark in the
    mini-sidebar. Clicking switches between the two modes. */
 (function initSidebarToggle() {
-  const logo = document.querySelector('.sidebar-logo');
-  if (!logo || logo.querySelector('.sidebar-toggle')) return;
+  const logo = document.querySelector('.app-logo');
+  if (!logo || logo.querySelector('.app-nav-collapse')) return;
   const btn = document.createElement('button');
   btn.type = 'button';
-  btn.className = 'sidebar-toggle';
+  btn.className = 'app-nav-collapse';
   btn.title = 'Toggle sidebar';
   btn.setAttribute('aria-label', 'Toggle sidebar');
   btn.innerHTML = '<i class="hgi hgi-stroke hgi-sidebar-left-01"></i>';
@@ -459,7 +459,7 @@ if (dropFile) {
 
 /* ── QUICK SEARCH PALETTE (Ctrl+K / /, and toolbar input) ─────────────── */
 (function () {
-  const links = Array.from(document.querySelectorAll('#sidebar a.side-link[href]'))
+  const links = Array.from(document.querySelectorAll('#app-nav a.side-link[href]'))
     .map(a => ({ label: a.textContent.trim().replace(/\s+/g, ' '), href: a.getAttribute('href') }))
     .filter(l => l.label && l.href && !l.href.startsWith('#'));
   const keyOf = l => (l.label + ' ' + l.href).toLowerCase();

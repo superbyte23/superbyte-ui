@@ -32,10 +32,11 @@
 
   /* App-shell width tokens, anchored to Bootstrap's breakpoint scale so the
      frame stays on the same grid as the framework. Contained mode follows the
-     xl breakpoint (1200px) exactly; boxed mode is a fixed 1440px frame
-     (the xxl breakpoint plus 40px of breathing room). */
+     xl breakpoint (1200px) exactly; boxed mode follows the container scale
+     (540px @sm, 720px @md, 960px @lg, 1140px @xl, 1320px @xxl) via the media
+     queries below. */
   --app-contained-w: var(--bs-breakpoint-xl);
-  --app-boxed-w: 1440px;
+  --app-boxed-w: 100%;
 
   /* Bootstrap variable bridge — makes native .btn/.card/.form-*/.modal etc.
      inherit this palette instead of Bootstrap's defaults */
@@ -124,8 +125,42 @@ a { text-decoration: none; }
 }
 .layout-contained .app-container { max-width: var(--app-contained-w); }
 
+/* Restructured pages swap .app-container for a Bootstrap container class so
+   Bootstrap owns the breakpoint widths (container: 540/720/960/1140/1320px;
+   container-xl: 1140px @xl, 1320px @xxl). Strip the Bootstrap gutter so the
+   per-bar padding rules keep control, and let only contained mode keep the
+   cap — fluid/boxed fill the bar. */
+#app-nav > .container,
+#app-nav > .container-xl,
+#toolbar > .container,
+#toolbar > .container-xl,
+#content.container,
+#content.container-xl,
+.app-footer-inner.container,
+.app-footer-inner.container-xl {
+  --bs-gutter-x: 0;
+}
+.layout-fluid #app-nav > .container,
+.layout-fluid #app-nav > .container-xl,
+.layout-fluid #toolbar > .container,
+.layout-fluid #toolbar > .container-xl,
+.layout-fluid #content.container,
+.layout-fluid #content.container-xl,
+.layout-fluid .app-footer-inner.container,
+.layout-fluid .app-footer-inner.container-xl,
+.layout-boxed #app-nav > .container,
+.layout-boxed #app-nav > .container-xl,
+.layout-boxed #toolbar > .container,
+.layout-boxed #toolbar > .container-xl,
+.layout-boxed #content.container,
+.layout-boxed #content.container-xl,
+.layout-boxed .app-footer-inner.container,
+.layout-boxed .app-footer-inner.container-xl {
+  max-width: none;
+}
+
 /* ── SIDEBAR ─────────────────────────────────────────────────────────────── */
-#sidebar {
+#app-nav {
   width: var(--sidebar-w);
   background: var(--surface);
   border-right: 1px solid var(--border);
@@ -137,14 +172,16 @@ a { text-decoration: none; }
   z-index: 1030;
   transition: transform .2s ease;
 }
-#sidebar > .app-container {
+#app-nav > .app-container,
+#app-nav > .container,
+#app-nav > .container-xl {
   flex: 1;
   min-height: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.sidebar-logo {
+.app-logo {
   height: var(--toolbar-h);
   padding: 0 18px;
   font-size: 15px;
@@ -157,7 +194,7 @@ a { text-decoration: none; }
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
-.sidebar-logo .logo-mark {
+.app-logo .logo-mark {
   width: 28px; height: 28px;
   display: flex; align-items: center; justify-content: center;
   background: var(--accent-bg);
@@ -165,9 +202,9 @@ a { text-decoration: none; }
   border-radius: var(--radius-sm);
   font-size: 13px;
 }
-.sidebar-logo span { opacity: .4; font-weight: 400; font-size: 11px; }
+.app-logo span { opacity: .4; font-weight: 400; font-size: 11px; }
 
-#nav-scroll {
+.app-navigation {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
@@ -203,7 +240,7 @@ a { text-decoration: none; }
 .side-link.active { background: var(--accent-bg); color: var(--accent-h); border-left-color: var(--accent); }
 .side-link .badge { margin-left: auto; }
 
-.sidebar-footer {
+.app-user {
   height: var(--toolbar-h);
   padding: 8px 14px;
   border-top: 1px solid var(--border);
@@ -216,22 +253,22 @@ a { text-decoration: none; }
   gap: 10px;
   flex-shrink: 0;
 }
-.sidebar-footer .plan-tag { font-family: var(--mono); }
+.app-user .plan-tag { font-family: var(--mono); }
 .footer-user .avatar-btn { padding: 4px; }
 .footer-user .avatar-btn .who { flex: 1; }
 .footer-user-chev { transition: transform .12s; }
 .footer-user.show .footer-user-chev { transform: rotate(180deg); }
 .footer-meta, .fs-label, .footer-links { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.footer-status { font-family: var(--mono); font-size: 9.5px; white-space: nowrap; }
-.footer-storage { font-family: var(--mono); font-size: 10px; }
+.footer-status { font-family: var(--mono); white-space: nowrap; }
+.footer-storage { font-family: var(--mono); }
 .fs-label { margin-bottom: 5px; }
 .fs-label span:last-child { color: var(--text2); }
 .footer-storage .progress { height: 4px; background: var(--surface3); border-radius: 99px; overflow: hidden; }
 .footer-storage .progress-bar { background: var(--accent); border-radius: inherit; }
 .footer-links { justify-content: flex-start; gap: 12px; }
-.footer-links a { color: var(--text3); font-size: 10px; transition: color .12s; }
+.footer-links a { color: var(--text3); transition: color .12s; }
 .footer-links a:hover { color: var(--accent-h); }
-.footer-copy { font-family: var(--mono); font-size: 9.5px; color: var(--text3); }
+.footer-copy { font-family: var(--mono); color: var(--text3); }
 
 /* ── MAIN ────────────────────────────────────────────────────────────────── */
 /* Flex framing is Bootstrap utilities on the element (.d-flex .flex-column);
@@ -249,9 +286,11 @@ a { text-decoration: none; }
   border-bottom: 1px solid var(--border);
   padding: 0;
 }
-#toolbar > .app-container { padding-inline: 18px; }
+#toolbar > .app-container,
+#toolbar > .container,
+#toolbar > .container-xl { padding-inline: 18px; }
 .tb-sep { width: 1px; height: 24px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
-.sidebar-toggle-btn { display: none; }
+.app-nav-toggle { display: none; }
 
 .breadcrumb-wrap { display: flex; align-items: center; flex: 1; overflow: hidden; margin: 0 4px; }
 .breadcrumb { margin-bottom: 0; flex-wrap: nowrap; --bs-breadcrumb-divider: '›'; --bs-breadcrumb-divider-color: var(--text3); --bs-breadcrumb-item-padding-x: .25rem; }
@@ -315,19 +354,22 @@ a { text-decoration: none; }
    inner content is pulled into the same column as #content (vertical mode
    keeps the footer full-bleed, matching its sidebar-offset content column). */
 .app-footer { margin-top: auto; background: var(--surface); border-top: 1px solid var(--border); }
-.app-footer-inner { height: var(--toolbar-h); padding: 8px 18px; display: grid; grid-template-columns: auto minmax(190px, 250px) auto auto; align-items: center; gap: 18px; }
-.layout-horizontal.layout-contained .app-footer-inner { max-width: var(--app-contained-w); margin-left: auto; margin-right: auto; }
+.app-footer-inner { height: var(--toolbar-h); padding: 8px 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px; font-size: 13px; }
+.layout-horizontal.layout-contained .app-footer-inner:not(.container):not(.container-xl) { max-width: var(--app-contained-w); margin-left: auto; margin-right: auto; }
 .app-footer .footer-meta { justify-content: flex-start; }
-.app-footer .footer-storage { min-width: 0; }
+.app-footer .footer-storage { min-width: 0; flex: 0 1 250px; }
 .app-footer .footer-links { gap: 14px; }
 .app-footer .footer-copy { white-space: nowrap; }
 @media (max-width: 767.98px) {
-  .app-footer-inner { height: auto; min-height: var(--toolbar-h); grid-template-columns: 1fr 1fr; gap: 12px 18px; }
-  .app-footer .footer-storage { grid-column: 1 / -1; grid-row: 1; }
-}
-@media (max-width: 479.98px) {
-  .app-footer-inner { grid-template-columns: 1fr; }
-  .app-footer .footer-storage { grid-column: auto; }
+  .app-footer-inner { height: auto; min-height: var(--toolbar-h); }
+  .app-footer .footer-meta,
+  .app-footer .footer-storage,
+  .app-footer .footer-links,
+  .app-footer .footer-copy { flex: 1 1 100%; }
+  .app-footer .footer-storage { order: -1; }
+  .app-footer .footer-meta,
+  .app-footer .footer-links { justify-content: center; }
+  .app-footer .footer-copy { text-align: center; }
 }
 .page-section { display: none; }
 .page-section.active { display: block; }
@@ -631,14 +673,14 @@ a { text-decoration: none; }
 .radius-opt:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
 
 /* Sidebar overlay for mobile */
-#sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 1025; }
+#app-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 1025; }
 
 @media (max-width: 991.98px) {
-  #sidebar { transform: translateX(-100%); }
-  #sidebar.open { transform: translateX(0); }
+  #app-nav { transform: translateX(-100%); }
+  #app-nav.open { transform: translateX(0); }
   #main { margin-left: 0; }
-  .sidebar-toggle-btn { display: inline-flex; }
-  #sidebar-overlay.open { display: block; }
+  .app-nav-toggle { display: inline-flex; }
+  #app-overlay.open { display: block; }
   .search-input { width: 140px; }
   .search-input:focus { width: 160px; }
 }
@@ -651,8 +693,10 @@ a { text-decoration: none; }
    LAYOUT FEATURES — compact mode, boxed content, RTL
    ══════════════════════════════════════════════════════════════════════════ */
 .layout-compact #toolbar { height: 48px; }
-.layout-compact #toolbar > .app-container { padding-inline: 14px; }
-.layout-compact .sidebar-logo { height: 48px; }
+.layout-compact #toolbar > .app-container,
+.layout-compact #toolbar > .container,
+.layout-compact #toolbar > .container-xl { padding-inline: 14px; }
+.layout-compact .app-logo { height: 48px; }
 .layout-compact #content { padding-top: 14px; }
 .layout-compact .page-head { margin-bottom: 14px; }
 .layout-compact .card-header { padding: 10px 14px; }
@@ -660,14 +704,22 @@ a { text-decoration: none; }
 .layout-compact .page-head h1 { font-size: 18px; }
 
 .layout-boxed #app { max-width: var(--app-boxed-w); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,.35); }
-/* Media queries cannot read CSS custom properties, so the boxed width is
-   repeated literally here. */
-@media (min-width: 1440px) {
-  .layout-boxed #sidebar { left: calc(50% - var(--app-boxed-w) / 2); }
-  [dir="rtl"] .layout-boxed #sidebar { left: auto; right: calc(50% - var(--app-boxed-w) / 2); }
+
+/* Boxed box follows the Bootstrap container scale. The fixed sidebar aligns
+   to the box once the fixed-rail layout kicks in (>=992px); below that it is
+   an off-canvas drawer anchored to the viewport edge. */
+@media (min-width: 576px)  { :root, [data-bs-theme="dark"] { --app-boxed-w: 540px; } }
+@media (min-width: 768px)  { :root, [data-bs-theme="dark"] { --app-boxed-w: 720px; } }
+@media (min-width: 992px)  { :root, [data-bs-theme="dark"] { --app-boxed-w: 960px; } }
+@media (min-width: 1200px) { :root, [data-bs-theme="dark"] { --app-boxed-w: 1140px; } }
+@media (min-width: 1400px) { :root, [data-bs-theme="dark"] { --app-boxed-w: 1320px; } }
+
+@media (min-width: 992px) {
+  .layout-boxed #app-nav { left: calc(50% - var(--app-boxed-w) / 2); }
+  [dir="rtl"] .layout-boxed #app-nav { left: auto; right: calc(50% - var(--app-boxed-w) / 2); }
 }
 
-[dir="rtl"] #sidebar { left: auto; right: 0; border-right: none; border-left: 1px solid var(--border); }
+[dir="rtl"] #app-nav { left: auto; right: 0; border-right: none; border-left: 1px solid var(--border); }
 [dir="rtl"] #main { margin-left: 0; margin-right: var(--sidebar-w); }
 [dir="rtl"] #toast-container { right: auto; left: 20px; }
 [dir="rtl"] .side-link { border-left: none; border-right: 2px solid transparent; }
@@ -683,8 +735,8 @@ a { text-decoration: none; }
 [dir="rtl"] .timeline-item::before { left: auto; right: -20px; }
 [dir="rtl"] .tooltip.bs-tooltip-end .tooltip-arrow { right: -1px; left: auto; }
 @media (max-width: 991.98px) {
-  [dir="rtl"] #sidebar { transform: translateX(100%); }
-  [dir="rtl"] #sidebar.open { transform: translateX(0); }
+  [dir="rtl"] #app-nav { transform: translateX(100%); }
+  [dir="rtl"] #app-nav.open { transform: translateX(0); }
   [dir="rtl"] #main { margin-right: 0; }
 }
 
@@ -1213,13 +1265,18 @@ input[type="color"].form-control-color { width: 38px; height: 38px; padding: 3px
 #create-swatches .swatch:hover { transform: scale(1.15); }
 
 /* Sidebar toggle: icon-btn sized, hidden on desktop (late rule wins over .icon-btn display) */
-.sidebar-toggle-btn { display: none; }
-@media (max-width: 991.98px) { .sidebar-toggle-btn { display: inline-flex; } }
+.app-nav-toggle { display: none; }
+@media (max-width: 991.98px) { .app-nav-toggle { display: inline-flex; } }
 
-/* Align toolbar + content gutters (mobile tighter, otherwise 18px both) */
+/* Align toolbar + content gutters (mobile tighter, otherwise 18px both).
+   The padding belongs on the bar's inner container, never on #toolbar
+   itself, so toolbar inner and content inner always line up. */
 @media (max-width: 575.98px) {
-  #toolbar { padding-left: 16px; padding-right: 16px; }
-  #content { padding-left: 16px; padding-right: 16px; }
+  #toolbar > .app-container,
+  #toolbar > .container,
+  #toolbar > .container-xl,
+  #content,
+  .app-footer-inner { padding-left: 16px; padding-right: 16px; }
 }
 
 /* ── SIDEBAR SUB-MENUS ─────────────────────────────────────────────────── */

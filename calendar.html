@@ -24,17 +24,17 @@
 <!-- ═══ APP SHELL ══════════════════════════════════════════════════════════ -->
 <div id="app">
 
-  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+  <div id="app-overlay" onclick="closeAppNav()"></div>
 
   <!-- SIDEBAR -->
-  <div id="sidebar">
-    <div class="app-container">
-    <div class="sidebar-logo">
+  <div id="app-nav">
+    <div class="container">
+    <div class="app-logo">
       <div class="logo-mark"><i class="hgi-stroke hgi-flowchart-01"></i></div>
       Superbyte UI
       
     </div>
-    <div id="nav-scroll">
+    <nav id="app-navigation" class="app-navigation">
   <div class="side-group">
     <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-dashboard-speed-01 sg-icon"></i> General <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
     <div class="side-submenu">
@@ -119,8 +119,8 @@
       <a class="side-link" href="docs.html"><i class="hgi-stroke hgi-book-01"></i> Docs</a>
     </div>
   </div>
-</div>
-          <div class="sidebar-footer">
+</nav>
+          <div class="app-user">
         <div class="dropdown footer-user" id="footer-user">
           <div class="avatar-btn" data-bs-toggle="dropdown">
             <div class="avatar-circle">JC</div>
@@ -143,8 +143,8 @@
 
     <!-- TOOLBAR -->
     <div id="toolbar" class="flex-shrink-0 sticky-top">
-    <div class="app-container d-flex align-items-center gap-2 h-100">
-      <button class="icon-btn sidebar-toggle-btn" onclick="openSidebar()" aria-label="Toggle navigation"><i class="hgi-stroke hgi-menu-02"></i></button>
+    <div class="container d-flex align-items-center gap-2 h-100">
+      <button class="icon-btn app-nav-toggle" onclick="openAppNav()" aria-label="Toggle navigation"><i class="hgi-stroke hgi-menu-02"></i></button>
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"><i class="hgi-stroke hgi-add-01 me-1"></i> New</button>
       <button class="btn btn-ghost" onclick="showToast('success','Data refreshed')" aria-label="Refresh data"><i class="hgi-stroke hgi-refresh-03"></i></button>
       <div class="tb-sep d-none d-md-block"></div>
@@ -176,7 +176,7 @@
     </div>
 
     <!-- CONTENT -->
-    <div id="content">
+    <div id="content" class="container">
 
       <section class="page-section active" id="page-calendar">
         <div class="page-head">
@@ -283,7 +283,7 @@
 </div>
 
 <footer class="app-footer">
-      <div class="app-footer-inner">
+      <div class="app-footer-inner d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
         <div class="footer-meta"><span class="plan-tag"><span class="status-dot on"></span>v2.5.0</span><span class="footer-status"><span class="status-dot on"></span>System online · 99.9% uptime</span></div>
         <div class="footer-storage"><div class="fs-label"><span>Storage</span><span>6.2 GB of 10 GB</span></div><div class="progress"><div class="progress-bar" style="width:62%"></div></div></div>
         <div class="footer-links"><a href="docs.html">Docs</a><a href="#">Support</a><a href="#">Changelog</a></div>
