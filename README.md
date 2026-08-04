@@ -35,7 +35,7 @@
 
 Superbyte UI is a static, front-end-only admin dashboard template. There's no build pipeline, no `npm install`, and no backend required — clone it, open a page, and it works.
 
-It ships as a full set of ready-to-use pages: dashboard analytics, CRUD-style data views, CRM and e-commerce workflows, forms, charts, maps, editors, authentication screens, and a large library of reusable UI components — everything you need to skip the "download a template and hope it has what you need" problem.
+The repository is split in two: the root `index.html` is a landing page that introduces the kit, and the full admin dashboard (47 ready-to-use pages) lives under `preview/`. It ships with dashboard analytics, CRUD-style data views, CRM and e-commerce workflows, forms, charts, maps, editors, authentication screens, and a large library of reusable UI components — everything you need to skip the "download a template and hope it has what you need" problem.
 
 ## Why This Project Exists
 
@@ -90,55 +90,58 @@ All dependencies are vendored locally under `vendor/` — no external CDN calls.
 
 ```text
 .
-├── index.html                 # Main dashboard page
-├── analytics.html             # Analytics page
-├── records.html                # Records listing page
-├── users.html                  # Users management page
-├── forms.html                  # Forms examples
-├── components.html             # Component gallery
-├── all-components.html         # Full component showcase
-├── elements.html                # Buttons and badges
-├── cards.html                   # Cards and alerts
-├── overlays.html                 # Modals and tabs
-├── utilities.html                # Utility classes
-├── icons.html                   # Icon library preview
-├── layouts.html                  # Layout mode hub page
-├── charts.html                  # Chart demos
-├── visuals.html                 # Widgets / visual blocks
-├── maps.html                    # Map page using Leaflet
-├── echarts.html                 # ECharts examples
-├── editors.html                 # Rich text / code editor demos
-├── crm.html                     # CRM workflow page
-├── ecommerce.html               # E-commerce page
-├── calendar.html                # Calendar demo
-├── kanban.html                  # Kanban board page
-├── email.html                   # Email UI demo
-├── file-manager.html            # File manager demo
-├── login.html                   # Authentication page
-├── register.html                # Registration page
-├── forgot.html                  # Password recovery page
-├── reset.html                   # Reset password page
-├── lock.html                    # Lock screen page
-├── verify.html                  # Email verification page
-├── two-factor.html              # Two-factor auth page
-├── session-expired.html         # Session expired page
-├── rtl.html                     # RTL preview page
-├── create.html                  # Preset/theme generator page
-├── docs.html                    # Documentation page
-├── layout-*.html                # 11 layout preset pages (one per mode/combo)
+├── index.html                 # Landing page about the UI kit
 ├── assets/
-│   ├── css/app.css              # Shared design system and layout styles
-│   ├── css/layout-modes.css     # Layout mode / frame styles
-│   ├── js/app.js                # Shared shell behavior, theme, and utilities
-│   ├── js/theme-bootstrap.js    # Pre-paint theme + layout bootstrap
-│   ├── js/auth.js               # Auth-related shared logic
-│   └── js/icons-data.js         # Icon library data
-├── vendor/                      # Vendored local libraries and assets
-├── _pages/                      # Page fragments and page-specific scripts
-├── app-shell.tmpl                # Shared shell template source
-├── auth.html.tmpl                # Auth page template source
-├── package.json                  # Minimal project metadata
-└── SESSION.md                    # Session/implementation handoff notes
+│   ├── css/app.css            # Shared design system and layout styles
+│   ├── css/layout-modes.css   # Layout mode / frame styles
+│   ├── css/landing.css        # Landing page styles
+│   ├── js/app.js              # Shared shell behavior, theme, and utilities
+│   ├── js/theme-bootstrap.js  # Pre-paint theme + layout bootstrap
+│   ├── js/auth.js             # Auth-related shared logic
+│   └── js/icons-data.js       # Icon library data
+├── vendor/                    # Vendored local libraries and assets
+├── preview/                   # The admin dashboard (47 pages)
+│   ├── index.html             # Main dashboard page
+│   ├── analytics.html         # Analytics page
+│   ├── records.html           # Records listing page
+│   ├── users.html             # Users management page
+│   ├── forms.html             # Forms examples
+│   ├── components.html        # Component gallery
+│   ├── all-components.html    # Full component showcase
+│   ├── elements.html          # Buttons and badges
+│   ├── cards.html             # Cards and alerts
+│   ├── overlays.html          # Modals and tabs
+│   ├── utilities.html         # Utility classes
+│   ├── icons.html             # Icon library preview
+│   ├── layouts.html           # Layout mode hub page
+│   ├── charts.html            # Chart demos
+│   ├── visuals.html           # Widgets / visual blocks
+│   ├── maps.html              # Map page using Leaflet
+│   ├── echarts.html           # ECharts examples
+│   ├── editors.html           # Rich text / code editor demos
+│   ├── crm.html               # CRM workflow page
+│   ├── ecommerce.html         # E-commerce page
+│   ├── calendar.html          # Calendar demo
+│   ├── kanban.html            # Kanban board page
+│   ├── email.html             # Email UI demo
+│   ├── file-manager.html      # File manager demo
+│   ├── login.html             # Authentication page
+│   ├── register.html          # Registration page
+│   ├── forgot.html            # Password recovery page
+│   ├── reset.html             # Reset password page
+│   ├── lock.html              # Lock screen page
+│   ├── verify.html            # Email verification page
+│   ├── two-factor.html        # Two-factor auth page
+│   ├── session-expired.html   # Session expired page
+│   ├── rtl.html               # RTL preview page
+│   ├── create.html            # Preset/theme generator page
+│   ├── docs.html              # Documentation page
+│   └── layout-*.html          # 11 layout preset pages (one per mode/combo)
+├── _pages/                    # Page fragments and page-specific scripts
+├── app-shell.tmpl             # Shared shell template source
+├── auth.html.tmpl             # Auth page template source
+├── package.json               # Minimal project metadata
+└── SESSION.md                 # Session/implementation handoff notes
 ```
 
 ## Getting Started
@@ -147,14 +150,14 @@ Because the project is fully static, you can run it with any local server.
 
 **Option 1 — VS Code Live Server**
 1. Open the project folder in VS Code.
-2. Open `index.html`.
+2. Open `index.html` (the landing page).
 3. Run it with the Live Server extension or live preview.
 
 **Option 2 — Python**
 ```bash
 python -m http.server 8000
 ```
-Then visit `http://localhost:8000/`.
+Then visit `http://localhost:8000/` for the landing page, or `http://localhost:8000/preview/` to go straight into the dashboard.
 
 **Option 3 — Any static server**
 `npx serve`, `php -S`, or anything that serves a static file set will work.

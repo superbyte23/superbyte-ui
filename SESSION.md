@@ -12,13 +12,15 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
   docs changelog) — those are sample data, not page versions.
 - **CDN policy: all assets are vendored locally under `vendor/`; zero external/CDN resource loads.**
 
-## Status: v1.0.0 FINAL — everything shipped, committed, pushed
-- **47 pages total**: index, analytics, records, users, forms, elements, cards, overlays,
-  utilities, docs, components, all-components, tables, charts, visuals, rtl, maps, echarts,
-  editors, crm, ecommerce, calendar, kanban, email, file-manager, create, layouts,
-  11 `layout-*.html` presets (vertical/horizontal/mini-sidebar × fluid/boxed/contained +
-  condensed/comfy), 8 auth pages (login/register/forgot/reset/lock/verify/two-factor/
-  session-expired).
+## Status: v1.0.0 — dashboard lives in `preview/`, root is the landing page
+- **47-page admin dashboard is now under `preview/`** (index, analytics, records, users, forms,
+  elements, cards, overlays, utilities, docs, components, all-components, tables, charts,
+  visuals, rtl, maps, echarts, editors, crm, ecommerce, calendar, kanban, email, file-manager,
+  create, layouts, 11 `layout-*.html` presets, 8 auth pages).
+- Root **`index.html`** is the landing page about the UI (styles in `assets/css/landing.css`),
+  with a hero that live-frames `preview/index.html` and links into the dashboard. Preview pages
+  reference shared assets as `../assets/` / `../vendor/`; `app-shell.tmpl` / `auth.html.tmpl`
+  emit `../` paths for regeneration into `preview/`.
 - All pages share the app shell (`#app` sidebar + toolbar + theme customizer) and
   `assets/css/app.css` / `assets/css/layout-modes.css` / `assets/js/app.js` /
   `assets/js/theme-bootstrap.js`. Auth pages are standalone (no shell).
@@ -111,6 +113,10 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
 - theme-bootstrap.js: pre-paint theme + layout + font loading.
 
 ## Changelog (condensed)
+- Landing page + preview split (2026-08-04): moved all 47 dashboard pages into `preview/`
+  (rewrote `assets/`/`vendor/` → `../`, incl. rtl.html's runtime CSS swap), root `index.html`
+  became the landing page (`assets/css/landing.css`), templates/docs/README/AGENTS updated;
+  verify.cjs now scans `preview/` too (also ignores `www.w3.org/2000/svg` namespace URIs).
 - v1.0.0 finalization (2026-08-03): boxed = Bootstrap container grid; footer flex + 13px;
   version 1.0.0 on all pages; README/SESSION/AGENTS updated; pushed to origin/main.
 - Footer/profile rework (2026-08-02): user dropdown in sidebar footer, theme toggle in

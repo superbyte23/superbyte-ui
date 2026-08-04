@@ -3,494 +3,305 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Superbyte UI — Dashboard</title>
+<title>Superbyte UI — Admin Dashboard &amp; UI Kit</title>
+<meta name="description" content="Superbyte UI is a free, open-source Bootstrap 5 admin dashboard and UI kit. 47 ready-to-use pages, three layout modes, a theme customizer, RTL support and zero CDN dependencies.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="vendor/hugeicons/css/hugeicons-used.css">
 <link rel="stylesheet" href="vendor/fonts.css">
 <link rel="stylesheet" href="vendor/fonts/theme-fonts.css">
 <link rel="stylesheet" href="assets/css/app.css">
-<link rel="stylesheet" href="assets/css/layout-modes.css">
+<link rel="stylesheet" href="assets/css/landing.css">
 <script src="assets/js/theme-bootstrap.js"></script>
-
 </head>
 <body data-bs-theme="dark">
 
-<!-- ═══ TOAST CONTAINER ═══════════════════════════════════════════════════ -->
-<div id="toast-container"></div>
-<input type="file" id="drop-file" class="d-none" multiple>
-
-<!-- ═══ APP SHELL ══════════════════════════════════════════════════════════ -->
-<div id="app">
-
-  <div id="app-overlay" onclick="closeAppNav()"></div>
-
-  <!-- SIDEBAR -->
-  <div id="app-nav">
-    <div class="container">
-    <div class="app-logo">
+<!-- ═══ TOP NAV ══════════════════════════════════════════════════════════ -->
+<header class="lnd-nav">
+  <div class="lnd-container lnd-nav-inner">
+    <a class="lnd-brand" href="#top">
       <div class="logo-mark"><i class="hgi-stroke hgi-flowchart-01"></i></div>
-      Superbyte UI
-      
-    </div>
-    <nav id="app-navigation" class="app-navigation">
-  <div class="side-group">
-    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-dashboard-speed-01 sg-icon"></i> General <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
-    <div class="side-submenu">
-      <a class="side-link active" href="index.html"><i class="hgi-stroke hgi-dashboard-speed-01"></i> Dashboard</a>
-      <a class="side-link" href="create.html"><i class="hgi-stroke hgi-cube"></i> Create</a>
-      <a class="side-link" href="analytics.html"><i class="hgi-stroke hgi-chart-line-data-01"></i> Analytics</a>
-    </div>
-  </div>
-  <div class="side-group" data-layout-group="layout">
-    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-grid-view sg-icon"></i> Layout <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
-    <div class="side-submenu">
-      <a class="side-link" data-layout-nav="1" data-layout-page="horizontal" href="layout-horizontal.html"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal</a>
-      <a class="side-link" data-layout-nav="1" data-layout-page="horizontal-boxed" href="layout-horizontal-boxed.html"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal + Boxed</a>
-      <a class="side-link" data-layout-nav="1" data-layout-page="horizontal-contained" href="layout-horizontal-contained.html"><i class="hgi-stroke hgi-arrow-expand-01"></i> Horizontal + Contained</a>
-      <a class="side-link" data-layout-nav="1" data-layout-page="mini-sidebar" href="layout-mini-sidebar.html"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar</a>
-      <a class="side-link" data-layout-nav="1" data-layout-page="mini-boxed" href="layout-mini-boxed.html"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar + Boxed</a>
-      <a class="side-link" data-layout-nav="1" data-layout-page="mini-contained" href="layout-mini-contained.html"><i class="hgi-stroke hgi-layers-01"></i> Mini Sidebar + Contained</a>
-      <a class="side-link" data-layout-nav="1" data-layout-page="vertical" href="layout-vertical.html"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical</a>
-      <a class="side-link" data-layout-nav="1" data-layout-page="vertical-boxed" href="layout-vertical-boxed.html"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical + Boxed</a>
-      <a class="side-link" data-layout-nav="1" data-layout-page="vertical-contained" href="layout-vertical-contained.html"><i class="hgi-stroke hgi-sidebar-left"></i> Vertical + Contained</a>
+      <span>Superbyte UI<span class="lnd-ver"> · v1.0.0</span></span>
+    </a>
+    <nav class="lnd-nav-links" id="lnd-nav-links">
+      <a href="#features">Features</a>
+      <a href="#pages">Pages</a>
+      <a href="#layouts">Layouts</a>
+      <a href="#customize">Customizer</a>
+      <a href="preview/docs.html">Docs</a>
+    </nav>
+    <div class="lnd-nav-cta">
+      <button class="icon-btn" onclick="toggleLndTheme()" title="Toggle theme" aria-label="Toggle theme"><i class="hgi-stroke hgi-moon-01" id="lnd-theme-icon"></i></button>
+      <button class="icon-btn lnd-nav-toggle" id="lnd-nav-toggle" aria-label="Toggle menu"><i class="hgi-stroke hgi-menu-02"></i></button>
+      <a class="btn btn-primary btn-sm d-none d-sm-inline-flex" href="preview/index.html"><i class="hgi-stroke hgi-arrow-right-01 me-1"></i> Live preview</a>
     </div>
   </div>
-  <div class="side-group">
-    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-database-01 sg-icon"></i> Data <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
-    <div class="side-submenu">
-      <a class="side-link" href="records.html"><i class="hgi-stroke hgi-table-01"></i> Records</a>
-      <a class="side-link" href="users.html"><i class="hgi-stroke hgi-user-group"></i> Users</a>
+</header>
+
+<main id="top">
+
+  <!-- ═══ HERO ═══════════════════════════════════════════════════════════ -->
+  <section class="lnd-hero">
+    <div class="lnd-container lnd-hero-grid">
+      <div>
+        <span class="lnd-badge"><span class="dot"></span> Free &amp; open source · MIT license</span>
+        <h1>The admin dashboard that ships with <span class="grad">everything</span>.</h1>
+        <p class="lead">Superbyte UI is a complete Bootstrap 5 admin kit — 47 ready-to-use pages, three navigation layouts, a live theme customizer and RTL support. Pure HTML, CSS and vanilla JS, fully offline.</p>
+        <div class="lnd-hero-actions">
+          <a class="btn btn-primary" href="preview/index.html"><i class="hgi-stroke hgi-rocket-01 me-1"></i> Live preview</a>
+          <a class="btn btn-ghost" href="https://github.com/superbyte23/superbyte-ui"><i class="hgi-stroke hgi-arrow-down-01 me-1"></i> View on GitHub</a>
+        </div>
+        <div class="lnd-hero-note">bootstrap 5.3.3 · no build step · no CDN · offline-ready</div>
+      </div>
+      <div class="lnd-browser">
+        <div class="lnd-browser-bar">
+          <span class="lnd-dot r"></span><span class="lnd-dot y"></span><span class="lnd-dot g"></span>
+          <span class="lnd-url">superbyte23.github.io/superbyte-ui/preview/</span>
+        </div>
+        <iframe src="preview/index.html" title="Superbyte UI dashboard preview"></iframe>
+      </div>
     </div>
-  </div>
-  <div class="side-group">
-    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-puzzle sg-icon"></i> Components <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
-    <div class="side-submenu">
-      <a class="side-link" href="forms.html"><i class="hgi-stroke hgi-check-list"></i> Forms</a>
-      <a class="side-link" href="elements.html"><i class="hgi-stroke hgi-geometric-shapes-01"></i> Buttons &amp; Badges</a>
-      <a class="side-link" href="cards.html"><i class="hgi-stroke hgi-id-card-lanyard"></i> Cards &amp; Alerts</a>
-      <a class="side-link" href="overlays.html"><i class="hgi-stroke hgi-square-arrow-data-transfer-vertical"></i> Modals &amp; Tabs</a>
-      <a class="side-link" href="utilities.html"><i class="hgi-stroke hgi-sliders-horizontal"></i> Utilities</a>
-      <a class="side-link" href="components.html"><i class="hgi-stroke hgi-layers-01"></i> Components</a>
-      <a class="side-link" href="all-components.html"><i class="hgi-stroke hgi-layers-02"></i> All components</a>
-      <a class="side-link" href="icons.html"><i class="hgi-stroke hgi-grid-view"></i> Icons</a>
+  </section>
+
+  <!-- ═══ STATS ══════════════════════════════════════════════════════════ -->
+  <section class="lnd-container">
+    <div class="lnd-stats">
+      <div class="lnd-stat"><b>47</b><span>ready-made pages</span></div>
+      <div class="lnd-stat"><b>3</b><span>navigation modes</span></div>
+      <div class="lnd-stat"><b>11</b><span>layout presets</span></div>
+      <div class="lnd-stat"><b>0</b><span>CDN dependencies</span></div>
     </div>
-  </div>
-  <div class="side-group">
-    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-pie-chart-01 sg-icon"></i> Visuals <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
-    <div class="side-submenu">
-      <a class="side-link" href="tables.html"><i class="hgi-stroke hgi-table-02"></i> Tables</a>
-      <a class="side-link" href="charts.html"><i class="hgi-stroke hgi-chart-column"></i> Charts</a>
-      <a class="side-link" href="visuals.html"><i class="hgi-stroke hgi-magic-wand-01"></i> Widgets</a>
-      <a class="side-link" href="maps.html"><i class="hgi-stroke hgi-map-pin"></i> Maps</a>
-      <a class="side-link" href="echarts.html"><i class="hgi-stroke hgi-chart-line-data-02"></i> ECharts</a>
-      <a class="side-link" href="editors.html"><i class="hgi-stroke hgi-code"></i> Editors</a>
+  </section>
+
+  <!-- ═══ FEATURES ═══════════════════════════════════════════════════════ -->
+  <section class="lnd-section" id="features">
+    <div class="lnd-container">
+      <div class="lnd-section-head">
+        <div class="lnd-eyebrow">Features</div>
+        <h2>Built to be complete, not just pretty</h2>
+        <p>Every page shares one consistent shell and the same design system, so what you see in the preview is exactly what you build on.</p>
+      </div>
+      <div class="lnd-grid">
+        <div class="lnd-card">
+          <div class="lnd-icon"><i class="hgi-stroke hgi-dashboard-speed-01"></i></div>
+          <h3>App shell</h3>
+          <p>Fixed sidebar, top toolbar, global search, notifications and a user dropdown wired up and consistent across every page.</p>
+        </div>
+        <div class="lnd-card">
+          <div class="lnd-icon"><i class="hgi-stroke hgi-arrow-expand-01"></i></div>
+          <h3>Layout modes</h3>
+          <p>Vertical, horizontal and mini-sidebar navigation × fluid, boxed or contained content — all persisted via localStorage.</p>
+        </div>
+        <div class="lnd-card">
+          <div class="lnd-icon"><i class="hgi-stroke hgi-paint-board"></i></div>
+          <h3>Theme customizer</h3>
+          <p>Light/dark appearance, 18 accent colors, corner radius, font family and size, plus compact vs roomy density — saved per browser.</p>
+        </div>
+        <div class="lnd-card">
+          <div class="lnd-icon"><i class="hgi-stroke hgi-arrow-left-right"></i></div>
+          <h3>RTL support</h3>
+          <p>A dedicated RTL preview flips the whole interface live using Bootstrap's RTL build and mirrored layout rules.</p>
+        </div>
+        <div class="lnd-card">
+          <div class="lnd-icon"><i class="hgi-stroke hgi-rocket-01"></i></div>
+          <h3>No build step</h3>
+          <p>Static HTML, CSS and vanilla JS. Clone it, open a page, done. All libraries are vendored locally so it runs fully offline.</p>
+        </div>
+        <div class="lnd-card">
+          <div class="lnd-icon"><i class="hgi-stroke hgi-puzzle"></i></div>
+          <h3>Reusable components</h3>
+          <p>Buttons, cards, tables, forms, modals, tabs, editors, maps and charts — a component gallery covering real admin workflows.</p>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="side-group">
-    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-grid-view sg-icon"></i> Apps <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
-    <div class="side-submenu">
-      <a class="side-link" href="crm.html"><i class="hgi-stroke hgi-user-settings-01"></i> CRM</a>
-      <a class="side-link" href="ecommerce.html"><i class="hgi-stroke hgi-store-01"></i> E-commerce</a>
-      <a class="side-link" href="calendar.html"><i class="hgi-stroke hgi-calendar-01"></i> Calendar</a>
-      <a class="side-link" href="kanban.html"><i class="hgi-stroke hgi-kanban"></i> Kanban</a>
-      <a class="side-link" href="email.html"><i class="hgi-stroke hgi-mail-01"></i> Email</a>
-      <a class="side-link" href="file-manager.html"><i class="hgi-stroke hgi-folder-open"></i> File manager</a>
+  </section>
+
+  <!-- ═══ PAGES ══════════════════════════════════════════════════════════ -->
+  <section class="lnd-section" id="pages">
+    <div class="lnd-container">
+      <div class="lnd-section-head">
+        <div class="lnd-eyebrow">Pages</div>
+        <h2>47 pages, ready to explore</h2>
+        <p>From the dashboard to the file manager — every page is a working demo you can click straight into.</p>
+      </div>
+      <div class="lnd-pages">
+        <a class="lnd-page" href="preview/index.html"><div class="lnd-icon"><i class="hgi-stroke hgi-dashboard-speed-01"></i></div><div class="info"><b>Dashboard</b><span>KPIs, revenue charts, activity feed</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/analytics.html"><div class="lnd-icon"><i class="hgi-stroke hgi-chart-line-data-01"></i></div><div class="info"><b>Analytics</b><span>Sessions, conversions, top pages</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/ecommerce.html"><div class="lnd-icon"><i class="hgi-stroke hgi-store-01"></i></div><div class="info"><b>E-commerce</b><span>Sales, orders, product overview</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/crm.html"><div class="lnd-icon"><i class="hgi-stroke hgi-user-settings-01"></i></div><div class="info"><b>CRM</b><span>Pipeline, deals, contacts</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/calendar.html"><div class="lnd-icon"><i class="hgi-stroke hgi-calendar-01"></i></div><div class="info"><b>Calendar</b><span>Month grid with events</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/kanban.html"><div class="lnd-icon"><i class="hgi-stroke hgi-kanban"></i></div><div class="info"><b>Kanban</b><span>Drag-and-drop board</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/email.html"><div class="lnd-icon"><i class="hgi-stroke hgi-mail-01"></i></div><div class="info"><b>Email</b><span>Inbox, folders, message pane</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/file-manager.html"><div class="lnd-icon"><i class="hgi-stroke hgi-folder-open"></i></div><div class="info"><b>File manager</b><span>Grid, list and file previews</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/records.html"><div class="lnd-icon"><i class="hgi-stroke hgi-table-01"></i></div><div class="info"><b>Records</b><span>Sortable data table with bulk actions</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/forms.html"><div class="lnd-icon"><i class="hgi-stroke hgi-check-list"></i></div><div class="info"><b>Forms</b><span>Inputs, selects, switches, uploads</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/charts.html"><div class="lnd-icon"><i class="hgi-stroke hgi-chart-column"></i></div><div class="info"><b>Charts</b><span>Chart.js, ECharts and more</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+        <a class="lnd-page" href="preview/login.html"><div class="lnd-icon"><i class="hgi-stroke hgi-login-01"></i></div><div class="info"><b>Auth</b><span>8 screens — login to 2FA</span></div><i class="hgi-stroke hgi-arrow-right-01 go"></i></a>
+      </div>
     </div>
-  </div>
-  <div class="side-group">
-    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-file-01 sg-icon"></i> Pages <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
-    <div class="side-submenu">
-      <a class="side-link" href="login.html"><i class="hgi-stroke hgi-login-01"></i> Login</a>
-      <a class="side-link" href="register.html"><i class="hgi-stroke hgi-user-add-01"></i> Register</a>
-      <a class="side-link" href="forgot.html"><i class="hgi-stroke hgi-key-01"></i> Forgot password</a>
-      <a class="side-link" href="reset.html"><i class="hgi-stroke hgi-circle-unlock-01"></i> Reset password</a>
-      <a class="side-link" href="lock.html"><i class="hgi-stroke hgi-lock"></i> Lock screen</a>
-      <a class="side-link" href="verify.html"><i class="hgi-stroke hgi-mail-open-01"></i> Verify email</a>
-      <a class="side-link" href="two-factor.html"><i class="hgi-stroke hgi-shield-01"></i> Two-factor auth</a>
-      <a class="side-link" href="session-expired.html"><i class="hgi-stroke hgi-transaction-history"></i> Session expired</a>
-      <a class="side-link" href="rtl.html"><i class="hgi-stroke hgi-arrow-left-right"></i> RTL preview</a>
+  </section>
+
+  <!-- ═══ LAYOUTS ════════════════════════════════════════════════════════ -->
+  <section class="lnd-section" id="layouts">
+    <div class="lnd-container">
+      <div class="lnd-section-head">
+        <div class="lnd-eyebrow">Layouts</div>
+        <h2>One shell, three navigation styles</h2>
+        <p>Switch navigation and content width from any page — each combination is also available as its own preset page.</p>
+      </div>
+      <div class="lnd-modes">
+        <a class="lnd-mode" href="preview/layout-vertical.html">
+          <div class="mock"><div class="m-nav"><div class="m-line active"></div><div class="m-line"></div><div class="m-line"></div></div><div class="m-body"></div></div>
+          <h3>Vertical sidebar</h3>
+          <p>The classic collapsed drawer with grouped sub-menus.</p>
+        </a>
+        <a class="lnd-mode" href="preview/layout-horizontal.html">
+          <div class="mock top"><div class="m-nav"><div class="m-line active"></div><div class="m-line"></div><div class="m-line"></div></div><div class="m-body"></div></div>
+          <h3>Horizontal top nav</h3>
+          <p>Flyout menus across the top of the frame.</p>
+        </a>
+        <a class="lnd-mode" href="preview/layout-mini-sidebar.html">
+          <div class="mock mini"><div class="m-nav"></div><div class="m-body"><div class="m-line active"></div><div class="m-line"></div><div class="m-line"></div></div></div>
+          <h3>Mini sidebar rail</h3>
+          <p>A compact icon rail that expands on hover.</p>
+        </a>
+      </div>
     </div>
-  </div>
-  <div class="side-group">
-    <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-book-01 sg-icon"></i> Docs <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
-    <div class="side-submenu">
-      <a class="side-link" href="docs.html"><i class="hgi-stroke hgi-book-01"></i> Docs</a>
-    </div>
-  </div>
-</nav>
-          <div class="app-user">
-        <div class="dropdown footer-user" id="footer-user">
-          <div class="avatar-btn" data-bs-toggle="dropdown">
-            <div class="avatar-circle">JC</div>
-            <div class="who"><div class="n">John Canete</div><div class="r">Administrator</div></div>
-            <i class="hgi-stroke hgi-arrow-up-01 footer-user-chev" style="font-size:9px;color:var(--text3)"></i>
-          </div>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#"><i class="hgi-stroke hgi-user me-2"></i>Profile</a></li>
-            <li><a class="dropdown-item" href="#"><i class="hgi-stroke hgi-settings-01 me-2"></i>Settings</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="#"><i class="hgi-stroke hgi-logout-01 me-2"></i>Sign out</a></li>
+  </section>
+
+  <!-- ═══ CUSTOMIZER ═════════════════════════════════════════════════════ -->
+  <section class="lnd-section" id="customize">
+    <div class="lnd-container">
+      <div class="lnd-split">
+        <div>
+          <div class="lnd-eyebrow">Theme customizer</div>
+          <h2 style="font-size:clamp(24px,3vw,32px);font-weight:700;color:var(--text);margin-bottom:10px">Make it yours in seconds</h2>
+          <p style="font-size:14px;line-height:1.7;color:var(--text2)">The customizer ships in every page's toolbar. Pick an appearance, accent, radius and density — preferences persist via localStorage and apply instantly across the whole UI, charts included.</p>
+          <ul class="lnd-checklist">
+            <li><i class="hgi-stroke hgi-tick-01"></i> Dark / light appearance toggled from any page</li>
+            <li><i class="hgi-stroke hgi-tick-01"></i> 18 accent palettes re-color the entire design system</li>
+            <li><i class="hgi-stroke hgi-tick-01"></i> Radius, font family and base font size controls</li>
+            <li><i class="hgi-stroke hgi-tick-01"></i> Compact vs roomy density and fluid/boxed/contained widths</li>
           </ul>
+          <a class="btn btn-primary mt-3" href="preview/index.html"><i class="hgi-stroke hgi-paint-board me-1"></i> Try the customizer</a>
+        </div>
+        <div class="lnd-cust">
+          <div class="cust-label">Appearance</div>
+          <div class="cust-row">
+            <div class="pill on"><i class="hgi-stroke hgi-moon-01 me-1"></i>Dark</div>
+            <div class="pill"><i class="hgi-stroke hgi-sun-01 me-1"></i>Light</div>
+          </div>
+          <div class="cust-label">Accent color</div>
+          <div class="swatches">
+            <div class="swatch on" style="background:#6366f1"></div>
+            <div class="swatch" style="background:#8b5cf6"></div>
+            <div class="swatch" style="background:#ec4899"></div>
+            <div class="swatch" style="background:#0ea5e9"></div>
+            <div class="swatch" style="background:#22c55e"></div>
+            <div class="swatch" style="background:#f59e0b"></div>
+          </div>
+          <div class="cust-label">Corner radius</div>
+          <div class="radius-options">
+            <div class="rpill sq on"></div>
+            <div class="rpill rd"></div>
+            <div class="rpill rr"></div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-btn"></div>
+            <div class="mini-prog">
+              <div class="bar"><i></i></div>
+              <div class="bar"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- MAIN -->
-  <div id="main" class="d-flex flex-column">
-
-    <!-- TOOLBAR -->
-    <div id="toolbar" class="flex-shrink-0 sticky-top">
-    <div class="container d-flex align-items-center gap-2 h-100">
-      <button class="icon-btn app-nav-toggle" onclick="openAppNav()" aria-label="Toggle navigation"><i class="hgi-stroke hgi-menu-02"></i></button>
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"><i class="hgi-stroke hgi-add-01 me-1"></i> New</button>
-      <button class="btn btn-ghost" onclick="showToast('success','Data refreshed')" aria-label="Refresh data"><i class="hgi-stroke hgi-refresh-03"></i></button>
-      <div class="tb-sep d-none d-md-block"></div>
-      <nav class="breadcrumb-wrap d-none d-md-flex" aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-          <li class="breadcrumb-item">Superbyte UI</li>
-          <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-        </ol>
-      </nav>
-      <div class="search-wrap ms-auto ms-md-0">
-        <i class="hgi-stroke hgi-search-01 search-icon"></i>
-        <input class="search-input" id="global-search" placeholder="Search…" autocomplete="off">
+  <!-- ═══ TECH ═══════════════════════════════════════════════════════════ -->
+  <section class="lnd-section" id="tech">
+    <div class="lnd-container">
+      <div class="lnd-section-head">
+        <div class="lnd-eyebrow">Tech stack</div>
+        <h2>Vendored, versioned, zero CDN</h2>
+        <p>Everything below ships inside the repository under <code>vendor/</code> — no external requests at runtime.</p>
       </div>
-      <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme"><i class="hgi-stroke hgi-moon-01" id="theme-icon"></i></button>
-      <div class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#themeCustomizer" title="Theme colors"><i class="hgi-stroke hgi-paint-board"></i></div>
-      <div class="dropdown">
-        <div class="icon-btn" data-bs-toggle="dropdown"><i class="hgi-stroke hgi-notification-01"></i><span class="ping">3</span></div>
-        <ul class="dropdown-menu dropdown-menu-end" style="width:300px">
-          <li class="dropdown-header px-2 pb-2">Notifications</li>
-          <li><a class="dropdown-item d-flex gap-2 py-2" href="#"><i class="hgi-stroke hgi-checkmark-circle-01 text-success mt-1"></i><span><strong class="d-block" style="color:var(--text)">Backup completed</strong><small style="color:var(--text3)">2 minutes ago</small></span></a></li>
-          <li><a class="dropdown-item d-flex gap-2 py-2" href="#"><i class="hgi-stroke hgi-user-add-01 mt-1" style="color:var(--accent-h)"></i><span><strong class="d-block" style="color:var(--text)">New user registered</strong><small style="color:var(--text3)">1 hour ago</small></span></a></li>
-          <li><a class="dropdown-item d-flex gap-2 py-2" href="#"><i class="hgi-stroke hgi-alert-02 mt-1" style="color:var(--yellow)"></i><span><strong class="d-block" style="color:var(--text)">Storage at 82%</strong><small style="color:var(--text3)">3 hours ago</small></span></a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-center" href="#" style="color:var(--accent-h)">View all</a></li>
-        </ul>
+      <div class="lnd-tech">
+        <span class="chip"><i class="hgi-stroke hgi-html-5"></i> HTML5</span>
+        <span class="chip"><i class="hgi-stroke hgi-code"></i> CSS3 + vanilla JS</span>
+        <span class="chip"><i class="hgi-stroke hgi-hugeicons"></i> Bootstrap 5.3.3</span>
+        <span class="chip"><i class="hgi-stroke hgi-chart-area"></i> Chart.js 4</span>
+        <span class="chip"><i class="hgi-stroke hgi-chart-line-data-02"></i> ECharts</span>
+        <span class="chip"><i class="hgi-stroke hgi-map-pin"></i> Leaflet</span>
+        <span class="chip"><i class="hgi-stroke hgi-content-writing"></i> Quill</span>
+        <span class="chip"><i class="hgi-stroke hgi-code-square"></i> CodeMirror</span>
+        <span class="chip"><i class="hgi-stroke hgi-geometric-shapes-01"></i> HugeIcons</span>
       </div>
     </div>
+  </section>
+
+  <!-- ═══ CTA ════════════════════════════════════════════════════════════ -->
+  <section class="lnd-container">
+    <div class="lnd-cta">
+      <h2>Ready to build something great?</h2>
+      <p>Jump into the live demo, clone the repository, or open the docs to start customizing.</p>
+      <div class="lnd-hero-actions">
+        <a class="btn btn-primary" href="preview/index.html"><i class="hgi-stroke hgi-rocket-01 me-1"></i> Open the dashboard</a>
+        <a class="btn btn-ghost" href="https://github.com/superbyte23/superbyte-ui"><i class="hgi-stroke hgi-arrow-down-01 me-1"></i> Get the source</a>
+        <a class="btn btn-ghost" href="preview/docs.html"><i class="hgi-stroke hgi-book-01 me-1"></i> Read the docs</a>
+      </div>
     </div>
+  </section>
 
-    <!-- CONTENT -->
-    <div id="content" class="container">
+</main>
 
-      <section class="page-section active" id="page-dashboard">
-        <div class="page-head">
-          <div><h1>Dashboard</h1><p>overview · last synced 2 min ago</p></div>
-          <div class="d-flex gap-2">
-            <button class="btn btn-ghost btn-sm"><i class="hgi-stroke hgi-calendar-02 me-1"></i> Last 30 days</button>
-            <button class="btn btn-primary btn-sm"><i class="hgi-stroke hgi-download-01 me-1"></i> Export</button>
-          </div>
-        </div>
-
-        <div class="row g-3 mb-3">
-          <div class="col-6 col-xl-3">
-            <div class="card stat-card">
-              <div class="top"><div class="stat-icon" style="background:var(--accent-bg);color:var(--accent-h)"><i class="hgi-stroke hgi-money-01"></i></div><span class="stat-delta up"><i class="hgi-stroke hgi-arrow-up-01"></i> 12.4%</span></div>
-              <div class="value">$84,204</div>
-              <div class="label">Total Revenue</div>
-            </div>
-          </div>
-          <div class="col-6 col-xl-3">
-            <div class="card stat-card">
-              <div class="top"><div class="stat-icon" style="background:var(--green-bg);color:var(--green)"><i class="hgi-stroke hgi-user-group"></i></div><span class="stat-delta up"><i class="hgi-stroke hgi-arrow-up-01"></i> 4.1%</span></div>
-              <div class="value">2,318</div>
-              <div class="label">Active Users</div>
-            </div>
-          </div>
-          <div class="col-6 col-xl-3">
-            <div class="card stat-card">
-              <div class="top"><div class="stat-icon" style="background:var(--yellow-bg);color:var(--yellow)"><i class="hgi-stroke hgi-shopping-cart-01"></i></div><span class="stat-delta down"><i class="hgi-stroke hgi-arrow-down-01"></i> 2.3%</span></div>
-              <div class="value">1,042</div>
-              <div class="label">Orders</div>
-            </div>
-          </div>
-          <div class="col-6 col-xl-3">
-            <div class="card stat-card">
-              <div class="top"><div class="stat-icon" style="background:var(--danger-bg);color:var(--danger)"><i class="hgi-stroke hgi-rotate-left-01"></i></div><span class="stat-delta up"><i class="hgi-stroke hgi-arrow-up-01"></i> 0.8%</span></div>
-              <div class="value">3.2%</div>
-              <div class="label">Churn Rate</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row g-3 mb-3">
-          <div class="col-lg-8">
-            <div class="card h-100">
-              <div class="card-header">
-                <div class="card-title"><i class="hgi-stroke hgi-chart-area"></i> Revenue over time</div>
-                <div class="d-flex gap-1">
-                  <span class="tag tag-indigo"><i class="hgi-stroke hgi-circle"></i> Revenue</span>
-                  <span class="tag tag-slate"><i class="hgi-stroke hgi-circle"></i> Target</span>
-                </div>
-              </div>
-              <div class="card-body"><div style="height:230px"><canvas id="revenueChart"></canvas></div></div>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="card h-100" id="traffic-sources">
-              <div class="card-header"><div class="card-title"><i class="hgi-stroke hgi-pie-chart-01"></i> Traffic sources</div></div>
-              <div class="card-body d-flex flex-column align-items-center">
-                <div class="w-100" style="height:180px"><canvas id="trafficChart"></canvas></div>
-                <div class="w-100 mt-3">
-                  <div class="d-flex justify-content-between mb-2" style="font-size:12px"><span><span class="legend-dot" style="background:#6366f1"></span>Direct</span><span class="font-mono" style="color:var(--text2)">48%</span></div>
-                  <div class="d-flex justify-content-between mb-2" style="font-size:12px"><span><span class="legend-dot" style="background:#818cf8"></span>Organic</span><span class="font-mono" style="color:var(--text2)">31%</span></div>
-                  <div class="d-flex justify-content-between" style="font-size:12px"><span><span class="legend-dot" style="background:#2e3547"></span>Referral</span><span class="font-mono" style="color:var(--text2)">21%</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row g-3">
-          <div class="col-lg-7">
-            <div class="card">
-              <div class="card-header">
-                <div class="card-title"><i class="hgi-stroke hgi-left-to-right-list-bullet"></i> Recent activity</div>
-                <span class="card-sub">7 events</span>
-              </div>
-              <div class="list-group list-group-flush">
-                <div class="list-group-item d-flex align-items-center gap-3">
-                  <div class="stat-icon" style="background:var(--green-bg);color:var(--green);width:30px;height:30px;font-size:12px"><i class="hgi-stroke hgi-tick-01"></i></div>
-                  <div class="flex-fill"><div style="color:var(--text);font-weight:500;font-size:13px">Deploy <span class="font-mono" style="color:var(--text3)">#a92f1c</span> succeeded</div><div style="font-size:11px;color:var(--text3)">production · 12 minutes ago</div></div>
-                  <span class="tag tag-green">passed</span>
-                </div>
-                <div class="list-group-item d-flex align-items-center gap-3">
-                  <div class="stat-icon" style="background:var(--accent-bg);color:var(--accent-h);width:30px;height:30px;font-size:12px"><i class="hgi-stroke hgi-user-add-01"></i></div>
-                  <div class="flex-fill"><div style="color:var(--text);font-weight:500;font-size:13px">Maria Santos joined the Editors team</div><div style="font-size:11px;color:var(--text3)">45 minutes ago</div></div>
-                  <span class="tag tag-indigo">team</span>
-                </div>
-                <div class="list-group-item d-flex align-items-center gap-3">
-                  <div class="stat-icon" style="background:var(--yellow-bg);color:var(--yellow);width:30px;height:30px;font-size:12px"><i class="hgi-stroke hgi-alert-02"></i></div>
-                  <div class="flex-fill"><div style="color:var(--text);font-weight:500;font-size:13px">Disk usage crossed 80% on <span class="font-mono" style="color:var(--text3)">db-02</span></div><div style="font-size:11px;color:var(--text3)">1 hour ago</div></div>
-                  <span class="tag tag-amber">warning</span>
-                </div>
-                <div class="list-group-item d-flex align-items-center gap-3">
-                  <div class="stat-icon" style="background:var(--danger-bg);color:var(--danger);width:30px;height:30px;font-size:12px"><i class="hgi-stroke hgi-cancel-01"></i></div>
-                  <div class="flex-fill"><div style="color:var(--text);font-weight:500;font-size:13px">Build <span class="font-mono" style="color:var(--text3)">#a91e0b</span> failed — 2 tests</div><div style="font-size:11px;color:var(--text3)">2 hours ago</div></div>
-                  <span class="tag tag-red">failed</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-5">
-            <div class="card h-100">
-              <div class="card-header"><div class="card-title"><i class="hgi-stroke hgi-target-02"></i> Team quota</div></div>
-              <div class="card-body d-flex flex-column gap-3">
-                <div>
-                  <div class="d-flex justify-content-between mb-1" style="font-size:12.5px"><span style="color:var(--text2)">API requests</span><span class="font-mono" style="color:var(--text3)">84,204 / 100,000</span></div>
-                  <div class="progress"><div class="progress-bar" style="width:84%"></div></div>
-                </div>
-                <div>
-                  <div class="d-flex justify-content-between mb-1" style="font-size:12.5px"><span style="color:var(--text2)">Storage</span><span class="font-mono" style="color:var(--text3)">61.2 GB / 100 GB</span></div>
-                  <div class="progress"><div class="progress-bar" style="width:61%;background:var(--green)"></div></div>
-                </div>
-                <div>
-                  <div class="d-flex justify-content-between mb-1" style="font-size:12.5px"><span style="color:var(--text2)">Seats used</span><span class="font-mono" style="color:var(--text3)">18 / 20</span></div>
-                  <div class="progress"><div class="progress-bar" style="width:90%;background:var(--yellow)"></div></div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between pt-2" style="border-top:1px solid var(--border)">
-                  <div class="avatar-stack">
-                    <div class="avatar-circle">JC</div><div class="avatar-circle" style="background:linear-gradient(135deg,#22c55e,#4ade80)">MS</div><div class="avatar-circle" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">RT</div><div class="avatar-circle" style="background:var(--surface3);color:var(--text2)">+15</div>
-                  </div>
-                  <button class="btn btn-ghost btn-sm">Manage</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════════════ -->
+<footer class="lnd-footer">
+  <div class="lnd-container lnd-footer-inner">
+    <a class="lnd-brand" href="#top"><div class="logo-mark"><i class="hgi-stroke hgi-flowchart-01"></i></div> Superbyte UI</a>
+    <div class="lnd-footer-links">
+      <a href="preview/index.html">Preview</a>
+      <a href="preview/docs.html">Docs</a>
+      <a href="preview/layouts.html">Layouts</a>
+      <a href="https://github.com/superbyte23/superbyte-ui">GitHub</a>
+    </div>
+    <div class="lnd-footer-copy">
+      <span class="plan-tag"><span class="status-dot on"></span>v1.0.0</span>
+      <span>© 2026 Superbyte UI · <a href="https://github.com/superbyte23/superbyte-ui" style="color:inherit">MIT license</a></span>
     </div>
   </div>
-</div>
-
-<!-- ═══ MODALS ═══════════════════════════════════════════════════════════ -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title"><span class="modal-icon"><i class="hgi-stroke hgi-folder-add"></i></span> New folder</div>
-        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="form-floating">
-          <input class="form-control" id="create-name" placeholder="new-folder" autofocus>
-          <label for="create-name">Folder name</label>
-        </div>
-        <div class="form-text mt-2">Folder names must be unique within the current directory.</div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary" data-bs-dismiss="modal" onclick="showToast('success','Folder created')">Create</button>
-      </div>
-    </div>
-    
-  </div>
-</div>
-
-<footer class="app-footer">
-      <div class="app-footer-inner d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
-        <div class="footer-meta"><span class="plan-tag"><span class="status-dot on"></span>v1.0.0</span><span class="footer-status"><span class="status-dot on"></span>System online · 99.9% uptime</span></div>
-        <div class="footer-storage"><div class="fs-label"><span>Storage</span><span>6.2 GB of 10 GB</span></div><div class="progress"><div class="progress-bar" style="width:62%"></div></div></div>
-        <div class="footer-links"><a href="docs.html">Docs</a><a href="#">Support</a><a href="#">Changelog</a></div>
-        <div class="footer-copy">© 2026 Superbyte UI</div>
-      </div>
-    </footer>
-
-<div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title"><span class="modal-icon"><i class="hgi-stroke hgi-cloud-upload"></i></span> Upload files</div>
-        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="dropzone" style="border:2px dashed var(--border2);border-radius:var(--radius);padding:26px;text-align:center;color:var(--text3);font-size:13px">
-          <i class="hgi-stroke hgi-cloud-upload d-block mb-2" style="font-size:22px"></i>
-          Drop files here or click to browse<br><small style="font-size:11px">Max 50 MB per file</small>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-primary" data-bs-dismiss="modal" onclick="showToast('success','Upload complete')">Upload</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title"><span class="modal-icon danger"><i class="hgi-stroke hgi-alert-02"></i></span> Confirm delete</div>
-        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body"><p style="color:var(--text2);font-size:13px;margin:0">This action cannot be undone. The item will be permanently removed.</p></div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-danger" data-bs-dismiss="modal" onclick="showToast('success','Item deleted')">Delete</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ THEME CUSTOMIZER ═════════════════════════════════════════════════ -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="themeCustomizer">
-  <div class="offcanvas-header">
-    <div class="offcanvas-title"><i class="hgi-stroke hgi-paint-board"></i> Theme customizer</div>
-    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
-  </div>
-  <div class="offcanvas-body">
-
-    <div class="customizer-section">
-      <div class="customizer-label">Appearance</div>
-      <div class="appearance-grid">
-        <div class="appearance-opt active" id="opt-dark" onclick="setAppearance('dark')"><i class="hgi-stroke hgi-moon-01"></i>Dark</div>
-        <div class="appearance-opt" id="opt-light" onclick="setAppearance('light')"><i class="hgi-stroke hgi-sun-01"></i>Light</div>
-      </div>
-    </div>
-
-    <div class="customizer-section">
-      <div class="customizer-label">Accent color</div>
-      <div class="swatch-grid" id="swatch-grid"></div>
-    </div>
-
-    <div class="customizer-section">
-      <div class="customizer-label">Corner radius</div>
-      <div class="radius-grid">
-        <div class="radius-opt active" id="radius-sharp" onclick="setRadius('4px','2px',this)">Sharp</div>
-        <div class="radius-opt" id="radius-default" onclick="setRadius('8px','4px',this)">Default</div>
-        <div class="radius-opt" id="radius-round" onclick="setRadius('14px','8px',this)">Round</div>
-      </div>
-    </div>
-
-    <div class="customizer-section">
-      <div class="customizer-label">Layout density</div>
-      <div class="appearance-grid">
-        <div class="appearance-opt" id="opt-compact" onclick="setCompact(true)"><i class="hgi-stroke hgi-drag-02"></i>Compact</div>
-        <div class="appearance-opt active" id="opt-roomy" onclick="setCompact(false)"><i class="hgi-stroke hgi-more-vertical"></i>Roomy</div>
-      </div>
-    </div>
-
-    <div class="customizer-section">
-      <div class="customizer-label">Content width</div>
-      <div class="appearance-grid">
-        <div class="appearance-opt" data-width-mode="fluid"><i class="hgi-stroke hgi-arrow-expand-01"></i>Fluid</div>
-        <div class="appearance-opt" data-width-mode="boxed"><i class="hgi-stroke hgi-arrow-shrink-01"></i>Boxed</div>
-        <div class="appearance-opt" data-width-mode="contained"><i class="hgi-stroke hgi-square-arrow-down-01"></i>Contained</div>
-      </div>
-    </div>
-    <div class="customizer-section">
-      <div class="customizer-label">Navigation</div>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
-        <div class="appearance-opt" data-layout-mode="vertical"><i class="hgi-stroke hgi-sidebar-left"></i>Vertical</div>
-        <div class="appearance-opt" data-layout-mode="horizontal"><i class="hgi-stroke hgi-arrow-expand-01"></i>Horizontal</div>
-        <div class="appearance-opt" data-layout-mode="mini-sidebar"><i class="hgi-stroke hgi-layers-01"></i>Mini Sidebar</div>
-      </div>
-    </div>
-
-    <div class="customizer-section">
-      <div class="customizer-label">Base font size</div>
-      <input type="range" class="form-range" id="fs-range" min="13" max="17" value="14" oninput="setFontSize(this.value)">
-      <div class="d-flex justify-content-between" style="font-size:10.5px;color:var(--text3);margin-top:4px"><span>13</span><span id="fs-out">14px</span><span>17</span></div>
-    </div>
-
-    <div class="customizer-section mb-0">
-      <div class="customizer-label">Preview</div>
-      <div class="card p-3 d-flex flex-column gap-2">
-        <button class="btn btn-primary btn-sm">Primary button</button>
-        <span class="tag tag-indigo" id="preview-tag"><i class="hgi-stroke hgi-circle"></i> Sample tag</span>
-        <div class="progress"><div class="progress-bar" style="width:65%"></div></div>
-      </div>
-    </div>
-
-  </div>
-</div>
+</footer>
 
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="vendor/chart.js/chart.umd.min.js"></script>
 <script>
-/* ── DASHBOARD CHARTS ───────────────────────────────────────────────────── */
-function initCharts() {
-  const v = themeVars();
-  Chart.defaults.color = v.text3;
-  Chart.defaults.font.family = "'Ubuntu Mono', monospace";
-  Chart.defaults.font.size = 11;
+/* ── LANDING PAGE BEHAVIOR ─────────────────────────────────────────────── */
+(function () {
+  const body = document.body;
 
-  if (window._revenueChart) window._revenueChart.destroy();
-  if (window._trafficChart) window._trafficChart.destroy();
-
-  window._revenueChart = new Chart(document.getElementById('revenueChart'), {
-    type: 'line',
-    data: {
-      labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul'],
-      datasets: [
-        { label:'Revenue', data:[42,49,45,58,63,70,84], borderColor:v.accent, backgroundColor:`rgba(${v.rgb},.12)`, fill:true, tension:.35, pointRadius:0, borderWidth:2 },
-        { label:'Target', data:[45,45,50,55,60,65,70], borderColor:v.border2, borderDash:[4,4], fill:false, tension:.35, pointRadius:0, borderWidth:2 }
-      ]
-    },
-    options: { plugins:{legend:{display:false}}, scales:{ x:{grid:{display:false}}, y:{grid:{color:v.grid}} }, maintainAspectRatio:false }
-  });
-
-  window._trafficChart = new Chart(document.getElementById('trafficChart'), {
-    type: 'doughnut',
-    data: { labels:['Direct','Organic','Referral'], datasets:[{ data:[48,31,21], backgroundColor:[v.accent, v.accentHi, v.border2], borderColor:v.border, borderWidth:3 }] },
-    options: { plugins:{legend:{display:false}}, cutout:'72%', maintainAspectRatio:false }
-  });
-
-  const dots = document.querySelectorAll('#traffic-sources .legend-dot');
-  if (dots.length === 3) {
-    dots[0].style.background = v.accent;
-    dots[1].style.background = v.accentHi;
-    dots[2].style.background = v.border2;
+  function themeIcon(mode) {
+    const i = document.getElementById('lnd-theme-icon');
+    if (i) i.className = mode === 'dark' ? 'hgi-stroke hgi-moon-01' : 'hgi-stroke hgi-sun-01';
   }
-}
-window.__chartInit = initCharts;
+
+  function applyAppearance(mode) {
+    body.setAttribute('data-bs-theme', mode);
+    themeIcon(mode);
+    try { localStorage.setItem('grid_admin_theme', mode); } catch (e) {}
+  }
+
+  window.toggleLndTheme = function () {
+    applyAppearance(body.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark');
+  };
+
+  themeIcon(body.getAttribute('data-bs-theme') || 'dark');
+
+  const navToggle = document.getElementById('lnd-nav-toggle');
+  if (navToggle) {
+    navToggle.addEventListener('click', function () {
+      document.getElementById('lnd-nav-links').classList.toggle('open');
+    });
+  }
+})();
 </script>
-<script src="assets/js/app.js"></script>
 </body>
 </html>
-

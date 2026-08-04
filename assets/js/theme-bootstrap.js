@@ -26,11 +26,17 @@
       } catch (e) {}
     }
     var R = { '4px': ['4px', '2px'], '8px': ['8px', '4px'], '14px': ['14px', '8px'] };
+    function accentText(base) {
+      var c = base.replace('#', '');
+      var r = parseInt(c.substr(0, 2), 16), g = parseInt(c.substr(2, 2), 16), b = parseInt(c.substr(4, 2), 16);
+      return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.72 ? '#111827' : '#ffffff';
+    }
     var t, hl = document.documentElement.style;
     if (m.fs) hl.fontSize = Math.min(17, Math.max(13, parseInt(m.fs, 10))) + 'px';
     if (m.font && FONTS[m.font]) hl.setProperty('--sans', FONTS[m.font].stack);
     if (m.accent && (t = THEMES[m.accent])) {
       hl.setProperty('--accent', t.base); hl.setProperty('--accent-h', t.hi);
+      hl.setProperty('--accent-text', accentText(t.base));
       hl.setProperty('--bs-primary', t.base); hl.setProperty('--bs-primary-rgb', t.rgb);
     }
     if (m.radius && R[m.radius]) {
@@ -70,6 +76,7 @@
       var light = (mode || 'dark') === 'light';
       if (m.accent && (t = THEMES[m.accent])) {
         bs.setProperty('--accent', t.base); bs.setProperty('--accent-h', t.hi);
+        bs.setProperty('--accent-text', accentText(t.base));
         bs.setProperty('--accent-bg', 'rgba(' + t.rgb + ',' + (light ? '.08' : '.12') + ')');
         bs.setProperty('--bs-primary', t.base); bs.setProperty('--bs-primary-rgb', t.rgb);
       }
