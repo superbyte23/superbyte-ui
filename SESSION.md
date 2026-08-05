@@ -113,6 +113,9 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
 - theme-bootstrap.js: pre-paint theme + layout + font loading.
 
 ## Changelog (condensed)
+- DataTables row actions (2026-08-05): client-side demo (2) now has always-visible
+  view · edit · delete buttons (`hgi-eye` view modal `#viewModal`, `openView`);
+  `.row-actions-always` override added so CRUD controls are discoverable.
 - DataTables CRUD (2026-08-05): client-side demo (2) on `preview/datatables.html` gained
   add · edit · delete via `#customerModal` + row-actions buttons (`openAdd`/`openEdit`/`openDelete`);
   row-action indices fixed for non-first pages (`csStart + idx`); verified headless (probe-crud.cjs).

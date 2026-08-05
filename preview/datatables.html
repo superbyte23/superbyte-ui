@@ -18,6 +18,11 @@
   th.sortable:hover { color: var(--text2); }
   th.sort-asc::after { content: ' ↑'; color: var(--accent-h); }
   th.sort-desc::after { content: ' ↓'; color: var(--accent-h); }
+  .row-actions-always .row-actions { opacity: 1 !important; }
+  .view-field { display: flex; justify-content: space-between; align-items: center; padding: 10px 2px; border-bottom: 1px solid var(--border); }
+  .view-field:last-child { border-bottom: 0; }
+  .view-field .k { font-size: 12px; color: var(--text3); }
+  .view-field .v { font-weight: 600; }
   .live-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--green); }
   .live-badge.paused { color: var(--text3); }
   .live-badge .status-dot.on { animation: live-pulse 1.6s ease-in-out infinite; }
@@ -223,7 +228,7 @@
         <div class="card mt-3">
           <div class="card-header">
             <div class="card-title"><i class="hgi-stroke hgi-sorting-a-z-01"></i> 2 · Client-side DataTable</div>
-            <span class="card-sub">vanilla JS · search · sort · paginate · add · edit · delete</span>
+            <span class="card-sub">vanilla JS · search · sort · paginate · add · view · edit · delete</span>
           </div>
           <div class="table-toolbar">
             <div class="d-flex flex-wrap gap-2 align-items-center">
@@ -245,7 +250,7 @@
           </div>
           <div class="table-zone">
             <div class="table-responsive">
-              <table class="table" id="cs-table">
+              <table class="table row-actions-always" id="cs-table">
                 <thead>
                   <tr>
                     <th data-col="name" class="sortable sort-asc">Customer</th>
@@ -464,6 +469,23 @@
   </div>
 </div>
 
+<div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"><span class="modal-icon"><i class="hgi-stroke hgi-eye"></i></span> Customer details</div>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="view-fields"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ THEME CUSTOMIZER ═════════════════════════════════════════════════ -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="themeCustomizer">
   <div class="offcanvas-header">
@@ -613,6 +635,7 @@ function csRender() {
       '<td class="mono-cell text-end">' + r.seats + '</td>' +
       '<td><span class="tag ' + csTag(r.status) + '"><i class="hgi-stroke hgi-circle"></i> ' + r.status + '</span></td>' +
       '<td class="row-actions">' +
+        '<button class="row-btn" data-act="view" title="View"><i class="hgi-stroke hgi-eye"></i></button>' +
         '<button class="row-btn" data-act="edit" title="Edit"><i class="hgi-stroke hgi-pen-01"></i></button>' +
         '<button class="row-btn del" data-act="del" title="Delete"><i class="hgi-stroke hgi-delete-01"></i></button>' +
       '</td>' +
@@ -655,7 +678,8 @@ csTbody.addEventListener('click', e => {
   const btn = e.target.closest('button[data-act]');
   if (!btn) return;
   const idx = csStart + [...csTbody.children].indexOf(btn.closest('tr'));
-  if (btn.dataset.act === 'edit') openEdit(idx);
+  if (btn.dataset.act === 'view') openView(idx);
+  else if (btn.dataset.act === 'edit') openEdit(idx);
   else if (btn.dataset.act === 'del') openDelete(idx);
 });
 
@@ -695,6 +719,22 @@ function openEdit(idx) {
   document.getElementById('cust-seats').value = r.seats;
   document.getElementById('cust-status').value = r.status;
   new bootstrap.Modal(custModalEl).show();
+}
+const viewFields = document.getElementById('view-fields');
+function openView(idx) {
+  const r = csCurrent[idx];
+  if (!r) return;
+  const rows = [
+    ['Customer', r.name],
+    ['Plan', r.plan],
+    ['MRR', '$' + r.amount.toLocaleString()],
+    ['Seats', r.seats],
+    ['Status', r.status]
+  ];
+  viewFields.innerHTML = rows.map(pair =>
+    '<div class="view-field"><span class="k">' + pair[0] + '</span><span class="v">' + pair[1] + '</span></div>'
+  ).join('');
+  new bootstrap.Modal(document.getElementById('viewModal')).show();
 }
 function openDelete(idx) {
   pendingDelete = idx;
