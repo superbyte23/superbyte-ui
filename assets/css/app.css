@@ -24,8 +24,8 @@
   --green-bg:  rgba(34,197,94,.12);
   --yellow:    #f59e0b;
   --yellow-bg: rgba(245,158,11,.12);
-  --radius:    8px;
-  --radius-sm: 4px;
+  --radius:    14px;
+  --radius-sm: 8px;
   --mono:      'Ubuntu Mono', monospace;
   --sans:      'Ubuntu', sans-serif;
   --sidebar-w: 232px;
@@ -47,7 +47,7 @@
   --bs-border-color: var(--border);
   --bs-border-radius: var(--radius);
   --bs-border-radius-sm: var(--radius-sm);
-  --bs-border-radius-lg: 12px;
+  --bs-border-radius-lg: var(--radius);
   --bs-primary: var(--accent);
   --bs-primary-rgb: 99,102,241;
   --bs-danger: var(--danger);
@@ -564,7 +564,7 @@ a { text-decoration: none; }
 .modal-content {
   background: var(--surface);
   border: 1px solid var(--border2);
-  border-radius: 18px;
+  border-radius: var(--radius);
   box-shadow: 0 32px 90px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
   overflow: hidden;
 }
@@ -582,7 +582,7 @@ a { text-decoration: none; }
 @media (max-width: 575.98px) {
   .modal-dialog { margin: 0; }
   .modal-dialog-centered { min-height: 100%; align-items: flex-end; }
-  .modal-content { border-radius: 20px 20px 0 0; }
+  .modal-content { border-radius: var(--radius) var(--radius) 0 0; }
   .modal.fade .modal-dialog { transform: translateY(100%); }
   .modal.show .modal-dialog { transform: none; }
 }

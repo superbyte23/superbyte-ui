@@ -6,7 +6,7 @@ window.__pageInit = function () {
   var STYLES = ['default', 'newyork', 'radix', 'bold'];
   var RADII = { '4px': ['4px', '2px'], '8px': ['8px', '4px'], '14px': ['14px', '8px'] };
 
-  var cfg = { color: 'indigo', baseTheme: 'neutral', font: 'ubuntu', style: 'default', radius: '8px', appearance: 'dark', layout: 'roomy', boxed: false, fontsize: 14 };
+  var cfg = { color: 'indigo', baseTheme: 'neutral', font: 'ubuntu', style: 'default', radius: '14px', appearance: 'dark', layout: 'roomy', boxed: false, fontsize: 14 };
   var cmdEl = document.getElementById('preset-cmd');
   var jsonEl = document.getElementById('preset-json');
   if (!cmdEl || !jsonEl) return;
@@ -109,7 +109,7 @@ window.__pageInit = function () {
     window._presetJson = json;
     try {
       var u = new URL(location.href);
-      if (tok === 'indigo-neutral-ubuntu-default-8-dark-roomy-14') u.searchParams.delete('preset');
+      if (tok === 'indigo-neutral-ubuntu-default-14-dark-roomy-14') u.searchParams.delete('preset');
       else u.searchParams.set('preset', tok);
       history.replaceState(null, '', u.pathname + u.search);
     } catch (e) {}

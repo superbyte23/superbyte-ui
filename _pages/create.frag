@@ -84,8 +84,8 @@
           <label class="customizer-label">Corner radius</label>
           <div class="d-flex gap-2" id="create-radius">
             <button type="button" class="radius-opt" data-r="4px" data-rs="2px">Sharp</button>
-            <button type="button" class="radius-opt active" data-r="8px" data-rs="4px">Default</button>
-            <button type="button" class="radius-opt" data-r="14px" data-rs="8px">Round</button>
+            <button type="button" class="radius-opt" data-r="8px" data-rs="4px">Default</button>
+            <button type="button" class="radius-opt active" data-r="14px" data-rs="8px">Round</button>
           </div>
         </div>
 

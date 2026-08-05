@@ -92,9 +92,10 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
 - **HTML overflow:** `html, body { overflow-x: hidden; }` in app.css — the off-canvas
   drawer/flyouts count toward `scrollWidth` on first frames otherwise. Wide tables scroll
   inside `.card:has(.data-table) { overflow-x: auto; }` instead.
-- **HugeIcons:** all icons are `hgi hgi-stroke hgi-<name>` from the vendored
-  `vendor/hugeicons/` subset (used-glyph set + `hugeicons.css`). `fa-*` is gone project-wide.
-  Adding a new glyph = rebuild subset webfont via `Temp\opencode\fontwork\add-glyph.cjs`.
+- **HugeIcons:** all icons are `hgi-stroke hgi-<name>`. Every page loads the vendored full
+  set, `vendor/hugeicons/css/hugeicons-full.css` (all 5,502 icons + full webfont), so any
+  icon from the icons page works on any page. The old `hugeicons-used.css` subset workflow
+  (rebuild subset webfont via `Temp\opencode\fontwork\add-glyph.cjs`) is retired.
 - **Auth pages** generated from `auth.html.tmpl` + `assets/js/auth.js` (demo only, no real
   auth). Guards in app.js keep shell features inert there.
 - **`.page-section` must NOT animate on load** — the fadeIn entrance was removed (it was the

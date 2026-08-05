@@ -6,7 +6,7 @@
 <title>Superbyte UI — Create</title>
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../vendor/hugeicons/css/hugeicons-used.css">
+<link rel="stylesheet" href="../vendor/hugeicons/css/hugeicons-full.css">
 <link rel="stylesheet" href="../vendor/fonts.css">
 <link rel="stylesheet" href="../vendor/fonts/theme-fonts.css">
 
@@ -269,8 +269,8 @@
           <label class="customizer-label">Corner radius</label>
           <div class="d-flex gap-2" id="create-radius">
             <button type="button" class="radius-opt" data-r="4px" data-rs="2px">Sharp</button>
-            <button type="button" class="radius-opt active" data-r="8px" data-rs="4px">Default</button>
-            <button type="button" class="radius-opt" data-r="14px" data-rs="8px">Round</button>
+            <button type="button" class="radius-opt" data-r="8px" data-rs="4px">Default</button>
+            <button type="button" class="radius-opt active" data-r="14px" data-rs="8px">Round</button>
           </div>
         </div>
 
@@ -450,9 +450,9 @@
     <div class="customizer-section">
       <div class="customizer-label">Corner radius</div>
       <div class="radius-grid">
-        <div class="radius-opt active" id="radius-sharp" onclick="setRadius('4px','2px',this)">Sharp</div>
+        <div class="radius-opt" id="radius-sharp" onclick="setRadius('4px','2px',this)">Sharp</div>
         <div class="radius-opt" id="radius-default" onclick="setRadius('8px','4px',this)">Default</div>
-        <div class="radius-opt" id="radius-round" onclick="setRadius('14px','8px',this)">Round</div>
+        <div class="radius-opt active" id="radius-round" onclick="setRadius('14px','8px',this)">Round</div>
       </div>
     </div>
 
@@ -510,7 +510,7 @@ window.__pageInit = function () {
   var STYLES = ['default', 'newyork', 'radix', 'bold'];
   var RADII = { '4px': ['4px', '2px'], '8px': ['8px', '4px'], '14px': ['14px', '8px'] };
 
-  var cfg = { color: 'indigo', baseTheme: 'neutral', font: 'ubuntu', style: 'default', radius: '8px', appearance: 'dark', layout: 'roomy', boxed: false, fontsize: 14 };
+  var cfg = { color: 'indigo', baseTheme: 'neutral', font: 'ubuntu', style: 'default', radius: '14px', appearance: 'dark', layout: 'roomy', boxed: false, fontsize: 14 };
   var cmdEl = document.getElementById('preset-cmd');
   var jsonEl = document.getElementById('preset-json');
   if (!cmdEl || !jsonEl) return;
@@ -625,7 +625,7 @@ window.__pageInit = function () {
     window._presetJson = json;
     try {
       var u = new URL(location.href);
-      if (tok === 'indigo-neutral-ubuntu-default-8-dark-roomy-14') u.searchParams.delete('preset');
+      if (tok === 'indigo-neutral-ubuntu-default-14-dark-roomy-14') u.searchParams.delete('preset');
       else u.searchParams.set('preset', tok);
       history.replaceState(null, '', u.pathname + u.search);
     } catch (e) {}

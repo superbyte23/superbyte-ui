@@ -31,7 +31,7 @@ Guidance for AI agents working in this repository. Read this before making chang
 - **Boxed width = Bootstrap container grid** via `--app-boxed-w` (540/720/960/1140/1320). Any media-query token override must repeat `:root, [data-bs-theme="dark"]` or body's own declaration shadows inheritance.
 - **Layout axes:** nav (`vertical`/`horizontal`/`mini-sidebar`) × width (`fluid`/`boxed`/`contained`) are mutually exclusive class sets; density = `layout-compact`. `setBoxed()` does not exist — use `setWidthMode`.
 - **Horizontal/mini top-nav is hover-only**; clicks are no-ops on desktop. Mobile (≤991.98px) horizontal = off-canvas drawer.
-- **Icons are HugeIcons** (`hgi hgi-stroke hgi-<name>`), vendored subset. No Font Awesome.
+- **Icons are HugeIcons** (`hgi-stroke hgi-<name>`), vendored full set: every page loads `vendor/hugeicons/css/hugeicons-full.css` (all 5,502 icons + full webfont). No Font Awesome. The old `hugeicons-used.css` subset workflow is retired.
 - **Do not add `animation` to `.page-section`** (removed on purpose: it was the visible refresh nudge).
 - **`html, body { overflow-x: hidden; }`** in app.css must stay (drawer/flyout first-frame overflow).
 - Never commit `session-ses_03f8.md` (untracked session note).
