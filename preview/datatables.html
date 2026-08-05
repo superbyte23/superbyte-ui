@@ -196,7 +196,7 @@
     <div id="content" class="container">
 
       <section class="page-section active" id="page-datatables">
-        <div class="page-head"><div><h1>DataTables</h1><p>four implementations · static markup · client-side · server-style · live stream</p></div></div>
+        <div class="page-head"><div><h1>DataTables</h1><p>four implementations · static markup · client-side (library) · server-style (library) · live stream</p></div></div>
 
         <div class="card">
           <div class="card-header">
@@ -227,83 +227,18 @@
 
         <div class="card mt-3">
           <div class="card-header">
-            <div class="card-title"><i class="hgi-stroke hgi-sorting-a-z-01"></i> 2 · Client-side DataTable</div>
-            <span class="card-sub">vanilla JS · search · sort · paginate · add · view · edit · delete</span>
+            <div class="card-title"><i class="hgi-stroke hgi-sorting-a-z-01"></i> 2 · Client-side DataTable — library</div>
+            <span class="card-sub">SuperDataTable · rows in memory · search · sort · paginate · add · view · edit · delete</span>
           </div>
-          <div class="table-toolbar">
-            <div class="d-flex flex-wrap gap-2 align-items-center">
-              <div class="search-wrap" style="position:relative">
-                <i class="hgi-stroke hgi-search-01 search-icon"></i>
-                <input class="search-input" id="cs-search" placeholder="Filter rows…" autocomplete="off" style="width:200px">
-              </div>
-              <select class="form-select form-select-sm" id="cs-size" style="width:auto">
-                <option value="5">5 / page</option>
-                <option value="10" selected>10 / page</option>
-                <option value="25">25 / page</option>
-                <option value="0">All</option>
-              </select>
-            </div>
-            <div class="d-flex gap-2">
-              <button class="btn btn-primary btn-sm" onclick="openAdd()"><i class="hgi-stroke hgi-add-01 me-1"></i> Add customer</button>
-              <button class="btn btn-ghost btn-sm" onclick="csReset()"><i class="hgi-stroke hgi-refresh-01 me-1"></i> Reset</button>
-            </div>
-          </div>
-          <div class="table-zone">
-            <div class="table-responsive">
-              <table class="table row-actions-always" id="cs-table">
-                <thead>
-                  <tr>
-                    <th data-col="name" class="sortable sort-asc">Customer</th>
-                    <th data-col="plan" class="sortable">Plan</th>
-                    <th data-col="amount" class="sortable text-end">MRR</th>
-                    <th data-col="seats" class="sortable text-end">Seats</th>
-                    <th data-col="status" class="sortable">Status</th>
-                    <th class="text-end">Actions</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="table-footer">
-            <span id="cs-info">—</span>
-            <nav><ul class="pagination pagination-sm mb-0" id="cs-pager"></ul></nav>
-          </div>
+          <div id="cs-zone"></div>
         </div>
 
         <div class="card mt-3">
           <div class="card-header">
-            <div class="card-title"><i class="hgi-stroke hgi-database-01"></i> 3 · Server-style DataTable</div>
-            <span class="card-sub">simulated API · one page at a time · ~400 ms round-trip</span>
+            <div class="card-title"><i class="hgi-stroke hgi-database-01"></i> 3 · Server-style DataTable — library</div>
+            <span class="card-sub">SuperDataTable + async source · one page at a time · ~400 ms round-trip</span>
           </div>
-          <div class="table-toolbar">
-            <div class="d-flex flex-wrap gap-2 align-items-center">
-              <div class="search-wrap" style="position:relative">
-                <i class="hgi-stroke hgi-search-01 search-icon"></i>
-                <input class="search-input" id="sv-search" placeholder="Remote query…" autocomplete="off" style="width:200px">
-              </div>
-              <select class="form-select form-select-sm" id="sv-size" style="width:auto">
-                <option value="8" selected>8 / page</option>
-                <option value="12">12 / page</option>
-                <option value="20">20 / page</option>
-              </select>
-            </div>
-            <button class="btn btn-ghost btn-sm" onclick="svGo(0, true)"><i class="hgi-stroke hgi-refresh-01 me-1"></i> Re-fetch</button>
-          </div>
-          <div class="table-zone" id="sv-zone">
-            <div class="table-responsive">
-              <table class="table" id="sv-table">
-                <thead>
-                  <tr><th class="sortable">Tx ID</th><th class="sortable">Customer</th><th class="sortable text-end">Amount</th><th class="sortable">Date</th><th class="sortable">Status</th></tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="table-footer">
-            <span id="sv-info">—</span>
-            <nav><ul class="pagination pagination-sm mb-0" id="sv-pager"></ul></nav>
-          </div>
+          <div id="sv-zone"></div>
         </div>
 
         <div class="card mt-3">
@@ -560,23 +495,14 @@
 </div>
 
 <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/datatable.js"></script>
 <script>
 /* ══════════════════════════════════════════════════════════════════════════
-   DataTables — four implementations in vanilla JS
-   1 · static markup (no JS)   2 · client-side   3 · server-style   4 · live
+   DataTables — four implementations
+   1 · static markup (no JS)   2 & 3 · SuperDataTable library   4 · live
    ══════════════════════════════════════════════════════════════════════════ */
 
-function pagerHtml(pages, cur) {
-  if (pages <= 1) return '';
-  let h = '<li class="page-item ' + (cur === 0 ? 'disabled' : '') + '"><a class="page-link" href="#" data-p="' + (cur - 1) + '">Prev</a></li>';
-  for (let i = 0; i < pages; i++) {
-    h += '<li class="page-item ' + (i === cur ? 'active' : '') + '"><a class="page-link" href="#" data-p="' + i + '">' + (i + 1) + '</a></li>';
-  }
-  h += '<li class="page-item ' + (cur === pages - 1 ? 'disabled' : '') + '"><a class="page-link" href="#" data-p="' + (cur + 1) + '">Next</a></li>';
-  return h;
-}
-
-/* ── 2 · CLIENT-SIDE DATA TABLE ─────────────────────────────────────────── */
+/* ── 2 · CLIENT-SIDE DATA TABLE — SuperDataTable (assets/js/datatable.js) ── */
 const CS_ROWS = [
   { name: 'Acme Corp', plan: 'Pro', amount: 290, seats: 3, status: 'Active' },
   { name: 'Northwind', plan: 'Enterprise', amount: 1240, seats: 12, status: 'Active' },
@@ -597,109 +523,46 @@ const CS_ROWS = [
   { name: 'Omni Consumer Products', plan: 'Pro', amount: 290, seats: 6, status: 'Active' },
   { name: 'Rich Industries', plan: 'Pro', amount: 290, seats: 3, status: 'Active' }
 ];
-const csTbody = document.querySelector('#cs-table tbody');
-const csInfo = document.getElementById('cs-info');
-const csPager = document.getElementById('cs-pager');
-const csSearch = document.getElementById('cs-search');
-const csSize = document.getElementById('cs-size');
-let csRows = CS_ROWS.map(r => ({ ...r }));
-let csSort = { col: 'name', dir: 1 };
-let csPage = 0;
-let csCurrent = [];
-let csStart = 0;
-let editingIndex = -1;
-let pendingDelete = -1;
+const csDT = new SuperDataTable('#cs-zone', {
+  data: CS_ROWS,
+  perPage: 10,
+  perPageOptions: [5, 10, 25, 0],
+  initialSort: { key: 'name', dir: 1 },
+  tableClass: 'row-actions-always',
+  searchPlaceholder: 'Filter rows…',
+  infoText: (from, to, total) => 'Showing ' + from + '–' + to + ' of ' + total + ' customers · client-side',
+  columns: [
+    { key: 'name', title: 'Customer', cellClass: 'name-cell' },
+    { key: 'plan', title: 'Plan' },
+    { key: 'amount', title: 'MRR', align: 'right', cellClass: 'mono-cell', render: r => '$' + r.amount.toLocaleString() },
+    { key: 'seats', title: 'Seats', align: 'right', cellClass: 'mono-cell' },
+    { key: 'status', title: 'Status', render: r => '<span class="tag ' + csTag(r.status) + '"><i class="hgi-stroke hgi-circle"></i> ' + r.status + '</span>' },
+    { title: 'Actions', align: 'right', sortable: false, cellClass: 'row-actions', render: r =>
+      '<button class="row-btn" data-act="view" title="View"><i class="hgi-stroke hgi-eye"></i></button>' +
+      '<button class="row-btn" data-act="edit" title="Edit"><i class="hgi-stroke hgi-pen-01"></i></button>' +
+      '<button class="row-btn del" data-act="del" title="Delete"><i class="hgi-stroke hgi-delete-01"></i></button>' }
+  ]
+});
+csDT.toolbar.insertAdjacentHTML('beforeend',
+  '<div class="d-flex gap-2">' +
+    '<button class="btn btn-primary btn-sm" onclick="openAdd()"><i class="hgi-stroke hgi-add-01 me-1"></i> Add customer</button>' +
+    '<button class="btn btn-ghost btn-sm" onclick="csReset()"><i class="hgi-stroke hgi-refresh-01 me-1"></i> Reset</button>' +
+  '</div>');
 
 function csTag(st) {
   return st === 'Active' ? 'tag-green' : st === 'Trial' ? 'tag-sky' : st === 'Suspended' ? 'tag-amber' : 'tag-slate';
 }
 
-function csFiltered() {
-  const q = csSearch.value.trim().toLowerCase();
-  return csRows.filter(r => !q || (r.name + ' ' + r.plan + ' ' + r.status).toLowerCase().includes(q));
-}
-
-function csRender() {
-  csCurrent = csFiltered();
-  const size = +csSize.value;
-  const pages = size ? Math.max(1, Math.ceil(csCurrent.length / size)) : 1;
-  if (csPage >= pages) csPage = pages - 1;
-  if (csPage < 0) csPage = 0;
-  csStart = size ? csPage * size : 0;
-  const page = size ? csCurrent.slice(csStart, csStart + size) : csCurrent;
-  csTbody.innerHTML = page.map(r =>
-    '<tr>' +
-      '<td class="name-cell">' + r.name + '</td>' +
-      '<td>' + r.plan + '</td>' +
-      '<td class="mono-cell text-end">$' + r.amount.toLocaleString() + '</td>' +
-      '<td class="mono-cell text-end">' + r.seats + '</td>' +
-      '<td><span class="tag ' + csTag(r.status) + '"><i class="hgi-stroke hgi-circle"></i> ' + r.status + '</span></td>' +
-      '<td class="row-actions">' +
-        '<button class="row-btn" data-act="view" title="View"><i class="hgi-stroke hgi-eye"></i></button>' +
-        '<button class="row-btn" data-act="edit" title="Edit"><i class="hgi-stroke hgi-pen-01"></i></button>' +
-        '<button class="row-btn del" data-act="del" title="Delete"><i class="hgi-stroke hgi-delete-01"></i></button>' +
-      '</td>' +
-    '</tr>'
-  ).join('');
-  const from = csCurrent.length ? (size ? csStart + 1 : 1) : 0;
-  const to = size ? Math.min(csStart + size, csCurrent.length) : csCurrent.length;
-  csInfo.textContent = 'Showing ' + from + '–' + to + ' of ' + csCurrent.length + ' customers · client-side';
-  csPager.innerHTML = pagerHtml(pages, csPage);
-}
-
-csPager.addEventListener('click', e => {
-  const a = e.target.closest('a[data-p]');
-  if (!a) return;
-  e.preventDefault();
-  if (a.parentElement.classList.contains('disabled')) return;
-  csPage = +a.dataset.p;
-  csRender();
-});
-
-document.querySelectorAll('#cs-table thead th.sortable').forEach(th => {
-  th.addEventListener('click', () => {
-    const col = th.dataset.col;
-    if (csSort.col === col) csSort.dir *= -1;
-    else { csSort.col = col; csSort.dir = 1; }
-    csRows.sort((a, b) => {
-      const x = a[col], y = b[col];
-      const nx = parseFloat(x), ny = parseFloat(y);
-      const c = !isNaN(nx) && !isNaN(ny) ? nx - ny : String(x).localeCompare(String(y));
-      return c * csSort.dir;
-    });
-    document.querySelectorAll('#cs-table thead th').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
-    th.classList.add(csSort.dir === 1 ? 'sort-asc' : 'sort-desc');
-    csPage = 0;
-    csRender();
-  });
-});
-
-csTbody.addEventListener('click', e => {
-  const btn = e.target.closest('button[data-act]');
-  if (!btn) return;
-  const idx = csStart + [...csTbody.children].indexOf(btn.closest('tr'));
-  if (btn.dataset.act === 'view') openView(idx);
-  else if (btn.dataset.act === 'edit') openEdit(idx);
-  else if (btn.dataset.act === 'del') openDelete(idx);
-});
-
-function csReset() {
-  csSearch.value = '';
-  csSize.value = '10';
-  csRows = CS_ROWS.map(r => ({ ...r }));
-  csSort = { col: 'name', dir: 1 };
-  csPage = 0;
-  document.querySelectorAll('#cs-table thead th').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
-  document.querySelector('#cs-table thead th[data-col="name"]').classList.add('sort-asc');
-  csRender();
-}
-csSearch.addEventListener('input', () => { csPage = 0; csRender(); });
-csSize.addEventListener('change', () => { csPage = 0; csRender(); });
+function csReset() { csDT.reset(); }
 
 /* ── 2b · CRUD — create / read / update / delete ─────────────────────────── */
 const custModalEl = document.getElementById('customerModal');
+const viewFields = document.getElementById('view-fields');
+let editingRow = null;
+let pendingDelete = null;
+
 function openAdd() {
-  editingIndex = -1;
+  editingRow = null;
   document.getElementById('customerModalTitle').textContent = 'Add customer';
   document.getElementById('cust-name').value = '';
   document.getElementById('cust-plan').value = 'Pro';
@@ -709,9 +572,9 @@ function openAdd() {
   new bootstrap.Modal(custModalEl).show();
 }
 function openEdit(idx) {
-  const r = csCurrent[idx];
+  const r = csDT.pageRows()[idx];
   if (!r) return;
-  editingIndex = idx;
+  editingRow = r;
   document.getElementById('customerModalTitle').textContent = 'Edit customer';
   document.getElementById('cust-name').value = r.name;
   document.getElementById('cust-plan').value = r.plan;
@@ -720,9 +583,8 @@ function openEdit(idx) {
   document.getElementById('cust-status').value = r.status;
   new bootstrap.Modal(custModalEl).show();
 }
-const viewFields = document.getElementById('view-fields');
 function openView(idx) {
-  const r = csCurrent[idx];
+  const r = csDT.pageRows()[idx];
   if (!r) return;
   const rows = [
     ['Customer', r.name],
@@ -737,9 +599,17 @@ function openView(idx) {
   new bootstrap.Modal(document.getElementById('viewModal')).show();
 }
 function openDelete(idx) {
-  pendingDelete = idx;
+  pendingDelete = csDT.pageRows()[idx] || null;
   new bootstrap.Modal(document.getElementById('deleteModal')).show();
 }
+csDT.tbody.addEventListener('click', e => {
+  const btn = e.target.closest('button[data-act]');
+  if (!btn) return;
+  const idx = [...csDT.tbody.children].indexOf(btn.closest('tr'));
+  if (btn.dataset.act === 'view') openView(idx);
+  else if (btn.dataset.act === 'edit') openEdit(idx);
+  else if (btn.dataset.act === 'del') openDelete(idx);
+});
 custModalEl.querySelector('.btn-primary').addEventListener('click', () => {
   const name = document.getElementById('cust-name').value.trim();
   const plan = document.getElementById('cust-plan').value;
@@ -748,30 +618,31 @@ custModalEl.querySelector('.btn-primary').addEventListener('click', () => {
   const seats = Math.max(1, Math.round(+document.getElementById('cust-seats').value || 1));
   if (!name) { showToast('error', 'Customer name is required'); return; }
   const rec = { name, plan, amount, seats, status };
-  if (editingIndex >= 0) {
-    Object.assign(csCurrent[editingIndex], rec);
+  if (editingRow) {
+    Object.assign(editingRow, rec);
     showToast('success', 'Customer updated');
   } else {
-    csRows.push(rec);
-    const size = +csSize.value;
-    const pages = size ? Math.max(1, Math.ceil(csFiltered().length / size)) : 1;
-    csPage = pages - 1;
+    CS_ROWS.push(rec);
+    const all = csDT.current();
+    const pos = all.indexOf(rec);
+    const pp = csDT.perPage;
+    csDT.go(pp ? Math.floor(pos / pp) : 0);
     showToast('success', 'Customer added');
   }
-  editingIndex = -1;
-  csRender();
+  editingRow = null;
+  csDT.render();
   bootstrap.Modal.getInstance(custModalEl).hide();
 });
 document.getElementById('deleteModal').querySelector('.btn-danger').addEventListener('click', () => {
-  if (pendingDelete >= 0 && csCurrent[pendingDelete]) {
-    csRows.splice(csRows.indexOf(csCurrent[pendingDelete]), 1);
-    csRender();
+  if (pendingDelete) {
+    CS_ROWS.splice(CS_ROWS.indexOf(pendingDelete), 1);
+    csDT.render();
     showToast('success', 'Customer deleted');
   }
-  pendingDelete = -1;
+  pendingDelete = null;
 });
 
-/* ── 3 · SERVER-STYLE DATA TABLE (simulated API) ────────────────────────── */
+/* ── 3 · SERVER-STYLE DATA TABLE — SuperDataTable + async source ────────── */
 const svNames = ['Acme', 'Northwind', 'Globex', 'Initech', 'Umbrella', 'Hooli', 'Vandelay', 'Stark', 'Wayne', 'Pied Piper', 'Aperture', 'Massive Dynamic', 'Soylent', 'Dunder Mifflin', 'Cyberdyne', 'Tyrell', 'Omni', 'Rich'];
 const svStatusPool = ['Paid', 'Paid', 'Pending', 'Paid', 'Refunded', 'Paid', 'Failed'];
 const svDB = Array.from({ length: 43 }, (_, i) => {
@@ -786,66 +657,44 @@ const svDB = Array.from({ length: 43 }, (_, i) => {
     ts: d.getTime()
   };
 });
-const svZone = document.getElementById('sv-zone');
-const svTbody = document.querySelector('#sv-table tbody');
-const svInfo = document.getElementById('sv-info');
-const svPager = document.getElementById('sv-pager');
-const svSearch = document.getElementById('sv-search');
-const svSize = document.getElementById('sv-size');
-let svPage = 0;
-let svLoading = false;
-
-function svQuery() {
-  const q = svSearch.value.trim().toLowerCase();
-  if (!q) return svDB;
-  return svDB.filter(r => (r.customer + ' ' + r.id + ' ' + r.status).toLowerCase().includes(q));
-}
-
 function svTag(st) {
   return st === 'Paid' ? 'tag-green' : st === 'Pending' ? 'tag-amber' : st === 'Failed' ? 'tag-red' : 'tag-slate';
 }
-
-function svGo(page, force) {
-  if (svLoading && !force) return;
-  const size = +svSize.value;
-  const rows = svQuery();
-  const pages = Math.max(1, Math.ceil(rows.length / size));
-  svPage = Math.max(0, Math.min(page, pages - 1));
-  svLoading = true;
-  svZone.classList.add('table-loading');
-  svPager.classList.add('pe-none', 'opacity-50');
-  svSearch.disabled = true;
-  svSize.disabled = true;
-  setTimeout(() => {
-    const slice = rows.slice(svPage * size, svPage * size + size);
-    svTbody.innerHTML = slice.map(r =>
-      '<tr>' +
-        '<td class="mono-cell">' + r.id + '</td>' +
-        '<td class="name-cell">' + r.customer + '</td>' +
-        '<td class="mono-cell text-end">$' + r.amount.toLocaleString() + '</td>' +
-        '<td class="mono-cell">' + r.date + '</td>' +
-        '<td><span class="tag ' + svTag(r.status) + '"><i class="hgi-stroke hgi-circle"></i> ' + r.status + '</span></td>' +
-      '</tr>'
-    ).join('');
-    svInfo.textContent = 'Page ' + (svPage + 1) + ' of ' + pages + ' · ' + slice.length + ' of ' + rows.length + ' rows · fetched in ~400 ms';
-    svPager.innerHTML = pagerHtml(pages, svPage);
-    svLoading = false;
-    svZone.classList.remove('table-loading');
-    svPager.classList.remove('pe-none', 'opacity-50');
-    svSearch.disabled = false;
-    svSize.disabled = false;
-  }, 400);
-}
-
-svPager.addEventListener('click', e => {
-  const a = e.target.closest('a[data-p]');
-  if (!a) return;
-  e.preventDefault();
-  if (a.parentElement.classList.contains('disabled') || svLoading) return;
-  svGo(+a.dataset.p);
+const svDT = new SuperDataTable('#sv-zone', {
+  source: async p => {
+    await new Promise(r => setTimeout(r, 400));
+    const q = p.query.trim().toLowerCase();
+    let rows = svDB.filter(r => !q || (r.customer + ' ' + r.id + ' ' + r.status).toLowerCase().includes(q));
+    if (p.sortKey) {
+      const dir = p.sortDir;
+      rows = rows.slice().sort((a, b) => {
+        const x = a[p.sortKey], y = b[p.sortKey];
+        const nx = parseFloat(x), ny = parseFloat(y);
+        const c = (!isNaN(nx) && !isNaN(ny)) ? nx - ny : String(x).localeCompare(String(y));
+        return c * dir;
+      });
+    }
+    const start = p.page * p.perPage;
+    return { rows: rows.slice(start, start + p.perPage), total: rows.length };
+  },
+  perPage: 8,
+  perPageOptions: [8, 12, 20],
+  searchPlaceholder: 'Remote query…',
+  infoText: (from, to, total, ctx) =>
+    'Page ' + (ctx.page + 1) + ' of ' + ctx.pages + ' · ' + to + ' of ' + total + ' rows · fetched in ~400 ms',
+  columns: [
+    { key: 'id', title: 'Tx ID', cellClass: 'mono-cell' },
+    { key: 'customer', title: 'Customer', cellClass: 'name-cell' },
+    { key: 'amount', title: 'Amount', align: 'right', cellClass: 'mono-cell', render: r => '$' + r.amount.toLocaleString() },
+    { key: 'date', title: 'Date', sortable: false, cellClass: 'mono-cell' },
+    { key: 'status', title: 'Status', render: r => '<span class="tag ' + svTag(r.status) + '"><i class="hgi-stroke hgi-circle"></i> ' + r.status + '</span>' }
+  ]
 });
-svSearch.addEventListener('input', () => svGo(0));
-svSize.addEventListener('change', () => svGo(0));
+svDT.toolbar.insertAdjacentHTML('beforeend',
+  '<div class="d-flex gap-2">' +
+    '<button class="btn btn-ghost btn-sm" onclick="svRefresh()"><i class="hgi-stroke hgi-refresh-01 me-1"></i> Re-fetch</button>' +
+  '</div>');
+function svRefresh() { svDT.refresh(); }
 
 /* ── 4 · LIVE STREAMING TABLE ───────────────────────────────────────────── */
 const liveTbody = document.querySelector('#live-table tbody');
@@ -917,10 +766,6 @@ function toggleLive() {
 setInterval(liveTick, liveInterval);
 setInterval(liveRelabel, 1000);
 liveTick();
-
-/* ── INIT ───────────────────────────────────────────────────────────────── */
-csRender();
-svGo(0);
 </script>
 <script src="../assets/js/app.js"></script>
 </body>

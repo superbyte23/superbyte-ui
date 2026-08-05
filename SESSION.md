@@ -37,7 +37,7 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
     (8), docs heading → `v1.0.0`.
 
 ## How to verify (re-run before declaring done)
-- `node --check assets/js/app.js assets/js/theme-bootstrap.js assets/js/auth.js`
+- `node --check assets/js/app.js assets/js/theme-bootstrap.js assets/js/auth.js assets/js/datatable.js`
 - `node C:\Users\Windows\AppData\Local\Temp\opencode\verify.cjs` — parses every inline
   `<script>` via `vm.Script`, resolves all local src/href, counts CDN refs (must be 0),
   checks app.js/auth.js syntax and sidebar links.
@@ -113,6 +113,12 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
 - theme-bootstrap.js: pre-paint theme + layout + font loading.
 
 ## Changelog (condensed)
+- SuperDataTable library (2026-08-05): new `assets/js/datatable.js` — dependency-free
+  DataTable (client `data` or async `source` mode, search/sort/pagination/page-size,
+  self-built toolbar+table+footer, events + `pageRows`/`current`/`reset` API). Demos 2 & 3
+  on `preview/datatables.html` refactored onto it (inline script shrank ~170 lines); CRUD
+  preserved via library API (add lands on the new row's page; server mode row-actions fixed).
+  README/AGENTS/verify.cjs updated to include the lib.
 - DataTables row actions (2026-08-05): client-side demo (2) now has always-visible
   view · edit · delete buttons (`hgi-eye` view modal `#viewModal`, `openView`);
   `.row-actions-always` override added so CRUD controls are discoverable.

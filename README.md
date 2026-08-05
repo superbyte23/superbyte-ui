@@ -97,6 +97,7 @@ All dependencies are vendored locally under `vendor/` — no external CDN calls.
 │   ├── css/landing.css        # Landing page styles
 │   ├── js/app.js              # Shared shell behavior, theme, and utilities
 │   ├── js/theme-bootstrap.js  # Pre-paint theme + layout bootstrap
+│   ├── js/datatable.js        # SuperDataTable — dependency-free DataTable lib
 │   ├── js/auth.js             # Auth-related shared logic
 │   └── js/icons-data.js       # Icon library data
 ├── vendor/                    # Vendored local libraries and assets

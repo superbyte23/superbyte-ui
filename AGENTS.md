@@ -10,7 +10,7 @@ Guidance for AI agents working in this repository. Read this before making chang
 
 ## Running / verifying
 - Serve statically, e.g. `python -m http.server 8000` (dev harness on port 8765).
-- Syntax check: `node --check assets/js/app.js assets/js/theme-bootstrap.js assets/js/auth.js`
+- Syntax check: `node --check assets/js/app.js assets/js/theme-bootstrap.js assets/js/auth.js assets/js/datatable.js`
 - Full integrity check: `node C:\Users\Windows\AppData\Local\Temp\opencode\verify.cjs`
   (parses every inline script, resolves local refs, asserts zero CDN refs).
 - Headless browser probes live in `C:\Users\Windows\AppData\Local\Temp\opencode\`
@@ -22,6 +22,7 @@ Guidance for AI agents working in this repository. Read this before making chang
 - `assets/js/app.js` — shell behavior: theme, `setLayoutMode`/`setWidthMode`, chart hook, quick search, notifications, footer toggle.
 - `assets/js/theme-bootstrap.js` — pre-paint script in `<head>`; applies saved theme + layout + fonts before first paint (prevents refresh scroll-jump / flash).
 - `assets/js/auth.js`, `assets/js/icons-data.js` — auth pages / icon data.
+- `assets/js/datatable.js` — `SuperDataTable` dependency-free DataTable lib (client `data` or async `source` mode; self-builds toolbar/table/footer; no build step).
 - `app-shell.tmpl`, `auth.html.tmpl` — page generators; `_pages/` — fragments + page scripts.
 
 ## Conventions & pitfalls
