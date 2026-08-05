@@ -33,7 +33,7 @@ Guidance for AI agents working in this repository. Read this before making chang
 - **Horizontal/mini top-nav is hover-only**; clicks are no-ops on desktop. Mobile (≤991.98px) horizontal = off-canvas drawer.
 - **Icons are HugeIcons** (`hgi-stroke hgi-<name>`), vendored full set: every page loads `vendor/hugeicons/css/hugeicons-full.css` (all 5,502 icons + full webfont). No Font Awesome. The old `hugeicons-used.css` subset workflow is retired.
 - **Do not add `animation` to `.page-section`** (removed on purpose: it was the visible refresh nudge).
-- **`html, body { overflow-x: hidden; }`** in app.css must stay (drawer/flyout first-frame overflow).
+- **`html, body { overflow-x: hidden; overflow-x: clip; }`** in app.css: clip (with hidden fallback) prevents drawer/flyout first-frame overflow WITHOUT breaking `position: sticky` (plain `overflow-x: hidden` on html/body silently kills sticky app-wide — toolbar `sticky-top` and docs-page TOC rely on this). Keep both declarations.
 - Never commit `session-ses_03f8.md` (untracked session note).
 - Keep commit messages imperative and focused; stage only intended files with `git add -u` after checking `git status`/`git diff`.
 

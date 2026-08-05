@@ -14,7 +14,7 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
 
 ## Status: v1.0.0 — dashboard lives in `preview/`, root is the landing page
 - **48-page admin dashboard is now under `preview/`** (index, analytics, records, users, datatables, forms,
-  elements, cards, overlays, utilities, docs, components, all-components, tables, charts,
+  elements, cards, overlays, utilities, docs, components, all-components, components-docs, tables, charts,
   visuals, rtl, maps, echarts, editors, crm, ecommerce, calendar, kanban, email, file-manager,
   create, layouts, 11 `layout-*.html` presets, 8 auth pages).
 - Root **`index.html`** is the landing page about the UI (styles in `assets/css/landing.css`),
@@ -89,8 +89,11 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
 - **Version tokens:** `--app-boxed-w` media overrides on `:root, [data-bs-theme="dark"]`
   (app.css). **Any media-query token override MUST repeat the full selector list
   `:root, [data-bs-theme="dark"]`** — body `data-bs-theme` shadows inheritance otherwise.
-- **HTML overflow:** `html, body { overflow-x: hidden; }` in app.css — the off-canvas
-  drawer/flyouts count toward `scrollWidth` on first frames otherwise. Wide tables scroll
+- **HTML overflow:** `html, body { overflow-x: hidden; overflow-x: clip; }` in app.css — the
+  off-canvas drawer/flyouts count toward `scrollWidth` on first frames otherwise. Plain
+  `overflow-x: hidden` on html/body makes body the scroll container and silently kills
+  `position: sticky` app-wide (toolbar `sticky-top` and the docs-page `.cds-toc` stick with
+  `clip`; the `hidden` declaration is kept as a fallback for older browsers). Wide tables scroll
   inside `.card:has(.data-table) { overflow-x: auto; }` instead.
 - **HugeIcons:** all icons are `hgi-stroke hgi-<name>`. Every page loads the vendored full
   set, `vendor/hugeicons/css/hugeicons-full.css` (all 5,502 icons + full webfont), so any

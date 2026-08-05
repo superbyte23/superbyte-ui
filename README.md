@@ -84,7 +84,7 @@ All dependencies are vendored locally under `vendor/` — no external CDN calls.
 | Apps | CRM, E-commerce, Calendar, Kanban, Email, File Manager |
 | Layout | Layout hub + 11 preset pages (vertical, horizontal, mini-sidebar × fluid, boxed, contained, plus condensed & comfy) |
 | Auth | Login, Register, Forgot/Reset Password, Lock Screen, Verify Email, Two-Factor Auth, Session Expired |
-| Other | RTL Preview, Docs |
+| Other | RTL Preview, Docs, Bootstrap Components Docs |
 
 ## Project Structure
 
@@ -101,7 +101,7 @@ All dependencies are vendored locally under `vendor/` — no external CDN calls.
 │   ├── js/auth.js             # Auth-related shared logic
 │   └── js/icons-data.js       # Icon library data
 ├── vendor/                    # Vendored local libraries and assets
-├── preview/                   # The admin dashboard (48 pages)
+├── preview/                   # The admin dashboard (49 pages)
 │   ├── index.html             # Main dashboard page
 │   ├── analytics.html         # Analytics page
 │   ├── records.html           # Records listing page
@@ -109,6 +109,7 @@ All dependencies are vendored locally under `vendor/` — no external CDN calls.
 │   ├── forms.html             # Forms examples
 │   ├── components.html        # Component gallery
 │   ├── all-components.html    # Full component showcase
+│   ├── components-docs.html   # Bootstrap 5.3 components docs
 │   ├── elements.html          # Buttons and badges
 │   ├── cards.html             # Cards and alerts
 │   ├── overlays.html          # Modals and tabs

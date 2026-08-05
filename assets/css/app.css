@@ -93,7 +93,7 @@
 [data-bs-theme="light"] .tag-pink    { color: #be185d; background: rgba(244,114,182,.14); border-color: rgba(244,114,182,.3); }
 [data-bs-theme="light"] .tag-red     { color: #b91c1c; background: rgba(239,68,68,.12);   border-color: rgba(239,68,68,.3); }
 
-html, body { background: var(--bg); overflow-x: hidden; }
+html, body { background: var(--bg); overflow-x: hidden; overflow-x: clip; }
 body {
   color: var(--text);
   font-family: var(--sans);
