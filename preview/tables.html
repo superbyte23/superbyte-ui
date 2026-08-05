@@ -12,6 +12,14 @@
 <link rel="stylesheet" href="../assets/css/app.css">
 <link rel="stylesheet" href="../assets/css/layout-modes.css">
 <script src="../assets/js/theme-bootstrap.js"></script>
+<style>
+  .live-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--green); }
+  .live-badge.paused { color: var(--text3); }
+  .live-badge .status-dot.on { animation: live-pulse 1.6s ease-in-out infinite; }
+  @keyframes live-pulse { 0%, 100% { box-shadow: 0 0 0 3px var(--green-bg); } 50% { box-shadow: 0 0 0 6px transparent; } }
+  #live-table tr.live-new td { animation: live-flash 1.4s ease-out; }
+  @keyframes live-flash { from { background: var(--accent-bg); } to { background: transparent; } }
+</style>
 
 </head>
 <body data-bs-theme="dark">
@@ -61,6 +69,7 @@
     <div class="side-submenu">
       <a class="side-link" href="records.html"><i class="hgi-stroke hgi-table-01"></i> Records</a>
       <a class="side-link" href="users.html"><i class="hgi-stroke hgi-user-group"></i> Users</a>
+      <a class="side-link" href="datatables.html"><i class="hgi-stroke hgi-table-columns-split"></i> DataTables</a>
     </div>
   </div>
   <div class="side-group">
@@ -246,6 +255,37 @@
           <span class="sep"></span>
           <span role="button" onclick="exportCsv()"><i class="hgi-stroke hgi-csv-01 me-1"></i>Export</span>
           <span role="button" onclick="deleteSelected()" style="color:var(--danger)"><i class="hgi-stroke hgi-delete-01 me-1"></i>Delete</span>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-header">
+            <div class="card-title"><i class="hgi-stroke hgi-flash"></i> Live sample data<span class="card-sub ms-2">simulated event stream · auto-updates</span></div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="live-badge" id="live-badge"><span class="status-dot on"></span> Live</span>
+              <button class="btn btn-ghost btn-sm" id="live-toggle" onclick="toggleLive()"><i class="hgi-stroke hgi-stop-watch"></i> Pause</button>
+              <button class="btn btn-ghost btn-sm" onclick="liveTick(true)"><i class="hgi-stroke hgi-refresh-01"></i> Tick</button>
+            </div>
+          </div>
+          <div class="table-zone">
+            <div class="table-responsive">
+              <table class="table" id="live-table">
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Event</th>
+                    <th>Amount</th>
+                    <th>Region</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="table-footer">
+            <span id="live-foot-info">0 events</span>
+            <span class="font-mono" style="font-size:11px;color:var(--text3)">auto-refresh · 2.5s interval</span>
+          </div>
         </div>
 
         <div class="row g-3 mt-1">
@@ -591,6 +631,90 @@ document.querySelectorAll('#expand-table tr.expand-head').forEach(tr => {
     if (detail && detail.classList.contains('detail-row')) detail.classList.toggle('show', tr.classList.contains('open'));
   });
 });
+
+/* ── LIVE SAMPLE DATA FEED ───────────────────────────────────────────────── */
+const liveTbody = document.querySelector('#live-table tbody');
+const liveFoot = document.getElementById('live-foot-info');
+const liveToggleBtn = document.getElementById('live-toggle');
+const liveBadge = document.getElementById('live-badge');
+const liveInterval = 2500;
+const liveMaxRows = 8;
+const livePool = [
+  ['Payment received', 120, 2400, 'INV-'],
+  ['Invoice paid', 150, 1800, 'INV-'],
+  ['Order shipped', 18, 460, 'ORD-'],
+  ['Refund issued', 12, 320, 'RFD-'],
+  ['Subscription renewed', 29, 149, 'SUB-'],
+  ['New user signed up', 0, 0, 'USR-'],
+  ['Support ticket opened', 0, 0, 'TCK-'],
+  ['Server deployed', 0, 0, 'REL-']
+];
+const liveRegions = ['APAC', 'EMEA', 'NA', 'LATAM'];
+const liveStatuses = [
+  ['tag-green', 'Active'],
+  ['tag-amber', 'Pending'],
+  ['tag-sky', 'Processing']
+];
+let livePaused = false;
+let liveTicks = 0;
+
+function liveLabel(ageMs) {
+  const s = Math.round(ageMs / 1000);
+  if (s < 3) return 'just now';
+  if (s < 60) return s + 's ago';
+  return Math.floor(s / 60) + 'm ago';
+}
+
+function liveRow() {
+  const ev = livePool[Math.floor(Math.random() * livePool.length)];
+  const region = liveRegions[Math.floor(Math.random() * liveRegions.length)];
+  const [tag, label] = liveStatuses[Math.floor(Math.random() * liveStatuses.length)];
+  const amount = ev[1] ? '$' + (ev[1] + Math.floor(Math.random() * (ev[2] - ev[1] + 1))).toLocaleString() : '—';
+  const ref = ev[3] + (1000 + Math.floor(Math.random() * 9000));
+  const tr = document.createElement('tr');
+  tr.dataset.ts = Date.now();
+  tr.className = 'live-new';
+  tr.innerHTML =
+    '<td class="mono-cell live-time">just now</td>' +
+    '<td class="name-cell">' + ev[0] + ' <span class="mono-cell" style="color:var(--text3)">· ' + ref + '</span></td>' +
+    '<td class="mono-cell">' + amount + '</td>' +
+    '<td class="name-cell">' + region + '</td>' +
+    '<td><span class="tag ' + tag + '"><i class="hgi-stroke hgi-circle"></i> ' + label + '</span></td>';
+  return tr;
+}
+
+function liveRelabel() {
+  if (livePaused) return;
+  const now = Date.now();
+  liveTbody.querySelectorAll('tr').forEach(r => {
+    r.querySelector('.live-time').textContent = liveLabel(now - +r.dataset.ts);
+  });
+}
+
+function liveTick(force) {
+  if (livePaused && !force) return;
+  liveTicks++;
+  liveTbody.prepend(liveRow());
+  while (liveTbody.children.length > liveMaxRows) liveTbody.lastElementChild.remove();
+  liveRelabel();
+  liveFoot.textContent = livePaused ? 'Paused · ' + liveTicks + ' events so far' : liveTicks + ' events · streamed live';
+}
+
+function toggleLive() {
+  livePaused = !livePaused;
+  liveToggleBtn.querySelector('i').className = 'hgi-stroke ' + (livePaused ? 'hgi-refresh-03' : 'hgi-stop-watch');
+  liveToggleBtn.lastChild.textContent = livePaused ? ' Resume' : ' Pause';
+  const dot = liveBadge.querySelector('.status-dot');
+  dot.classList.toggle('on', !livePaused);
+  dot.classList.toggle('off', livePaused);
+  liveBadge.classList.toggle('paused', livePaused);
+  liveBadge.lastChild.textContent = livePaused ? ' Paused' : ' Live';
+  liveTick();
+}
+
+setInterval(liveTick, liveInterval);
+setInterval(liveRelabel, 1000);
+liveTick();
 </script>
 <script src="../assets/js/app.js"></script>
 </body>

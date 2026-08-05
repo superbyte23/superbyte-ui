@@ -6,7 +6,7 @@ Guidance for AI agents working in this repository. Read this before making chang
 - Static Bootstrap 5.3.3 admin dashboard UI (HTML + CSS + vanilla JS). No build step, no package manager needed.
 - Product version: **1.0.0**. The footer badge reads `v1.0.0` on all pages. Do not bump it without being asked.
 - **Everything is vendored locally under `vendor/`. Never add CDN/network resource loads.**
-- The admin dashboard lives in **`preview/`** (47 pages); the root **`index.html`** is the landing page about the UI (styles in `assets/css/landing.css`). All preview pages reference shared assets as `../assets/` / `../vendor/`.
+- The admin dashboard lives in **`preview/`** (48 pages); the root **`index.html`** is the landing page about the UI (styles in `assets/css/landing.css`). All preview pages reference shared assets as `../assets/` / `../vendor/`.
 
 ## Running / verifying
 - Serve statically, e.g. `python -m http.server 8000` (dev harness on port 8765).

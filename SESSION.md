@@ -7,13 +7,13 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
   `git@github.com:superbyte23/superbyte-ui.git`).
 - No build step, no `npm install`, no backend. Serve with any static server
   (dev harness: `node Temp\opencode\static-server.cjs` on port 8765).
-- **Product version: 1.0.0.** Footer badge `v1.0.0` on all 47 pages, auth headers `v1.0.0`,
+- **Product version: 1.0.0.** Footer badge `v1.0.0` on all 48 pages, auth headers `v1.0.0`,
   docs heading `v1.0.0`. Demo content may still mention `v2.x` (calendar event, file names,
   docs changelog) — those are sample data, not page versions.
 - **CDN policy: all assets are vendored locally under `vendor/`; zero external/CDN resource loads.**
 
 ## Status: v1.0.0 — dashboard lives in `preview/`, root is the landing page
-- **47-page admin dashboard is now under `preview/`** (index, analytics, records, users, forms,
+- **48-page admin dashboard is now under `preview/`** (index, analytics, records, users, datatables, forms,
   elements, cards, overlays, utilities, docs, components, all-components, tables, charts,
   visuals, rtl, maps, echarts, editors, crm, ecommerce, calendar, kanban, email, file-manager,
   create, layouts, 11 `layout-*.html` presets, 8 auth pages).
@@ -113,6 +113,13 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
 - theme-bootstrap.js: pre-paint theme + layout + font loading.
 
 ## Changelog (condensed)
+- DataTables CRUD (2026-08-05): client-side demo (2) on `preview/datatables.html` gained
+  add · edit · delete via `#customerModal` + row-actions buttons (`openAdd`/`openEdit`/`openDelete`);
+  row-action indices fixed for non-first pages (`csStart + idx`); verified headless (probe-crud.cjs).
+- DataTables page (2026-08-05): added `preview/datatables.html` showcasing four table
+  implementations (1 · static markup, 2 · client-side search/sort/paginate, 3 · simulated
+  server-side fetch, 4 · live streaming feed); `DataTables` nav link added to all 39 shell
+  pages; landing/docs/README/AGENTS/SESSION page counts bumped to 48.
 - Landing page + preview split (2026-08-04): moved all 47 dashboard pages into `preview/`
   (rewrote `assets/`/`vendor/` → `../`, incl. rtl.html's runtime CSS swap), root `index.html`
   became the landing page (`assets/css/landing.css`), templates/docs/README/AGENTS updated;
@@ -120,7 +127,7 @@ Saved: Mon Aug 03 2026. Next session: read this first, then `git status` + `git 
 - v1.0.0 finalization (2026-08-03): boxed = Bootstrap container grid; footer flex + 13px;
   version 1.0.0 on all pages; README/SESSION/AGENTS updated; pushed to origin/main.
 - Footer/profile rework (2026-08-02): user dropdown in sidebar footer, theme toggle in
-  toolbar, page footer (version + uptime + storage meter + links + copyright) on all 47 pages.
+  toolbar, page footer (version + uptime + storage meter + links + copyright) on all 48 pages.
 - Layout: two-axis model (nav × width) + density; 11 preset pages; pre-paint scroll-jump
   fixes (theme-bootstrap, font preload, `.page-section` fadeIn removal); hover-only
   horizontal flyouts; mobile fallback drawer.

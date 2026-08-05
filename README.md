@@ -100,7 +100,7 @@ All dependencies are vendored locally under `vendor/` — no external CDN calls.
 │   ├── js/auth.js             # Auth-related shared logic
 │   └── js/icons-data.js       # Icon library data
 ├── vendor/                    # Vendored local libraries and assets
-├── preview/                   # The admin dashboard (47 pages)
+├── preview/                   # The admin dashboard (48 pages)
 │   ├── index.html             # Main dashboard page
 │   ├── analytics.html         # Analytics page
 │   ├── records.html           # Records listing page
