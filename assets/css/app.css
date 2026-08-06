@@ -39,8 +39,8 @@
   --app-contained-w: var(--bs-breakpoint-xl);
   --app-boxed-w: 100%;
 
-  /* Bootstrap variable bridge — makes native .btn/.card/.form-*/.modal etc.
-     inherit this palette instead of Bootstrap's defaults */
+  /* Bootstrap variable bridge — makes native .btn/.card/.form-* etc. plus
+     .modal and friends inherit this palette instead of Bootstrap's defaults */
   --bs-body-bg: var(--bg);
   --bs-body-color: var(--text);
   --bs-body-font-family: var(--sans);
@@ -1473,3 +1473,91 @@ input[type="color"].form-control-color { width: 38px; height: 38px; padding: 3px
 /* HugeIcons stroke-rounded helpers */
 .hgi-spin { display: inline-block; animation: hgi-spin 1s linear infinite; }
 @keyframes hgi-spin { to { transform: rotate(360deg); } }
+
+/* Docs pages (shared by the vanilla docs pages and the React docs route) */
+.docs h2 { font-size: 16px; font-weight: 700; margin: 0 0 10px; display: flex; align-items: center; gap: 9px; letter-spacing: -.02em; }
+.docs h2 i { color: var(--accent); font-size: 13px; }
+.docs h3 { font-size: 13.5px; font-weight: 700; margin: 18px 0 6px; color: var(--text); }
+.docs p, .docs li { font-size: 13px; color: var(--text2); line-height: 1.7; }
+.docs ul, .docs ol { padding-left: 18px; margin: 0 0 8px; }
+.docs code { font-family: var(--mono); font-size: 12px; background: var(--surface2); border: 1px solid var(--border2); padding: 1px 6px; border-radius: 5px; color: var(--accent-h); }
+.docs pre { background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius-sm); padding: 14px 16px; font-family: var(--mono); font-size: 12px; color: var(--text); overflow-x: auto; line-height: 1.65; margin: 0 0 8px; }
+.docs pre code { background: none; border: none; padding: 0; color: inherit; }
+.docs .docs-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.docs .docs-table th { text-align: left; font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); padding: 9px 12px; border-bottom: 1px solid var(--border2); white-space: nowrap; }
+.docs .docs-table td { padding: 9px 12px; color: var(--text2); border-bottom: 1px solid var(--border); vertical-align: top; }
+.docs .docs-table td:first-child { color: var(--text); font-family: var(--mono); font-size: 12px; }
+.docs .docs-table tr:last-child td { border-bottom: none; }
+.docs .cds-demo { padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); }
+
+/* ── Docs site (standalone documentation outside the app shell) ─────────────
+   Laravel/MUI-style docs: sticky topbar, left nav sidebar, content column,
+   right on-page TOC, footer. Rendered by the React port's /docs/* routes. */
+.ds-root { min-height: 100vh; display: flex; flex-direction: column; }
+.ds-topbar {
+  position: sticky; top: 0; z-index: 1000; height: 58px;
+  background: var(--lnd-nav-bg, rgba(10,11,15,.82));
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.ds-topbar-inner {
+  height: 100%; max-width: 1240px; margin: 0 auto; padding: 0 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.ds-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14.5px; color: var(--text); white-space: nowrap; }
+.ds-brand .logo-mark { font-size: 19px; }
+.ds-search { position: relative; flex: 0 1 320px; margin-left: 14px; }
+.ds-search-input { display: flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; padding: 7px 14px; }
+.ds-search-input i { color: var(--text3); font-size: 13px; }
+.ds-search-input input { background: none; border: none; outline: none; color: var(--text); font-size: 13px; width: 100%; }
+.ds-search-input input::placeholder { color: var(--text3); }
+.ds-search-results { position: absolute; top: calc(100% + 8px); left: 0; right: 0; background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius); box-shadow: 0 18px 44px rgba(0,0,0,.45); padding: 6px; max-height: 340px; overflow: auto; z-index: 1200; }
+.ds-search-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--radius-sm); color: var(--text2); font-size: 13px; }
+.ds-search-item:hover { background: var(--surface3); color: var(--text); }
+.ds-search-item .cat { margin-left: auto; font-size: 10.5px; color: var(--text3); font-family: var(--mono); white-space: nowrap; }
+.ds-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.ds-burger { display: none; }
+.ds-shell { flex: 1; display: flex; width: 100%; max-width: 1240px; margin: 0 auto; }
+.ds-sidebar {
+  width: 248px; flex-shrink: 0; border-right: 1px solid var(--border);
+  padding: 22px 14px; position: sticky; top: 58px; height: calc(100vh - 58px);
+  overflow-y: auto;
+}
+.ds-nav-group { margin-bottom: 20px; }
+.ds-nav-group-label { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin: 0 0 8px 10px; }
+.ds-nav-link { display: flex; align-items: center; gap: 9px; padding: 7px 10px; border-radius: 8px; font-size: 13px; color: var(--text2); transition: color .15s, background .15s; }
+.ds-nav-link:hover { color: var(--text); background: var(--surface3); }
+.ds-nav-link.active { color: var(--accent-h); background: var(--accent-bg); }
+.ds-nav-link i { font-size: 13px; width: 14px; text-align: center; }
+.ds-main { flex: 1; min-width: 0; padding: 34px 36px 60px; }
+.ds-main-inner { max-width: 780px; }
+.ds-toc { width: 216px; flex-shrink: 0; padding: 34px 0 0 18px; }
+.ds-toc-inner { position: sticky; top: 84px; max-height: calc(100vh - 110px); overflow: auto; }
+.ds-toc-label { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); font-weight: 700; margin-bottom: 10px; }
+.ds-toc-link { display: block; font-size: 12px; color: var(--text3); padding: 3px 0 3px 12px; border-left: 2px solid var(--border); line-height: 1.5; }
+.ds-toc-link:hover { color: var(--text); }
+.ds-toc-link.active { color: var(--accent-h); border-left-color: var(--accent); }
+.ds-toc-link.l2 { padding-left: 24px; }
+.ds-doc-head { margin-bottom: 26px; }
+.ds-doc-head h1 { font-size: clamp(24px, 3vw, 30px); font-weight: 700; color: var(--text); letter-spacing: -.02em; }
+.ds-doc-head p { font-size: 14px; color: var(--text2); margin: 8px 0 0; }
+.ds-prevnext { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
+.ds-prevnext a { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px; color: var(--text2); font-size: 12px; transition: border-color .15s; }
+.ds-prevnext a:hover { border-color: var(--accent); color: var(--text); }
+.ds-prevnext a b { color: var(--accent-h); font-size: 13px; }
+.ds-footer { border-top: 1px solid var(--border); background: var(--surface); }
+.ds-footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; max-width: 1240px; margin: 0 auto; font-size: 12px; color: var(--text3); }
+.ds-footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+.ds-footer-links a { color: var(--text3); transition: color .15s; }
+.ds-footer-links a:hover { color: var(--text); }
+@media (max-width: 991.98px) {
+  .ds-sidebar { position: fixed; left: 0; top: 58px; bottom: 0; z-index: 900; background: var(--surface); transform: translateX(-100%); transition: transform .2s; height: auto; border-right: 1px solid var(--border2); box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+  .ds-sidebar.open { transform: none; }
+  .ds-burger { display: inline-flex; }
+  .ds-toc { display: none; }
+  .ds-search { flex: 0 1 200px; }
+}
+@media (max-width: 575.98px) {
+  .ds-main { padding: 22px 18px 48px; }
+  .ds-search { display: none; }
+}
