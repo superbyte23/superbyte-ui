@@ -67,8 +67,12 @@
       // 'condensed'/'comfy'; honor them here so the saved preference survives
       // migration (new-model prefs use grid_admin_compact).
       if (!dens) dens = (nav === 'condensed' || nav === 'comfy') ? nav : (m.compact === '1' ? 'condensed' : 'comfy');
+      // Mini-sidebar is a desktop-only icon rail: below the mobile breakpoint it
+      // collapses to the standard off-canvas drawer, so the class is never
+      // applied there (app.js mirrors this guard in setLayoutMode).
+      var mobile = window.matchMedia('(max-width: 991.98px)').matches;
       if (nav === 'horizontal') b.classList.add('layout-horizontal');
-      else if (nav === 'mini-sidebar') b.classList.add('layout-mini-sidebar');
+      else if (nav === 'mini-sidebar' && !mobile) b.classList.add('layout-mini-sidebar');
       if (width === 'boxed') b.classList.add('layout-boxed');
       else if (width === 'contained') b.classList.add('layout-contained');
       else b.classList.add('layout-fluid');

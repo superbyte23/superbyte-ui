@@ -55,14 +55,14 @@ function initEditors() {
     '<head>\n' +
     '  <meta charset="UTF-8">\n' +
     '  <title>Superbyte</title>\n' +
-    '</head>\n' +
+    '<\/head>\n' +
     '<body data-bs-theme="dark">\n' +
     '  <main class="app-shell">\n' +
     '    <h1>UI</h1>\n' +
     '    <button class="btn btn-primary">New</button>\n' +
     '  </main>\n' +
-    '</body>\n' +
-    '</html>\n'
+    '<\/body>\n' +
+    '<\/html>\n'
   );
 
   window._cm.py = CodeMirror.fromTextArea(document.getElementById('cm-py'), {

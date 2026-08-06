@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,7 @@
 <title>Superbyte UI — Editors</title>
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../vendor/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="../vendor/hugeicons/css/hugeicons-full.css">
+<link rel="stylesheet" href="../vendor/hugeicons/css/hugeicons-used.css">
 <link rel="stylesheet" href="../vendor/fonts.css">
 <link rel="stylesheet" href="../vendor/fonts/theme-fonts.css">
 <link rel="stylesheet" href="../vendor/quill/quill.snow.css">
@@ -63,7 +64,6 @@
     <div class="side-submenu">
       <a class="side-link" href="records.html"><i class="hgi-stroke hgi-table-01"></i> Records</a>
       <a class="side-link" href="users.html"><i class="hgi-stroke hgi-user-group"></i> Users</a>
-      <a class="side-link" href="datatables.html"><i class="hgi-stroke hgi-table-columns-split"></i> DataTables</a>
     </div>
   </div>
   <div class="side-group">
@@ -119,7 +119,6 @@
     <div class="side-group-toggle" role="button" tabindex="0" aria-expanded="false"><i class="hgi-stroke hgi-book-01 sg-icon"></i> Docs <i class="hgi-stroke hgi-arrow-down-01 sg-chev"></i></div>
     <div class="side-submenu">
       <a class="side-link" href="docs.html"><i class="hgi-stroke hgi-book-01"></i> Docs</a>
-      <a class="side-link" href="components-docs.html"><i class="hgi-stroke hgi-book-open-01"></i> Bootstrap Components Docs</a>
     </div>
   </div>
 </nav>
@@ -343,9 +342,9 @@
     <div class="customizer-section">
       <div class="customizer-label">Corner radius</div>
       <div class="radius-grid">
-        <div class="radius-opt" id="radius-sharp" onclick="setRadius('4px','2px',this)">Sharp</div>
+        <div class="radius-opt active" id="radius-sharp" onclick="setRadius('4px','2px',this)">Sharp</div>
         <div class="radius-opt" id="radius-default" onclick="setRadius('8px','4px',this)">Default</div>
-        <div class="radius-opt active" id="radius-round" onclick="setRadius('14px','8px',this)">Round</div>
+        <div class="radius-opt" id="radius-round" onclick="setRadius('14px','8px',this)">Round</div>
       </div>
     </div>
 
@@ -461,14 +460,14 @@ function initEditors() {
     '<head>\n' +
     '  <meta charset="UTF-8">\n' +
     '  <title>Superbyte UI</title>\n' +
-    '</head>\n' +
+    '<\/head>\n' +
     '<body data-bs-theme="dark">\n' +
     '  <main class="app-shell">\n' +
     '    <h1>UI</h1>\n' +
     '    <button class="btn btn-primary">New</button>\n' +
     '  </main>\n' +
-    '</body>\n' +
-    '</html>\n'
+    '<\/body>\n' +
+    '<\/html>\n'
   );
 
   window._cm.py = CodeMirror.fromTextArea(document.getElementById('cm-py'), {

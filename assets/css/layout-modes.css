@@ -704,9 +704,9 @@
     font-size: 15px;
   }
 
+  .app-nav-collapse,
   .layout-mini-sidebar .app-nav-collapse {
-    display: flex;
-    margin-left: auto;
+    display: none;
   }
 
   .layout-mini-sidebar .side-group-toggle {

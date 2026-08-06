@@ -1,13 +1,51 @@
 {
   "name": "superbyte-admin",
   "version": "1.0.0",
-  "description": "A modern admin dashboard and management UI template, built with Bootstrap and plain HTML, CSS, and JavaScript.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "A free, open-source admin dashboard and UI kit built with Bootstrap 5, HTML, CSS, and vanilla JavaScript. Zero CDN dependencies - everything vendored.",
+  "main": "assets/js/app.js",
+  "style": "assets/css/app.css",
+  "unpkg": "assets/css/app.css",
+  "jsdelivr": "assets/css/app.css",
+  "files": [
+    "assets",
+    "vendor"
+  ],
+  "exports": {
+    ".": "./assets/js/app.js",
+    "./package.json": "./package.json",
+    "./assets/*": "./assets/*",
+    "./vendor/*": "./vendor/*"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "sideEffects": [
+    "*.css",
+    "./assets/**"
+  ],
+  "scripts": {
+    "test": "node --check assets/js/app.js assets/js/theme-bootstrap.js assets/js/auth.js assets/js/datatable.js"
+  },
+  "keywords": [
+    "admin",
+    "admin-dashboard",
+    "dashboard",
+    "ui",
+    "ui-kit",
+    "template",
+    "bootstrap",
+    "bootstrap-5",
+    "frontend",
+    "hugeicons",
+    "chartjs",
+    "datatable",
+    "responsive"
+  ],
+  "author": "John Canete",
+  "license": "MIT",
+  "homepage": "https://superbyte23.github.io/superbyte-ui/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superbyte23/superbyte-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/superbyte23/superbyte-ui/issues"
+  }
 }

@@ -188,9 +188,13 @@ function syncFooterUserPlacement() {
 function setLayoutMode(mode) {
   const b = document.body.classList;
   // Navigation frame: vertical (no class) / horizontal / mini-sidebar — mutually exclusive.
+  // Mini-sidebar is a desktop-only icon rail; below the mobile breakpoint it
+  // collapses to the standard off-canvas drawer, so the class is never applied
+  // there (theme-bootstrap.js mirrors this guard pre-paint).
+  const mobile = window.matchMedia('(max-width: 991.98px)').matches;
   b.remove('layout-horizontal', 'layout-mini-sidebar');
   if (mode === 'horizontal') b.add('layout-horizontal');
-  else if (mode === 'mini-sidebar') b.add('layout-mini-sidebar');
+  else if (mode === 'mini-sidebar' && !mobile) b.add('layout-mini-sidebar');
 
   // Density (orthogonal to the frame) — condensed is compact, comfy is roomy.
   if (mode === 'condensed') setCompact(true);

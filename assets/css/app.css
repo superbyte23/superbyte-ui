@@ -351,9 +351,11 @@ a { text-decoration: none; }
 
 /* ── CONTENT ─────────────────────────────────────────────────────────────── */
 #content { padding: 22px 18px 60px; flex: 1; }
-/* The footer bar spans the full width; in horizontal contained mode only its
-   inner content is pulled into the same column as #content (vertical mode
-   keeps the footer full-bleed, matching its sidebar-offset content column). */
+/* The footer bar lives inside #main (after #content) on every shell page, so it
+   aligns with the content column automatically. In horizontal contained mode
+   only its inner content is pulled into the same column as #content (vertical
+   mode keeps the footer full-bleed across #main, matching its sidebar-offset
+   content column). */
 .app-footer { margin-top: auto; background: var(--surface); border-top: 1px solid var(--border); }
 .app-footer-inner { height: var(--toolbar-h); padding: 8px 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px; font-size: 13px; }
 .layout-horizontal.layout-contained .app-footer-inner:not(.container):not(.container-xl) { max-width: var(--app-contained-w); margin-left: auto; margin-right: auto; }
@@ -706,9 +708,9 @@ a { text-decoration: none; }
 
 .layout-boxed #app { max-width: var(--app-boxed-w); margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,.35); }
 
-/* Feature pages keep the page footer outside #app (body-level sibling), so cap
-   it to the same boxed width; pages whose footer lives inside #main are already
-   capped by the box. */
+/* Every shell page keeps the footer inside #main, so it is already capped by
+   the box. This rule is kept defensively so any body-level footer still caps
+   to the same boxed width. */
 .layout-boxed .app-footer { width: 100%; max-width: var(--app-boxed-w); margin-left: auto; margin-right: auto; }
 
 /* Boxed box follows the Bootstrap container scale. The fixed sidebar aligns

@@ -33,7 +33,7 @@
 
 ## About
 
-Superbyte UI is a static, front-end-only admin dashboard template. There's no build pipeline, no `npm install`, and no backend required — clone it, open a page, and it works.
+Superbyte UI is a static, front-end-only admin dashboard template. The repo has no build pipeline and no backend required — clone it, open a page, and it works. For consumers who prefer package managers, the reusable assets and vendored libraries are also installable from npm as `superbyte-admin`.
 
 The repository is split in two: the root `index.html` is a landing page that introduces the kit, and the full admin dashboard (47 ready-to-use pages) lives under `preview/`. It ships with dashboard analytics, CRUD-style data views, CRM and e-commerce workflows, forms, charts, maps, editors, authentication screens, and a large library of reusable UI components — everything you need to skip the "download a template and hope it has what you need" problem.
 
@@ -142,13 +142,30 @@ All dependencies are vendored locally under `vendor/` — no external CDN calls.
 ├── _pages/                    # Page fragments and page-specific scripts
 ├── app-shell.tmpl             # Shared shell template source
 ├── auth.html.tmpl             # Auth page template source
-├── package.json               # Minimal project metadata
+├── package.json               # npm package metadata (publishes assets/ + vendor/)
 └── SESSION.md                 # Session/implementation handoff notes
 ```
 
 ## Getting Started
 
 Because the project is fully static, you can run it with any local server.
+
+**Option 0 — npm (reusable assets only)**
+Install just the styles, scripts, and vendored libraries for use in your own pages or build pipeline:
+
+```bash
+npm install superbyte-admin
+```
+
+Then reference them from `node_modules/` — for example in a plain page:
+
+```html
+<link href="node_modules/superbyte-admin/assets/css/app.css" rel="stylesheet">
+<script src="node_modules/superbyte-admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="node_modules/superbyte-admin/assets/js/app.js"></script>
+```
+
+Or import subpaths with a bundler: `superbyte-admin/assets/css/app.css`, `superbyte-admin/assets/js/app.js`, `superbyte-admin/vendor/hugeicons/css/hugeicons-full.css`, and so on. The package ships `assets/` (the shared design system and shell scripts) and `vendor/` (every library the kit uses — Bootstrap 5.3.3, HugeIcons, Chart.js, ECharts, Leaflet, Quill, CodeMirror, and more), with zero CDN dependencies.
 
 **Option 1 — VS Code Live Server**
 1. Open the project folder in VS Code.

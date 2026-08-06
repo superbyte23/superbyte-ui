@@ -1,0 +1,23 @@
+{
+  "name": "superbyte-react",
+  "private": true,
+  "version": "1.0.0",
+  "description": "React version of the Superbyte Admin template — core shell (theme customizer, layout modes) + key pages, consuming the superbyte-admin npm package.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.2",
+    "superbyte-admin": "file:.."
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.5",
+    "esbuild": "^0.28.1",
+    "vite": "^8.2.0"
+  }
+}
