@@ -8,6 +8,14 @@ Guidance for AI agents working in this repository. Read this before making chang
 - **Everything is vendored locally under `vendor/`. Never add CDN/network resource loads.**
 - The admin dashboard lives in **`preview/`** (48 pages); the root **`index.html`** is the landing page about the UI (styles in `assets/css/landing.css`). All preview pages reference shared assets as `../assets/` / `../vendor/`.
 
+## Repo layout (multi-project, consolidated)
+- **Root** — Bootstrap 5.3.3 HTML edition (`preview/`, `index.html`, `assets/`, `vendor/`, `app-shell.tmpl`, `_pages/`).
+- **`superbyte-ui-tailwind/`** — the Tailwind HTML edition (design-pattern reference for the Tailwind package).
+- **`superbyte-ui-react/`** — the React edition.
+- **`package-bootstrap/`** — Laravel + Livewire component kit, Bootstrap version (parallel package; do not touch from Tailwind work).
+- **`package-tailwind/`** — Laravel + Livewire component kit, Tailwind version (Blade components, `resources/js/superbyte.js` runtime, Tailwind v4 CSS).
+- **`laravel-livewire-app/`** — the Laravel 13 + Livewire demo app that consumes `package-tailwind/` via a Composer path repo (`../package-tailwind`, symlinked). Was `demo-app/` before the 2026-08-09 consolidation.
+
 ## Running / verifying
 - Serve statically, e.g. `python -m http.server 8000` (dev harness on port 8765).
 - Syntax check: `node --check assets/js/app.js assets/js/theme-bootstrap.js assets/js/auth.js assets/js/datatable.js`
@@ -36,6 +44,7 @@ Guidance for AI agents working in this repository. Read this before making chang
 - **`html, body { overflow-x: hidden; overflow-x: clip; }`** in app.css: clip (with hidden fallback) prevents drawer/flyout first-frame overflow WITHOUT breaking `position: sticky` (plain `overflow-x: hidden` on html/body silently kills sticky app-wide — toolbar `sticky-top` and docs-page TOC rely on this). Keep both declarations.
 - Never commit `session-ses_03f8.md` (untracked session note).
 - Keep commit messages imperative and focused; stage only intended files with `git add -u` after checking `git status`/`git diff`.
+- **Fixes go in the package source** (`laravel-livewire-app/` renders `package-tailwind/` views live via the path repo); CSS/token fixes must also be re-published (`vendor:publish --tag=superbyte-ui-css --force`) + rebuilt. The Bootstrap edition is a separate parallel package — do not apply fixes there. **Record every fix** in `DEV_PLAN.md` §16 Fix Log.
 
 ## More detail
 See `SESSION.md` for the full session handoff, conventions, and verification suite.
