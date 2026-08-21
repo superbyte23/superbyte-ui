@@ -1,0 +1,7 @@
+# Dependency dirs (safety net; nested projects have their own ignores)
+node_modules/
+
+# Self-managed sibling repos with their own remotes — do not embed
+/package-bootstrap/
+/superbyte-ui-react/
+/superbyte-ui-tailwind/

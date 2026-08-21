@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+@import './vendor/superbyte-ui/superbyte-ui.css';
+
+@source '../../vendor/superbyte/ui-tailwind/resources/views/**/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/* Theme toggle: show the icon of the current theme (moon in dark, sun in light). */
+html.dark .icon-theme-sun { display: none; }
+html.light .icon-theme-moon { display: none; }
+
+/* Docs code highlighting (Prism) — VSCode default theme palette (Dark+ dark, Light+ light). */
+[data-code] pre code { color: #d4d4d4; }
+[data-code] .token.tag { color: #569cd6; }
+[data-code] .token.tag .token.punctuation { color: #808080; }
+[data-code] .token.punctuation { color: #d4d4d4; }
+[data-code] .token.attr-name,
+[data-code] .token.property { color: #9cdcfe; }
+[data-code] .token.attr-value,
+[data-code] .token.string { color: #ce9178; }
+[data-code] .token.comment,
+[data-code] .token.prolog,
+[data-code] .token.cdata { color: #6a9955; font-style: italic; }
+[data-code] .token.number { color: #b5cea8; }
+[data-code] .token.boolean,
+[data-code] .token.keyword { color: #569cd6; }
+[data-code] .token.operator { color: #d4d4d4; }
+
+html.light [data-code] pre code { color: #000000; }
+html.light [data-code] .token.tag { color: #800000; }
+html.light [data-code] .token.tag .token.punctuation,
+html.light [data-code] .token.punctuation { color: #000000; }
+html.light [data-code] .token.attr-name,
+html.light [data-code] .token.property { color: #ff0000; }
+html.light [data-code] .token.attr-value,
+html.light [data-code] .token.string { color: #a31515; }
+html.light [data-code] .token.comment,
+html.light [data-code] .token.prolog,
+html.light [data-code] .token.cdata { color: #008000; font-style: italic; }
+html.light [data-code] .token.number { color: #098658; }
+html.light [data-code] .token.boolean,
+html.light [data-code] .token.keyword { color: #0000ff; }
+html.light [data-code] .token.operator { color: #000000; }

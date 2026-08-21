@@ -1,0 +1,117 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   Superbyte UI — design tokens for Tailwind CSS v4 (CSS-first).
+   Import AFTER `@import "tailwindcss";` in your entry stylesheet.
+
+     @import "tailwindcss";
+     @import "./vendor/superbyte-ui/superbyte-ui.css";
+
+   This file registers:
+     - the class-based dark variant (`.dark` / `.light` on <html>),
+     - `@theme inline` aliases so `bg-surface`, `text-ink-2`, `border-line`,
+       `text-accent` … map to the runtime tokens set by pre-paint.js.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-accent: var(--accent);
+  --color-accent-hi: var(--accent-ink);
+  --color-accent-text: var(--accent-text);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-bg: var(--accent-bg);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface2);
+  --color-surface-3: var(--surface3);
+  --color-line: var(--border);
+  --color-line-2: var(--border2);
+  --color-ink: var(--text);
+  --color-ink-2: var(--text2);
+  --color-ink-3: var(--text3);
+  --color-green: var(--green);
+  --color-green-bg: var(--green-bg);
+  --color-yellow: var(--yellow);
+  --color-yellow-bg: var(--yellow-bg);
+  --color-danger: var(--danger);
+  --color-danger-bg: var(--danger-bg);
+  --color-sky: var(--sky);
+
+  --font-sans: var(--sans);
+  --font-mono: var(--mono);
+}
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  /* Dark is the default — pre-paint.js toggles `.light` / `.dark` on <html>. */
+  :root {
+    --bg:        #0b0b0d;
+    --surface:   #121214;
+    --surface2:  #18181b;
+    --surface3:  #212124;
+    --border:    #27272a;
+    --border2:   #3f3f46;
+    --text:      #fafafa;
+    --text2:     #a1a1aa;
+    --text3:     #71717a;
+    --accent:    #F2F0EA;
+    --accent-h:  #E5E2DA;
+    --accent-soft: #18181b;
+    --accent-ink: #d4d4d8;
+    --accent-text: #18181b;
+    --accent-bg: #F2F0EA;
+    --accent-rgb: 24,24,27;
+    --danger:    #ef4444;
+    --danger-bg: rgba(239,68,68,.12);
+    --green:     #22c55e;
+    --green-bg:  rgba(34,197,94,.12);
+    --yellow:    #f59e0b;
+    --yellow-bg: rgba(245,158,11,.12);
+    --sky:       #38bdf8;
+    --sky-bg:    rgba(56,189,248,.12);
+    --radius:    12px;
+    --radius-sm: 6px;
+    --mono:      'Ubuntu Mono', monospace;
+    --sans:      'Ubuntu', sans-serif;
+    --ring:      rgba(255,255,255,.22);
+    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,.18), 0 1px 3px 0 rgba(0,0,0,.14);
+    --shadow-md: 0 6px 20px -4px rgba(0,0,0,.35), 0 3px 8px -3px rgba(0,0,0,.25);
+    --shadow-lg: 0 20px 50px -12px rgba(0,0,0,.5), 0 10px 24px -10px rgba(0,0,0,.4);
+  }
+
+  .light {
+    --bg:        #fafafa;
+    --surface:   #ffffff;
+    --surface2:  #f4f4f5;
+    --surface3:  #e4e4e7;
+    --border:    #e4e4e7;
+    --border2:   #d4d4d8;
+    --text:      #09090b;
+    --text2:     #3f3f46;
+    --text3:     #71717a;
+    --accent:    #18181b;
+    --accent-h:  #27272a;
+    --accent-soft: #18181b;
+    --accent-ink: #18181b;
+    --accent-text: #ffffff;
+    --accent-bg: rgba(24,24,27,.08);
+    --danger-bg: rgba(220,38,38,.08);
+    --green:     #16a34a;
+    --green-bg:  rgba(22,163,74,.08);
+    --yellow:    #d97706;
+    --yellow-bg: rgba(217,119,6,.08);
+    --sky:       #0284c7;
+    --sky-bg:    rgba(2,132,199,.08);
+    --ring:      rgba(24,24,27,.25);
+    --shadow-sm: 0 1px 2px 0 rgba(15,23,42,.06), 0 1px 3px 0 rgba(15,23,42,.08);
+    --shadow-md: 0 8px 24px -6px rgba(15,23,42,.14), 0 4px 10px -4px rgba(15,23,42,.1);
+    --shadow-lg: 0 24px 60px -16px rgba(15,23,42,.22), 0 12px 30px -12px rgba(15,23,42,.18);
+  }
+
+  html { font-size: 15px; }
+  html, body { background: var(--bg); overflow-x: hidden; overflow-x: clip; }
+  body { color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.5; }
+  h1,h2,h3,h4,h5,h6 { font-family: var(--sans); letter-spacing: -.02em; }
+  a:not(.btn) { text-decoration: none; color: inherit; }
+  ::selection { background: var(--accent); color: var(--accent-text); }
+}
