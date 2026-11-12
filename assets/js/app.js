@@ -278,24 +278,26 @@ function themeVars() {
 function openAppNav(){ document.getElementById('app-nav').classList.add('open'); document.getElementById('app-overlay').classList.add('open'); }
 function closeAppNav(){ document.getElementById('app-nav').classList.remove('open'); document.getElementById('app-overlay').classList.remove('open'); }
 
-/* ── SIDEBAR SUB-MENUS ─────────────────────────────────────────────────── */
-document.querySelectorAll('.side-group-toggle').forEach(t => {
-  t.addEventListener('click', () => {
-    // Auto-show modes: dropdowns open on hover (or keyboard .kb-open).
-    // Horizontal is always auto-show on desktop; below the desktop breakpoint
-    // it falls back to the vertical off-canvas drawer, so the click-accordion
-    // stays active. Mini-sidebar only keeps the click-toggle accordion on
-    // mobile too.
-    const horizontalDesktop = document.body.classList.contains('layout-horizontal') && window.matchMedia('(min-width: 992px)').matches;
-    const miniSidebarDesktop = document.body.classList.contains('layout-mini-sidebar') && window.matchMedia('(min-width: 992px)').matches;
-    if (horizontalDesktop || miniSidebarDesktop) return;
-    const g = t.closest('.side-group');
-    g.classList.toggle('open');
-    t.setAttribute('aria-expanded', g.classList.contains('open'));
-  });
-  t.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t.click(); }
-  });
+/* ── SIDEBAR SUB-MENUS ───────────────────────────────────────────────────
+   Delegated so it survives Livewire SPA morphs (wire:navigate). The layout
+   #app-nav is outside {{ $slot }} but gets morphed to update .active states,
+   so direct listeners would be lost after the first SPA navigation. */
+function toggleSideGroup(t) {
+  const horizontalDesktop = document.body.classList.contains('layout-horizontal') && window.matchMedia('(min-width: 992px)').matches;
+  const miniSidebarDesktop = document.body.classList.contains('layout-mini-sidebar') && window.matchMedia('(min-width: 992px)').matches;
+  if (horizontalDesktop || miniSidebarDesktop) return;
+  const g = t.closest('.side-group');
+  if (!g) return;
+  g.classList.toggle('open');
+  t.setAttribute('aria-expanded', g.classList.contains('open'));
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest('.side-group-toggle');
+  if (t) toggleSideGroup(t);
+});
+document.addEventListener('keydown', e => {
+  const t = e.target.closest('.side-group-toggle');
+  if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggleSideGroup(t); }
 });
 /* Keyboard access for the auto-show top nav / rail: Tab to a top-level menu
    and it opens (via .kb-open); the dropdown stays open while focus is inside
@@ -303,18 +305,39 @@ document.querySelectorAll('.side-group-toggle').forEach(t => {
 let kbNav = false;
 document.addEventListener('keydown', () => { kbNav = true; });
 document.addEventListener('mousedown', () => { kbNav = false; });
-document.querySelectorAll('.side-group').forEach(g => {
-  g.addEventListener('focusin', () => {
-    if (kbNav && (document.body.classList.contains('layout-horizontal') || document.body.classList.contains('layout-mini-sidebar'))) {
-      g.classList.add('kb-open');
-    }
-  });
-  g.addEventListener('focusout', e => {
-    if (!g.contains(e.relatedTarget)) g.classList.remove('kb-open');
-  });
+// Delegated so kb-open survives Livewire SPA morphs.
+document.addEventListener('focusin', e => {
+  const g = e.target.closest('.side-group');
+  if (!g) return;
+  if (kbNav && (document.body.classList.contains('layout-horizontal') || document.body.classList.contains('layout-mini-sidebar'))) {
+    g.classList.add('kb-open');
+  }
 });
-document.querySelectorAll('.side-group').forEach(g => {
-  if (g.querySelector('.side-link.active')) g.classList.add('open');
+document.addEventListener('focusout', e => {
+  const g = e.target.closest('.side-group');
+  if (!g) return;
+  if (!g.contains(e.relatedTarget)) g.classList.remove('kb-open');
+});
+function syncSideGroups() {
+  document.querySelectorAll('.side-group').forEach(g => {
+    const hasActive = !!g.querySelector('.side-link.active');
+    // Keep the group open if it contains the active link; otherwise preserve
+    // the user's previous toggle state (don't force-close on every SPA nav).
+    if (hasActive) g.classList.add('open');
+    const toggle = g.querySelector('.side-group-toggle');
+    if (toggle) toggle.setAttribute('aria-expanded', g.classList.contains('open') ? 'true' : 'false');
+  });
+}
+syncSideGroups();
+document.addEventListener('livewire:navigated', syncSideGroups);
+// Re-init Bootstrap tooltips/popovers that may be inside the morphed {{ $slot }}
+document.addEventListener('livewire:navigated', () => {
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+    try { bootstrap.Tooltip.getOrCreateInstance(el); } catch(e) {}
+  });
+  document.querySelectorAll('[data-bs-toggle="popover"]').forEach(el => {
+    try { bootstrap.Popover.getOrCreateInstance(el); } catch(e) {}
+  });
 });
 /* Sidebar collapse/expand toggle between the full vertical sidebar and the
    mini-sidebar rail. Always present; CSS shows it on the right of the logo in

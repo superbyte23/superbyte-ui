@@ -96,5 +96,21 @@
       var mo = new MutationObserver(function () { if (document.body) { mo.disconnect(); applyBody(); } });
       mo.observe(document.documentElement, { childList: true });
     }
+    // Persist theme across Livewire SPA navigates (wire:navigate). New pages
+    // render <body data-bs-theme="dark"> by default; without this the user's
+    // light/dark choice would be clobbered on every SPA navigation.
+    document.addEventListener('livewire:navigated', function () {
+      try {
+        var saved = localStorage.getItem('grid_admin_theme');
+        if (saved === 'light' || saved === 'dark') {
+          document.body.setAttribute('data-bs-theme', saved);
+          var ic = document.getElementById('theme-icon');
+          if (ic) ic.className = saved === 'dark' ? 'hgi-stroke hgi-moon-01' : 'hgi-stroke hgi-sun-01';
+          var od = document.getElementById('opt-dark'), ol = document.getElementById('opt-light');
+          if (od) od.classList.toggle('active', saved === 'dark');
+          if (ol) ol.classList.toggle('active', saved === 'light');
+        }
+      } catch (e) {}
+    });
   } catch (e) {}
 })();
